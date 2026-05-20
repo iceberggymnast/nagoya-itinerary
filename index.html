@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>名古屋 · 3박 4일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root {
+    --paper: #F4F1EA;
+    --paper-2: #EAE5DA;
+    --paper-3: #E0DAC9;
+    --ink: #1A1818;
+    --ink-soft: #4A4A4A;
+    --ink-mute: #8A857C;
+    --rule: #D8D2C4;
+    --accent-1: #B91D1D;
+    --accent-2: #1B4D3E;
+    --accent-3: #1E3A5F;
+    --accent-4: #6B6B6B;
+    --serif: 'Fraunces', 'Noto Serif JP', serif;
+    --sans: 'IBM Plex Sans KR', system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(420px, 1fr) 1.2fr;
+    height: 100vh;
+  }
+  .panel {
+    background: var(--paper);
+    overflow-y: auto;
+    padding: 32px 40px 64px;
+    border-right: 1px solid var(--rule);
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule) transparent;
+  }
+  .panel::-webkit-scrollbar { width: 6px; }
+  .panel::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+  .header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+  .eyebrow {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent-1);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .title-jp {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .title-jp em { font-style: italic; color: var(--accent-1); }
+  .meta {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+  }
+  .meta strong { color: var(--ink); font-weight: 500; }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 10;
+    padding-top: 4px;
+  }
+  .tab {
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-mute);
+    padding: 14px 18px 14px 0;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    margin-right: 8px;
+  }
+  .tab .num {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    margin-right: 6px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); font-weight: 500; }
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 8px;
+    height: 2px;
+    background: var(--accent-1);
+  }
+  .day-head { margin-bottom: 24px; }
+  .day-date {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .day-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .day-desc {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    max-width: 480px;
+  }
+  .option-toggle {
+    display: inline-flex;
+    background: var(--paper-2);
+    border-radius: 2px;
+    padding: 3px;
+    margin: 16px 0 24px;
+    border: 1px solid var(--rule);
+  }
+  .option-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-mute);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+  .option-btn.active { background: var(--ink); color: var(--paper); }
+
+  .timeline { position: relative; }
+  .item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .item:hover { background: rgba(185, 29, 29, 0.03); }
+  .item.transit { cursor: default; }
+  .item.transit:hover { background: transparent; }
+  .item-time {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    padding-top: 2px;
+  }
+  .item-body { min-width: 0; }
+  .item-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .item-sub { font-size: 12px; color: var(--ink-mute); font-family: var(--serif); font-style: italic; }
+  .item-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+  .item.transit .item-name { color: var(--ink-mute); font-weight: 400; font-style: italic; }
+  .item.poi::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 22px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--day-color, var(--accent-1));
+  }
+
+  .section {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .section-head {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent-1);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+  }
+  .card-list { display: grid; gap: 10px; }
+  .card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--paper-2);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+  .card:hover { background: var(--paper-3); border-color: var(--rule); }
+  .card-name { font-size: 13px; font-weight: 500; }
+  .card-info { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+  .card-cat {
+    display: inline-block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-1);
+    margin-right: 6px;
+    font-weight: 500;
+  }
+  .card-price {
+    font-family: var(--serif);
+    font-size: 12px;
+    color: var(--ink-soft);
+    align-self: center;
+    white-space: nowrap;
+  }
+  .card-arrow {
+    align-self: center;
+    color: var(--ink-mute);
+    font-size: 14px;
+  }
+
+  .cost-box {
+    margin-top: 32px;
+    padding: 18px 20px;
+    background: var(--paper-2);
+    border-left: 2px solid var(--accent-1);
+  }
+  .cost-head {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .cost-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; }
+  .cost-row .lbl { color: var(--ink-soft); }
+  .cost-row .val { font-family: var(--serif); }
+  .cost-total { border-top: 1px solid var(--rule); margin-top: 8px; padding-top: 8px; font-weight: 500; }
+  .cost-total .val { color: var(--accent-1); font-weight: 500; }
+
+  .map-wrap {
+    position: relative;
+    height: 100vh;
+    background: var(--paper-2);
+  }
+  #map { width: 100%; height: 100%; background: var(--paper); }
+  .leaflet-container { background: #E8E3D5; font-family: var(--sans); }
+  .map-legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(244, 241, 234, 0.96);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    z-index: 1000;
+    font-size: 11px;
+    max-width: 200px;
+  }
+  .legend-head { font-family: var(--serif); font-style: italic; margin-bottom: 8px; color: var(--ink-soft); }
+  .legend-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+  .legend-dot { width: 10px; height: 2px; }
+  .map-title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(244, 241, 234, 0.96);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--rule);
+    padding: 10px 16px;
+    z-index: 1000;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .marker-pin {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--accent-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent-1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  .marker-secondary {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid var(--ink-mute);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
+  .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
+
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 24, 24, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fadeIn 0.2s;
+  }
+  .modal-bg.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal {
+    background: var(--paper);
+    max-width: 560px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 32px 36px;
+    position: relative;
+    animation: slideUp 0.25s;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--ink-mute);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-eyebrow {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--accent-1);
+    margin-bottom: 6px;
+  }
+  .modal-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .modal-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 20px;
+  }
+  .modal-section {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+  .modal-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .modal-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .modal-stat .v { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+  .modal-stat .l {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+  .modal-menu {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .modal-menu li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 12.5px;
+  }
+  .modal-menu li:last-child { border-bottom: none; }
+  .modal-menu .m-n { color: var(--ink-soft); }
+  .modal-menu .m-p { font-family: var(--serif); color: var(--ink); }
+  .modal-warn {
+    background: rgba(185, 29, 29, 0.06);
+    border-left: 2px solid var(--accent-1);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--accent-1);
+    margin-top: 16px;
+  }
+  .modal-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    font-family: var(--sans);
+    font-size: 12px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: var(--paper);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn.primary:hover { background: var(--accent-1); border-color: var(--accent-1); }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; height: auto; }
+    .panel { height: auto; padding: 24px 20px 40px; border-right: none; border-bottom: 1px solid var(--rule); }
+    .map-wrap { height: 60vh; position: sticky; top: 0; }
+    .title-jp { font-size: 36px; }
+    .day-title { font-size: 22px; }
+    .modal { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside class="panel">
+    <div class="header">
+      <div class="eyebrow">Plush Travel · 2026.05.31 → 06.03</div>
+      <h1 class="title-jp">名古屋 <em>Nagoya</em></h1>
+      <div class="meta">
+        3박 4일 · <strong>8인</strong> · 호텔 <strong>ibis Styles Nagoya</strong> · 노약자 동반
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-day="1"><span class="num">01</span>도착·명역</button>
+      <button class="tab" data-day="2"><span class="num">02</span>아츠타·오스</button>
+      <button class="tab" data-day="3"><span class="num">03</span>나고야항</button>
+      <button class="tab" data-day="4"><span class="num">04</span>귀국</button>
+    </nav>
+    <div id="day-content"></div>
+  </aside>
+
+  <div class="map-wrap">
+    <div class="map-title">동선 지도 · Route Map</div>
+    <div id="map"></div>
+    <div class="map-legend">
+      <div class="legend-head">Days</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#B91D1D"></div>Day 1 · 도착·나고야성</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#1B4D3E"></div>Day 2 · 아츠타/오스</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#1E3A5F"></div>Day 3 · 나고야항</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#6B6B6B"></div>Day 4 · 귀국</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// =============================================================
+// PLACES — 모든 장소 (관광지 / 식당 / 쇼핑)
+// =============================================================
+const PLACES = {
+  // ─── 기준점 ───
+  hotel: {
+    name: "ibis Styles Nagoya", jp: "イビススタイルズ名古屋",
+    lat: 35.169048, lng: 136.889279, cat: "base",
+    desc: "나고야역 메이에키에서 도보 약 7분. 모든 일정의 기점.",
+    addr: "4-22-24 Meieki, Nakamura Ward",
+    placeId: "ChIJF2iihMh3A2ARhD9mlrU0JmA"
+  },
+  ngo: {
+    name: "주부 센트레아 국제공항 (NGO)", jp: "中部国際空港",
+    lat: 34.8584, lng: 136.8054, cat: "base",
+    desc: "시내까지 점보택시 약 50분.",
+    placeId: "ChIJgYKWPxN0BWAR8tEMzpQwOgo"
+  },
+
+  // ─── 관광지 ───
+  esca: {
+    name: "에스카 지하상가", jp: "エスカ地下街",
+    lat: 35.1706, lng: 136.8816, cat: "attraction",
+    desc: "나고야역 신칸센 출구 직결 지하상가. 미소카츠·키시멘·히츠마부시 등 나고야 명물 식당이 한 곳에 모여 있어 짐 맡기고 바로 갈 수 있는 1일차 점심 최적지.",
+    cost: "¥1,000~2,500/인", duration: "60~90분"
+  },
+  castle: {
+    name: "나고야성 + 혼마루 궁전", jp: "名古屋城 · 本丸御殿",
+    lat: 35.184864, lng: 136.899927, cat: "attraction",
+    desc: "도쿠가와 오와리 가문의 본거지. 본격적으로 들어가야 할 곳은 천수각이 아니라 복원된 혼마루 궁전. 다다미·금박 후스마·세밀한 목조 장식이 인상적이며 모두 평지·실내라 노약자에게 안성맞춤. 천수각은 현재 계단 구조라 노약자는 외부 사진만.",
+    cost: "성인 ¥500 · 시니어(65+) ¥100", duration: "약 2시간",
+    warn: "혼마루 궁전 입장 마감 16:00. 신발 벗고 입장하므로 양말 권장.",
+    placeId: "ChIJse-wx8t2A2ARd6Z1knjp07k"
+  },
+  atsuta: {
+    name: "아츠타 신궁", jp: "熱田神宮",
+    lat: 35.127, lng: 136.908, cat: "attraction",
+    desc: "1900년 이상 역사를 가진 신사. 삼종신기 중 하나인 쿠사나기 신검을 모시는 곳으로 알려져 있다. 본전까지 가는 길은 깊은 녹음의 평지 산책로로 거동이 불편한 분도 무리 없이 걸을 수 있다.",
+    cost: "무료", duration: "약 90분"
+  },
+  osu: {
+    name: "오스 상점가", jp: "大須商店街",
+    lat: 35.159066, lng: 136.902573, cat: "attraction",
+    desc: "약 1,200개 점포가 모인 나고야 최대 상점가. 아케이드 구조라 비·햇볕 걱정 없이 평지로 구경 가능. 길거리 음식·잡화·빈티지·전자제품까지 다양해 중장년층 만족도가 높다.",
+    cost: "자유", duration: "2~3시간",
+    placeId: "ChIJZdlrqMxwA2ARpJpFJF45vgg"
+  },
+  aqua: {
+    name: "나고야항 수족관", jp: "名古屋港水族館",
+    lat: 35.0944, lng: 136.8814, cat: "attraction",
+    desc: "북관(고래·범고래·돌고래)과 남관(심해·산호초·펭귄)으로 구성된 일본 최대급 수족관. 엘리베이터·평지 동선 완비. 돌고래쇼는 이번 일정에서 제외.",
+    cost: "성인 ¥2,030 · 시니어/어린이 ¥1,010 · 3관 공통권 ¥2,440", duration: "약 3시간"
+  },
+  jetty: {
+    name: "JETTY", jp: "ジェティ",
+    lat: 35.0924, lng: 136.8796, cat: "attraction",
+    desc: "수족관 바로 옆 쇼핑몰. 푸드코트에 나고야 명물(앙카케 스파게티·미소카츠·키시멘)과 스가키야 라멘이 모여 있다. 점심·쇼핑·휴식을 한 번에.",
+    cost: "¥800~1,500/인", duration: "1.5~2시간"
+  },
+  porttower: {
+    name: "포트빌딩 전망실", jp: "名古屋港ポートビル展望室",
+    lat: 35.0905, lng: 136.8800, cat: "attraction",
+    desc: "지상 53m 전망실. 엘리베이터로 바로 올라가 나고야항 전경을 360도 조망. 짧고 가볍게 마무리하기 좋다.",
+    cost: "성인 ¥300 · 시니어/어린이 ¥200", duration: "약 40분"
+  },
+
+  // ─── 식당: 호텔/메이에키 주변 ───
+  maruya: {
+    name: "마루야 혼텐 (JR역점)", jp: "まるや本店",
+    lat: 35.169031, lng: 136.881825, cat: "restaurant",
+    desc: "나고야 히츠마부시 노포. JR 나고야역 우마이몬도리에 위치. 노약자에게 추천. 대기 20~60분.",
+    menu: [["히츠마부시 (1마리)","¥4,950"],["히츠마부시 (1.5마리)","¥6,930"],["미니 히츠마부시","¥3,300"],["우나동","¥3,520"]],
+    cost: "1인 ¥3,500~7,000", hours: "11:00–22:00 (연중무휴)",
+    placeId: "ChIJDcxFked2A2ARKoF3INiy4CY"
+  },
+  binchou: {
+    name: "히츠마부시 빈쵸 (다이나고야빌딩 3F)", jp: "炭焼うな富士",
+    lat: 35.171878, lng: 136.884302, cat: "restaurant",
+    desc: "히츠마부시 전문점. 마루야보다 웨이팅 적은 편. 다이나고야빌딩 3층.",
+    menu: [["히츠마부시","¥5,500~"],["우나기 8피스","¥7,500"],["뱀장어 본구이","¥6,000~"]],
+    cost: "1인 ¥5,500~7,500", hours: "11:00–14:30, 17:00–21:30",
+    placeId: "ChIJ-SgrX-uRQTUR8FWrnBgkJAk"
+  },
+  kitchen_nagoya: {
+    name: "키친 나고야 (JR역 우마이몬도리)", jp: "キッチン名古屋",
+    lat: 35.170367, lng: 136.882396, cat: "restaurant",
+    desc: "미소카츠·치킨윙·키시멘 등 나고야 명물을 한 번에. 역 내 접근성 최고.",
+    menu: [["미소카츠 정식","¥1,650"],["미소카츠+치킨윙","¥1,980"],["키시멘","¥1,100"],["테바사키 5p","¥780"]],
+    cost: "1인 ¥1,500~2,000", hours: "10:30–22:00",
+    placeId: "ChIJe8VLked2A2ARrar2JCOjN0I"
+  },
+  keitei: {
+    name: "케이테이 (메이에키)", jp: "鶏亭",
+    lat: 35.171007, lng: 136.882555, cat: "restaurant",
+    desc: "돈카츠 전문점. 무한리필 양배추·미소국. 가격대 합리적.",
+    menu: [["로스카츠 정식","¥1,650"],["히레카츠 정식","¥1,800"],["흑돼지 로스","¥2,200"]],
+    cost: "1인 ¥1,500~2,500", hours: "11:00–23:00",
+    placeId: "ChIJe8VLked2A2ARDWerQje_33w"
+  },
+  kishimen: {
+    name: "에키카마 키시멘 (JR역 내)", jp: "驛釜きしめん",
+    lat: 35.170293, lng: 136.881858, cat: "restaurant",
+    desc: "납작 우동(키시멘) 전문. 아침 7시 오픈, 빠르게 가볍게.",
+    menu: [["키시멘 (온/냉)","¥650~"],["텐푸라 키시멘","¥1,100"],["미소 니코미","¥1,200"]],
+    cost: "1인 ¥600~1,200", hours: "07:00–22:00",
+    placeId: "ChIJL1OLked2A2AR6CQojjO0rhc"
+  },
+  yabaton_jr: {
+    name: "야바톤 JR 나고야역점", jp: "矢場とん JR名古屋駅店",
+    lat: 35.169754, lng: 136.881161, cat: "restaurant",
+    desc: "나고야 미소카츠 대표 체인 '야바톤'의 역내 점포. 단, 이곳은 테이크아웃 전용. 호텔에서 먹을 때 추천.",
+    menu: [["미소카츠 도시락","¥1,300~"],["히레카츠 도시락","¥1,500"]],
+    cost: "도시락 ¥1,300~1,800", hours: "07:00–21:00",
+    placeId: "ChIJNXv5XpB3A2ARZPZWWk1GOag"
+  },
+  komeda: {
+    name: "코메다 커피 (메이에키)", jp: "コメダ珈琲店",
+    lat: 35.170215, lng: 136.887182, cat: "restaurant",
+    desc: "나고야 발 카페 체인. 모닝 서비스(음료 주문 시 토스트+삶은달걀 무료)가 유명. 아침/오후 휴식용.",
+    menu: [["블렌드 커피","¥520"],["모닝 세트 (~11시)","음료가만"],["시로노와르","¥760"],["오구라 토스트","¥530"]],
+    cost: "1인 ¥500~1,000", hours: "07:00–23:00",
+    placeId: "ChIJua9OPgB3A2AREk-XBTarTxM"
+  },
+  yamachan: {
+    name: "세계의 야마짱 (메이에키점)", jp: "世界の山ちゃん",
+    lat: 35.170683, lng: 136.887800, cat: "restaurant",
+    desc: "나고야 명물 테바사키(닭날개) 전문 이자카야. 저녁 술 한잔과 함께. 호텔에서 도보 가능.",
+    menu: [["환상의 테바사키 5p","¥660"],["테바사키 10p","¥1,250"],["가라아게","¥680"],["나마비루(생맥주)","¥594"]],
+    cost: "1인 ¥2,500~4,000", hours: "17:00–24:00 (저녁만)",
+    placeId: "ChIJjXSuD9x2A2ARWf8ZoxWpKhw"
+  },
+
+  // ─── 식당: 오스 ───
+  yabaton_honten: {
+    name: "야바톤 야바초 본점", jp: "矢場とん 矢場町本店",
+    lat: 35.161678, lng: 136.906236, cat: "restaurant",
+    desc: "1947년 창업, 나고야 미소카츠의 원조 본점. 오스 상점가 인근. 본점 분위기가 압도적. 대기 30~90분.",
+    menu: [["철판 미소카츠","¥1,900"],["로스카츠 정식","¥1,750"],["와라지(짚신) 톤카츠","¥2,200"],["테바사키","¥780"]],
+    cost: "1인 ¥1,800~2,500", hours: "11:00–21:00",
+    placeId: "ChIJeUhI_NNxA2ARSBP5UM663A0"
+  },
+  buriko: {
+    name: "Buriko (부리코)", jp: "ブリコ",
+    lat: 35.158437, lng: 136.903697, cat: "restaurant",
+    desc: "오스 상점가 안 고민가 개조 카페. 말차 파르페·치즈케이크가 시그니처. 중장년 여성 인기 높음.",
+    menu: [["말차 치즈케이크","¥850"],["호지차 파르페","¥1,200"],["말차 파르페","¥1,300"],["커피/홍차","¥600~"]],
+    cost: "1인 ¥800~1,500", hours: "11:00–18:00 (목 휴무)",
+    placeId: "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ"
+  },
+  yumyum: {
+    name: "라멘 스탠드 Yumyum", jp: "ラーメン屋台 ヤムヤム",
+    lat: 35.158705, lng: 136.899569, cat: "restaurant",
+    desc: "오스 상점가 끝자락의 정통 포장마차 라멘. 쇼유 베이스 가벼운 국물. 8인이 한 번에 앉기는 어려움 (좌석 8석).",
+    menu: [["쇼유 라멘","¥500"],["챠슈멘","¥800"],["맥주","¥500"]],
+    cost: "1인 ¥500~1,000", hours: "12:00–13:45, 17:30–22:45",
+    placeId: "ChIJBUGaeQ53A2ARgMfKcmXqdCc"
+  },
+
+  // ─── 식당: 아츠타 ───
+  ten: {
+    name: "Ten (아츠타 신궁 인근)", jp: "天 (てん)",
+    lat: 35.123099, lng: 136.911119, cat: "restaurant",
+    desc: "아츠타 신궁 도보 5분. 호라이켄보다 웨이팅 적고 가성비 좋은 히츠마부시. 점심만 영업 (11:00–15:30).",
+    menu: [["히츠마부시","¥3,500"],["우나동","¥2,800"],["우나기 라이스","¥3,200"]],
+    cost: "1인 ¥2,500~4,000", hours: "11:00–15:30 (점심만)",
+    placeId: "ChIJb2Z4jWB7A2ARbVJFKs-d_js"
+  },
+  horaiken_honten: {
+    name: "아츠타 호라이켄 본점", jp: "あつた蓬莱軒 本店",
+    lat: 35.120169, lng: 136.906898, cat: "restaurant",
+    desc: "히츠마부시 원조 노포 본점. 신궁점은 월·화 휴무지만 본점은 수요일만 휴무. 신궁에서 도보 15분, 대기 1~2시간 각오.",
+    menu: [["히츠마부시","¥4,990"],["우나동","¥4,200"],["우나기 정식","¥6,500~"]],
+    cost: "1인 ¥5,000~7,000", hours: "11:30–14:00, 16:30–20:30 (수 휴무)",
+    warn: "예약 불가. 이름 적고 신궁 산책 후 돌아오는 게 일반적.",
+    placeId: "ChIJJRIRWR96A2AR1pCxwc4H298"
+  },
+
+  // ─── 식당: 나고야성 / 나고야항 ───
+  kinshachi: {
+    name: "킨샤치 요코초 (나고야성 옆)", jp: "金シャチ横丁",
+    lat: 35.183005, lng: 136.898817, cat: "restaurant",
+    desc: "나고야성 동문 바로 옆 식당가. 야바톤, 미소우동, 우나동 등 나고야 명물집들이 한 번에 모여 있어 1일차 일정과 결합 가능.",
+    menu: [["야바톤 미소카츠","¥1,800~"],["미소 니코미 우동","¥1,400"],["히츠마부시","¥4,000~"]],
+    cost: "1인 ¥1,500~4,500", hours: "10:30–17:30",
+    placeId: "ChIJQ02iFcx2A2ARMRob2W5qhtY"
+  },
+  jetty_food: {
+    name: "JETTY 푸드코트", jp: "JETTY フードコート",
+    lat: 35.0924, lng: 136.8796, cat: "restaurant",
+    desc: "나고야 명물 (앙카케 스파게티·미소카츠·키시멘·도테야키)을 한 곳에서. 푸드코트라 8인 자리 잡기 쉬움.",
+    menu: [["앙카케 스파게티","¥900~"],["미소카츠 정식","¥1,200"],["키시멘","¥800"],["도테야키동","¥1,000"]],
+    cost: "1인 ¥800~1,500", hours: "11:00–20:00"
+  },
+  sugakiya: {
+    name: "스가키야 (JETTY 내)", jp: "スガキヤ",
+    lat: 35.092404, lng: 136.879521, cat: "restaurant",
+    desc: "나고야 소울푸드 라멘 체인. 어른들 추억의 맛. JETTY 푸드코트 안.",
+    menu: [["라멘","¥430"],["챠슈멘","¥720"],["크림젠자이(디저트)","¥330"]],
+    cost: "1인 ¥400~800", hours: "10:30–17:30 (월 휴무)",
+    placeId: "ChIJx1h936B5A2AR68VrEA3Al1Y"
+  },
+  tortoise: {
+    name: "food terrace TORTOISE", jp: "フードテラス トータス",
+    lat: 35.090347, lng: 136.878629, cat: "restaurant",
+    desc: "수족관 남관 3층 푸드코트. 바다 뷰 창가석 있음. 수족관 관람 중 가볍게 끼니.",
+    menu: [["키시멘","¥800"],["미소카츠동","¥1,200"],["대만 라멘","¥1,000"],["소프트 아이스크림","¥450"]],
+    cost: "1인 ¥800~1,200", hours: "10:30–17:30",
+    placeId: "ChIJL35Mp895A2ARbCNBIvDRD7w"
+  },
+
+  // ─── 쇼핑 ───
+  takashimaya: {
+    name: "JR 나고야 다카시마야", jp: "ジェイアール名古屋タカシマヤ",
+    lat: 35.170914, lng: 136.883180, cat: "shopping",
+    desc: "JR 나고야역과 직결된 백화점. 지하 식품관(데파치카)이 명물. 화과자·도시락·디저트 선물용 구입에 최적. 외국인 5% 면세.",
+    menu: [["지하 데파치카","식품관"],["1~5F","여성 패션·코스메"],["8~11F","남성·잡화"],["12~13F","레스토랑가"]],
+    cost: "자유", hours: "10:00–20:00",
+    placeId: "ChIJ_zIUlSd3A2ARsDK_g3Ov14M"
+  },
+  gatetower: {
+    name: "다카시마야 게이트타워몰", jp: "ゲートタワーモール",
+    lat: 35.172207, lng: 136.882618, cat: "shopping",
+    desc: "다카시마야 본관과 연결된 11층 쇼핑몰. 유니클로·MUJI·니토리·캐주얼 브랜드 다수. 12~13층 레스토랑가.",
+    cost: "자유", hours: "10:00–20:00",
+    placeId: "ChIJaxUfTtl2A2ARbs5oPXeaIdM"
+  },
+  aeon_noritake: {
+    name: "이온몰 나고야 노리타케 가든", jp: "イオンモール ノリタケの森",
+    lat: 35.179866, lng: 136.879914, cat: "shopping",
+    desc: "호텔에서 도보 15분 또는 택시 5분. 노리타케 정원 옆 대형몰. 식품 슈퍼·약국·생활용품·푸드코트까지 한 번에. 노인분들 일상용품 채우기 좋음.",
+    cost: "자유", hours: "10:00–21:00",
+    placeId: "ChIJRfCWc-p3A2AR4olIdF_c4V4"
+  },
+  esca_shopping: {
+    name: "에스카 지하상가 (쇼핑)", jp: "エスカ地下街",
+    lat: 35.1706, lng: 136.8816, cat: "shopping",
+    desc: "신칸센 출구 직결 지하상가. 식당뿐 아니라 기념품·과자·로컬 특산품(우이로 등) 구입에 좋음. 비 와도 OK.",
+    cost: "자유", hours: "10:00–20:30"
+  },
+  kinshachi_shop: {
+    name: "킨샤치 요코초 (쇼핑)", jp: "金シャチ横丁",
+    lat: 35.183221, lng: 136.904710, cat: "shopping",
+    desc: "나고야성 동문 옆 쇼핑·기념품 거리. 킨샤치(금범고래) 굿즈, 나고야 한정 과자, 사무라이 굿즈 등.",
+    cost: "자유", hours: "10:30–17:30",
+    placeId: "ChIJJ51qjTJxA2ARJOCknmJgdL8"
+  },
+  osu_shopping: {
+    name: "오스 상점가 (쇼핑)", jp: "大須商店街",
+    lat: 35.159066, lng: 136.902573, cat: "shopping",
+    desc: "약 1,200개 점포. 잡화·빈티지 의류·전자제품·코스프레·아니메·차도구·약방까지. 한국으로 치면 동대문+홍대+세운상가 믹스.",
+    cost: "자유", hours: "대부분 10:00–20:00",
+    placeId: "ChIJZdlrqMxwA2ARpJpFJF45vgg"
+  },
+  jetty_shop: {
+    name: "JETTY 쇼핑몰", jp: "ジェティ",
+    lat: 35.0924, lng: 136.8796, cat: "shopping",
+    desc: "나고야항 수족관 옆 쇼핑몰. 기념품·해양 굿즈·캐릭터 숍·푸드. 가족 단위 관광객 대상.",
+    cost: "자유", hours: "10:00–20:00"
+  }
+};
+
+// 구글 맵 링크 생성
+function gmapUrl(p) {
+  if (p.placeId) {
+    return `https://www.google.com/maps/place/?q=place_id:${p.placeId}`;
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+}
+
+// =============================================================
+// DAYS — 일자별 일정 (8인 기준)
+// =============================================================
+const DAYS = {
+  1: {
+    date: "5월 31일 (일요일)",
+    title: "도착 · 명역 · 나고야성",
+    desc: "비행기에서 내려 호텔에 짐 풀고, 점심 후 나고야성에서 가볍게 첫날을 마무리.",
+    color: "#B91D1D",
+    items: [
+      { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "transit", poi: "ngo" },
+      { t: "10:25", n: "입국 수속 완료", s: "—", type: "transit" },
+      { t: "10:30", n: "점보택시 승차", s: "공항 → 호텔 (약 50분)", tag: "택시 1대 · 약 ¥18,000", type: "transit" },
+      { t: "11:15", n: "호텔 도착, 짐 보관", s: "ibis Styles Nagoya", type: "poi", poi: "hotel" },
+      { t: "11:30", n: "점심 · 에스카 지하상가", s: "나고야역 직결", tag: "점심", type: "poi", poi: "esca" },
+      { t: "13:15", n: "택시 이동", s: "호텔 → 나고야성 (약 10분)", tag: "택시 · 약 ¥2,500", type: "transit" },
+      { t: "13:30", n: "나고야성 + 혼마루 궁전", s: "名古屋城 · 本丸御殿", tag: "메인 일정", type: "poi", poi: "castle" },
+      { t: "15:45", n: "택시 이동", s: "나고야성 → 호텔", tag: "택시 · 약 ¥2,500", type: "transit" },
+      { t: "16:00", n: "호텔 복귀 · 휴식", s: "—", type: "transit" },
+      { t: "18:00", n: "저녁 · 호텔 주변", s: "메이에키 일대 자유 선택", tag: "저녁", type: "transit" }
+    ],
+    cost: [
+      { l: "점보택시 NGO→호텔 (1대)", v: "¥18,000" },
+      { l: "택시 호텔↔나고야성 (왕복)", v: "¥5,000" },
+      { l: "나고야성 입장 (8인, 시니어 일부)", v: "¥3,200" },
+      { l: "점심+저녁 (8인)", v: "¥24,000~40,000" }
+    ],
+    total: "¥50,000~66,000",
+    restos: ["maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan"],
+    shops: ["takashimaya","gatetower","esca_shopping","aeon_noritake","kinshachi_shop"]
+  },
+  "2a": {
+    date: "6월 1일 (월요일) · A안",
+    title: "오스 상점가",
+    desc: "비 와도 OK인 아케이드. 길거리 음식·빈티지·잡화로 부담 없이 반나절. 호라이켄 신궁점은 월요일 휴무이므로 어차피 식사는 오스 권역에서.",
+    color: "#1B4D3E",
+    items: [
+      { t: "09:30", n: "호텔 출발", s: "택시 승차", type: "transit" },
+      { t: "09:45", n: "오스 상점가 도착", s: "택시 약 15분", tag: "택시 · 약 ¥3,000", type: "transit" },
+      { t: "10:00", n: "오스 상점가 자유 구경", s: "大須商店街 · 아케이드", tag: "메인 일정", type: "poi", poi: "osu" },
+      { t: "12:30", n: "점심 · 오스 내 식당", s: "야바톤 본점 / Buriko / 길거리", tag: "점심", type: "transit" },
+      { t: "14:00", n: "추가 구경 · 카페 휴식", s: "오스 칸논 사찰까지 산책 가능", type: "transit" },
+      { t: "15:45", n: "택시 승차", s: "오스 → 호텔", tag: "택시 · 약 ¥3,000", type: "transit" },
+      { t: "16:00", n: "호텔 복귀", s: "—", type: "transit" },
+      { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
+    ],
+    cost: [
+      { l: "택시 (왕복)", v: "¥6,000" },
+      { l: "오스 입장료", v: "무료" },
+      { l: "점심 (8인 · 야바톤 본점 기준)", v: "¥14,000~20,000" },
+      { l: "저녁 (8인)", v: "¥12,000~24,000" }
+    ],
+    total: "¥32,000~50,000",
+    restos: ["yabaton_honten","buriko","yumyum","komeda","yamachan"],
+    shops: ["osu_shopping","takashimaya","gatetower"]
+  },
+  "2b": {
+    date: "6월 1일 (월요일) · B안",
+    title: "아츠타 신궁",
+    desc: "고요한 숲길 산책과 진짜 나고야 히츠마부시. 호라이켄 신궁점이 월요일 휴무이므로 Ten 또는 호라이켄 본점 선택.",
+    color: "#1B4D3E",
+    items: [
+      { t: "09:30", n: "호텔 출발", s: "택시 승차", type: "transit" },
+      { t: "09:50", n: "아츠타 신궁 도착", s: "택시 약 20분", tag: "택시 · 약 ¥4,000", type: "transit" },
+      { t: "09:50", n: "신궁 산책", s: "熱田神宮 · 본전까지 평지", tag: "메인 일정", type: "poi", poi: "atsuta" },
+      { t: "11:30", n: "점심 · Ten 또는 호라이켄 본점", s: "히츠마부시", tag: "점심", type: "transit" },
+      { t: "13:00", n: "택시 승차", s: "아츠타 → 호텔", tag: "택시 · 약 ¥4,000", type: "transit" },
+      { t: "13:30", n: "호텔 복귀 · 오후 자유", s: "메이에키 산책 또는 휴식", type: "transit" },
+      { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
+    ],
+    cost: [
+      { l: "택시 (왕복)", v: "¥8,000" },
+      { l: "아츠타 신궁 입장료", v: "무료" },
+      { l: "점심 (8인 · Ten 기준)", v: "¥24,000~32,000" },
+      { l: "저녁 (8인)", v: "¥12,000~24,000" }
+    ],
+    total: "¥44,000~64,000",
+    restos: ["ten","horaiken_honten","komeda","yamachan","maruya"],
+    shops: ["takashimaya","gatetower","esca_shopping","aeon_noritake"]
+  },
+  3: {
+    date: "6월 2일 (화요일)",
+    title: "나고야항",
+    desc: "수족관 → 점심 → 쇼핑 → 전망대. 반경 500m 안에서 모두 해결되는 노약자 최적 코스.",
+    color: "#1E3A5F",
+    items: [
+      { t: "09:00", n: "호텔 출발", s: "택시 승차", type: "transit" },
+      { t: "09:25", n: "나고야항 도착", s: "택시 약 25분", tag: "택시 · 약 ¥5,000", type: "transit" },
+      { t: "09:30", n: "수족관 관람 (북관→남관)", s: "名古屋港水族館", tag: "메인 일정", type: "poi", poi: "aqua" },
+      { t: "12:30", n: "점심 · JETTY 푸드코트", s: "ジェティ", tag: "점심", type: "poi", poi: "jetty" },
+      { t: "13:30", n: "JETTY 쇼핑·카페", s: "기념품·휴식", type: "transit" },
+      { t: "14:30", n: "포트빌딩 전망실", s: "ポートビル展望室", tag: "전망", type: "poi", poi: "porttower" },
+      { t: "15:20", n: "택시 승차", s: "나고야항 → 호텔", tag: "택시 · 약 ¥5,000", type: "transit" },
+      { t: "15:50", n: "호텔 복귀", s: "—", type: "transit" },
+      { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
+    ],
+    cost: [
+      { l: "택시 (왕복)", v: "¥10,000" },
+      { l: "수족관 (성인 4+시니어 4)", v: "¥12,160" },
+      { l: "포트빌딩 전망실 (8인)", v: "¥2,400" },
+      { l: "점심+저녁 (8인)", v: "¥20,000~32,000" }
+    ],
+    total: "¥44,000~56,000",
+    restos: ["jetty_food","sugakiya","tortoise","komeda","yamachan","maruya"],
+    shops: ["jetty_shop","takashimaya","gatetower","esca_shopping"]
+  },
+  4: {
+    date: "6월 3일 (수요일)",
+    title: "귀국",
+    desc: "이른 출발. 점보택시 2대로 분산 (수하물 여유, 8인+짐).",
+    color: "#6B6B6B",
+    items: [
+      { t: "06:30", n: "호텔 출발", s: "점보택시 2대 (수하물 분산)", tag: "택시 2대 · 약 ¥36,000", type: "transit" },
+      { t: "07:15", n: "NGO 도착", s: "공항 카운터로 직행", type: "poi", poi: "ngo" },
+      { t: "10:25", n: "출발", s: "—", type: "transit" }
+    ],
+    cost: [
+      { l: "점보택시 2대 (호텔→NGO)", v: "¥36,000" }
+    ],
+    total: "¥36,000",
+    restos: [],
+    shops: []
+  }
+};
+
+// =============================================================
+// MAP
+// =============================================================
+const HOTEL = PLACES.hotel;
+const map = L.map('map', { zoomControl: true, attributionControl: true })
+  .setView([35.155, 136.895], 12);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap, © CARTO', maxZoom: 19
+}).addTo(map);
+
+let routeLayer = L.layerGroup().addTo(map);
+let markerLayer = L.layerGroup().addTo(map);
+let secondaryLayer = L.layerGroup().addTo(map);
+
+function makeIcon(label, color) {
+  return L.divIcon({
+    html: `<div class="marker-pin" style="border-color:${color};color:${color}">${label}</div>`,
+    className: '', iconSize: [28, 28], iconAnchor: [14, 14]
+  });
+}
+function makeSecondaryIcon(type) {
+  return L.divIcon({
+    html: `<div class="marker-secondary ${type}"></div>`,
+    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
+  });
+}
+
+function renderRoute(dayKey) {
+  routeLayer.clearLayers();
+  markerLayer.clearLayers();
+  secondaryLayer.clearLayers();
+
+  const day = DAYS[dayKey];
+  const color = day.color;
+  const pts = [];
+  let idx = 1;
+
+  day.items.forEach(it => {
+    if (it.type === 'poi' && it.poi && PLACES[it.poi]) {
+      const p = PLACES[it.poi];
+      if (p.cat === 'base' && it.poi === 'ngo') {
+        // NGO too far - don't include in fitBounds normally
+        pts.push([p.lat, p.lng]);
+        L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
+          .addTo(markerLayer)
+          .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
+          .on('click', () => openPlaceModal(it.poi));
+        idx++;
+      } else if (p.cat !== 'base') {
+        pts.push([p.lat, p.lng]);
+        L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
+          .addTo(markerLayer)
+          .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
+          .on('click', () => openPlaceModal(it.poi));
+        idx++;
+      }
+    }
+  });
+
+  // Hotel
+  if (dayKey !== '4') {
+    L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
+      .addTo(markerLayer)
+      .bindTooltip('ibis Styles Nagoya (호텔)', { direction: 'top', offset: [0, -8] })
+      .on('click', () => openPlaceModal('hotel'));
+    if (dayKey !== '1') {
+      pts.unshift([HOTEL.lat, HOTEL.lng]);
+      pts.push([HOTEL.lat, HOTEL.lng]);
+    }
+  }
+
+  // Secondary markers (restos/shops)
+  const seen = new Set();
+  [...(day.restos || []), ...(day.shops || [])].forEach(id => {
+    if (seen.has(id)) return;
+    seen.add(id);
+    const p = PLACES[id];
+    if (!p) return;
+    L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(p.cat === 'shopping' ? 'shop' : 'resto') })
+      .addTo(secondaryLayer)
+      .bindTooltip(`${p.cat === 'shopping' ? '🛍️' : '🍱'} ${p.name}`, { direction: 'top', offset: [0, -6] })
+      .on('click', () => openPlaceModal(id));
+  });
+
+  // Polyline (exclude NGO if too far for day 1 / 4)
+  const inCityPts = pts.filter(([lat, lng]) => lat > 35.0);
+  if (inCityPts.length > 1) {
+    L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
+      .addTo(routeLayer);
+  }
+
+  // Fit bounds (in-city only)
+  if (inCityPts.length > 0) {
+    map.fitBounds(L.latLngBounds(inCityPts), { padding: [60, 60], maxZoom: 14 });
+  }
+}
+
+// =============================================================
+// RENDER DAY
+// =============================================================
+function renderDay(dayKey) {
+  const container = document.getElementById('day-content');
+  const isDay2 = (dayKey === '2');
+  let activeKey = dayKey;
+  if (isDay2) activeKey = window._day2Choice || '2a';
+
+  const day = DAYS[activeKey];
+  document.documentElement.style.setProperty('--day-color', day.color);
+
+  let html = `
+    <div class="day-head">
+      <div class="day-date">${day.date}</div>
+      <h2 class="day-title">${day.title}</h2>
+      <p class="day-desc">${day.desc}</p>
+  `;
+  if (isDay2) {
+    html += `
+      <div class="option-toggle">
+        <button class="option-btn ${activeKey==='2a'?'active':''}" data-opt="2a">A안 · 오스 상점가</button>
+        <button class="option-btn ${activeKey==='2b'?'active':''}" data-opt="2b">B안 · 아츠타 신궁</button>
+      </div>`;
+  }
+  html += `</div><div class="timeline">`;
+
+  day.items.forEach((it, i) => {
+    const cls = it.type === 'poi' ? 'item poi' : 'item transit';
+    const poiAttr = it.poi ? `data-poi="${it.poi}"` : '';
+    html += `
+      <div class="${cls}" ${poiAttr} data-idx="${i}">
+        <div class="item-time">${it.t}</div>
+        <div class="item-body">
+          <div class="item-name">${it.n}</div>
+          <div class="item-sub">${it.s}</div>
+          ${it.tag ? `<div class="item-tag">${it.tag}</div>` : ''}
+        </div>
+      </div>`;
+  });
+  html += `</div>`;
+
+  // Restaurants
+  if (day.restos && day.restos.length > 0) {
+    html += `<div class="section">
+      <div class="section-head">— 식당 추천 · Restaurants</div>
+      <div class="card-list">`;
+    day.restos.forEach(id => {
+      const p = PLACES[id];
+      if (!p) return;
+      html += `<div class="card" data-place="${id}">
+        <div>
+          <div class="card-name"><span class="card-cat">FOOD</span>${p.name}</div>
+          <div class="card-info">${p.jp || ''} · ${(p.hours || '').split(' ')[0] || ''}</div>
+        </div>
+        <div class="card-price">${p.cost || ''}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Shopping
+  if (day.shops && day.shops.length > 0) {
+    html += `<div class="section">
+      <div class="section-head">— 쇼핑 추천 · Shopping</div>
+      <div class="card-list">`;
+    day.shops.forEach(id => {
+      const p = PLACES[id];
+      if (!p) return;
+      html += `<div class="card" data-place="${id}">
+        <div>
+          <div class="card-name"><span class="card-cat" style="color:#5A6B7D">SHOP</span>${p.name}</div>
+          <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Cost
+  html += `<div class="cost-box">
+    <div class="cost-head">— 예상 비용 (8인 기준)</div>`;
+  day.cost.forEach(c => {
+    html += `<div class="cost-row"><span class="lbl">${c.l}</span><span class="val">${c.v}</span></div>`;
+  });
+  html += `<div class="cost-row cost-total"><span class="lbl">합계</span><span class="val">${day.total}</span></div></div>`;
+
+  container.innerHTML = html;
+  renderRoute(activeKey);
+
+  if (isDay2) {
+    container.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window._day2Choice = btn.dataset.opt;
+        renderDay('2');
+      });
+    });
+  }
+  container.querySelectorAll('.item.poi').forEach(el => {
+    el.addEventListener('click', () => {
+      const k = el.dataset.poi;
+      if (k && PLACES[k]) openPlaceModal(k);
+    });
+  });
+  container.querySelectorAll('.card').forEach(el => {
+    el.addEventListener('click', () => {
+      const k = el.dataset.place;
+      if (k && PLACES[k]) openPlaceModal(k);
+    });
+  });
+}
+
+// =============================================================
+// MODAL — 통합 (관광지 / 식당 / 쇼핑)
+// =============================================================
+function openPlaceModal(id) {
+  const p = PLACES[id];
+  if (!p) return;
+  const body = document.getElementById('modal-body');
+
+  const eyebrowMap = { attraction: '관광 · Attraction', restaurant: '식당 · Restaurant', shopping: '쇼핑 · Shopping', base: '기준점' };
+  const eyebrow = eyebrowMap[p.cat] || '장소';
+
+  let html = `
+    <div class="modal-eyebrow">— ${eyebrow}</div>
+    <h3 class="modal-title">${p.name}</h3>
+    <div class="modal-sub">${p.jp || ''}</div>
+    <div class="modal-text">${p.desc || ''}</div>
+  `;
+
+  // Stats
+  const stats = [];
+  if (p.cost) stats.push(`<div class="modal-stat"><div class="v">${p.cost}</div><div class="l">${p.cat==='restaurant'?'가격대':p.cat==='shopping'?'예산':'비용'}</div></div>`);
+  if (p.duration) stats.push(`<div class="modal-stat"><div class="v">${p.duration}</div><div class="l">소요 시간</div></div>`);
+  if (p.hours) stats.push(`<div class="modal-stat"><div class="v">${p.hours}</div><div class="l">영업 시간</div></div>`);
+  if (stats.length > 0) {
+    html += `<div class="modal-section"><div class="modal-grid">${stats.join('')}</div></div>`;
+  }
+
+  // Menu
+  if (p.menu && p.menu.length > 0) {
+    const label = p.cat === 'shopping' ? '주요 구역' : '대표 메뉴';
+    html += `<div class="modal-section">
+      <div class="modal-label">${label}</div>
+      <ul class="modal-menu">`;
+    p.menu.forEach(([n, pr]) => {
+      html += `<li><span class="m-n">${n}</span><span class="m-p">${pr}</span></li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  if (p.warn) {
+    html += `<div class="modal-warn">⚠ ${p.warn}</div>`;
+  }
+
+  // Actions
+  html += `<div class="modal-actions">
+    <a href="${gmapUrl(p)}" target="_blank" rel="noopener" class="btn primary">📍 구글 지도에서 열기</a>
+    <button class="btn" onclick="focusOnMap(${p.lat}, ${p.lng})">지도에서 위치 보기</button>
+  </div>`;
+
+  body.innerHTML = html;
+  document.getElementById('modal').classList.add('open');
+}
+
+function focusOnMap(lat, lng) {
+  map.setView([lat, lng], 15, { animate: true });
+  closeModal();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target.id === 'modal') closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// =============================================================
+// TABS
+// =============================================================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderDay(tab.dataset.day);
+  });
+});
+
+// INIT
+renderDay('1');
+</script>
+
+</body>
+</html>
