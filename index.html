@@ -1314,6 +1314,22 @@ function makeHeritageIcon() {
   });
 }
 
+function markerIdentity(p) {
+  if (p.placeId) return `place:${p.placeId}`;
+  if (p.ftid) return `ftid:${p.ftid}`;
+  return `coord:${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
+}
+function markerCoordIdentity(p) {
+  return `coord:${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
+}
+function occupyMarker(p, occupied) {
+  occupied.add(markerIdentity(p));
+  occupied.add(markerCoordIdentity(p));
+}
+function isMarkerOccupied(p, occupied) {
+  return occupied.has(markerIdentity(p)) || occupied.has(markerCoordIdentity(p));
+}
+
 function renderRoute(dayKey) {
   routeLayer.clearLayers();
   markerLayer.clearLayers();
@@ -1322,6 +1338,7 @@ function renderRoute(dayKey) {
   const day = DAYS[dayKey];
   const color = day.color;
   const pts = [];
+  const occupiedMarkers = new Set();
   let idx = 1;
 
   day.items.forEach(it => {
@@ -1330,6 +1347,7 @@ function renderRoute(dayKey) {
       if (p.cat === 'base' && it.poi === 'ngo') {
         // NGO too far - don't include in fitBounds normally
         pts.push([p.lat, p.lng]);
+        occupyMarker(p, occupiedMarkers);
         L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
           .addTo(markerLayer)
           .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
@@ -1337,6 +1355,7 @@ function renderRoute(dayKey) {
         idx++;
       } else if (p.cat !== 'base') {
         pts.push([p.lat, p.lng]);
+        occupyMarker(p, occupiedMarkers);
         L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
           .addTo(markerLayer)
           .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
@@ -1348,6 +1367,7 @@ function renderRoute(dayKey) {
 
   // Hotel
   if (dayKey !== '4') {
+    occupyMarker(HOTEL, occupiedMarkers);
     L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
       .addTo(markerLayer)
       .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
@@ -1374,6 +1394,8 @@ function renderRoute(dayKey) {
     seen.add(id);
     const p = PLACES[id];
     if (!p) return;
+    if (isMarkerOccupied(p, occupiedMarkers)) return;
+    occupyMarker(p, occupiedMarkers);
     const iconType = placeCategory(p);
     L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(iconType) })
       .addTo(secondaryLayer)
