@@ -334,18 +334,42 @@
     right: 20px;
     z-index: 1000;
   }
-  .locate-btn {
+  .location-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     border: 1px solid var(--rule);
     background: rgba(244, 241, 234, 0.96);
     color: var(--ink);
     font-family: var(--sans);
     font-size: 12px;
-    padding: 9px 12px;
+    padding: 8px 10px;
     cursor: pointer;
     backdrop-filter: blur(8px);
   }
-  .locate-btn:hover { background: var(--paper-2); }
-  .locate-btn:disabled { color: var(--ink-mute); cursor: wait; }
+  .location-toggle:hover { background: var(--paper-2); }
+  .location-toggle:disabled { color: var(--ink-mute); cursor: wait; }
+  .location-toggle .toggle-track {
+    position: relative;
+    width: 34px;
+    height: 18px;
+    border-radius: 999px;
+    background: #B8B2A8;
+    transition: background 0.2s ease;
+  }
+  .location-toggle .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+  }
+  .location-toggle.is-on .toggle-track { background: #2F80ED; }
+  .location-toggle.is-on .toggle-thumb { transform: translateX(16px); }
   .marker-pin {
     width: 28px;
     height: 28px;
@@ -569,8 +593,8 @@
       top: 10px;
       right: 10px;
     }
-    .locate-btn {
-      padding: 7px 9px;
+    .location-toggle {
+      padding: 7px 8px;
       font-size: 11px;
     }
     .map-legend { display: none; }
@@ -603,7 +627,10 @@
   <div class="map-wrap">
     <div class="map-title">동선 지도 · Route Map</div>
     <div class="map-actions">
-      <button class="locate-btn" id="locate-btn" type="button">내 위치</button>
+      <button class="location-toggle" id="location-toggle" type="button" role="switch" aria-checked="false">
+        <span class="toggle-track" aria-hidden="true"><span class="toggle-thumb"></span></span>
+        <span class="toggle-label">내 위치</span>
+      </button>
     </div>
     <div id="map"></div>
     <div class="map-legend">
@@ -1347,6 +1374,7 @@ let routeLayer = L.layerGroup().addTo(map);
 let markerLayer = L.layerGroup().addTo(map);
 let secondaryLayer = L.layerGroup().addTo(map);
 let userLocationLayer = L.layerGroup().addTo(map);
+let userLocationWatchId = null;
 
 function makeIcon(label, color) {
   return L.divIcon({
@@ -1782,36 +1810,57 @@ function updateUserLocationMarker(lat, lng, accuracy) {
   }
 }
 
-function locateMe() {
-  const btn = document.getElementById('locate-btn');
+function setLocationToggleState(isOn, isLoading = false) {
+  const toggle = document.getElementById('location-toggle');
+  const label = toggle?.querySelector('.toggle-label');
 
+  if (!toggle) return;
+
+  toggle.classList.toggle('is-on', isOn);
+  toggle.setAttribute('aria-checked', String(isOn));
+  toggle.disabled = isLoading;
+
+  if (label) {
+    label.textContent = isLoading ? '확인 중' : '내 위치';
+  }
+}
+
+function stopLocationWatch() {
+  if (userLocationWatchId !== null) {
+    navigator.geolocation.clearWatch(userLocationWatchId);
+    userLocationWatchId = null;
+  }
+  userLocationLayer.clearLayers();
+  setLocationToggleState(false);
+}
+
+function startLocationWatch() {
   if (!navigator.geolocation) {
     alert('이 브라우저에서는 현재 위치를 사용할 수 없습니다.');
+    setLocationToggleState(false);
     return;
   }
 
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = '확인 중';
-  }
-
-  navigator.geolocation.getCurrentPosition(
+  setLocationToggleState(true, true);
+  userLocationWatchId = navigator.geolocation.watchPosition(
     pos => {
       updateUserLocationMarker(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = '내 위치';
-      }
+      setLocationToggleState(true);
     },
     () => {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = '내 위치';
-      }
+      stopLocationWatch();
       alert('현재 위치를 가져오지 못했습니다. 브라우저 위치 권한을 확인하세요.');
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
   );
+}
+
+function toggleLocationWatch() {
+  if (userLocationWatchId === null) {
+    startLocationWatch();
+  } else {
+    stopLocationWatch();
+  }
 }
 
 function closeModal() {
@@ -1820,7 +1869,7 @@ function closeModal() {
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target.id === 'modal') closeModal();
 });
-document.getElementById('locate-btn').addEventListener('click', locateMe);
+document.getElementById('location-toggle').addEventListener('click', toggleLocationWatch);
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
