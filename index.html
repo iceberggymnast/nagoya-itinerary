@@ -509,9 +509,37 @@
   .btn.primary:hover { background: var(--accent-1); border-color: var(--accent-1); }
 
   @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; height: auto; }
-    .panel { height: auto; padding: 24px 20px 40px; border-right: none; border-bottom: 1px solid var(--rule); }
-    .map-wrap { height: 60vh; position: sticky; top: 0; }
+    :root { --mobile-map-height: 38vh; }
+    html, body { height: 100%; overflow: hidden; }
+    .layout {
+      display: block;
+      height: 100dvh;
+      min-height: 100vh;
+    }
+    .panel {
+      height: 100dvh;
+      padding: 24px 20px calc(var(--mobile-map-height) + 40px);
+      border-right: none;
+      border-bottom: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .map-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: var(--mobile-map-height);
+      z-index: 100;
+      border-top: 1px solid var(--rule);
+    }
+    .map-title {
+      top: 10px;
+      left: 10px;
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+    .map-legend { display: none; }
     .title-jp { font-size: 36px; }
     .day-title { font-size: 22px; }
     .modal { padding: 24px 22px; }
