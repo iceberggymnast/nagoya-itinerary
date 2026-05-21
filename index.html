@@ -818,10 +818,10 @@ const DAYS = {
     desc: "비행기에서 내려 호텔에 짐 풀고, 점심 후 나고야성에서 가볍게 첫날을 마무리.",
     color: "#B91D1D",
     items: [
-      { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "transit", poi: "ngo" },
+      { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "poi", poi: "ngo" },
       { t: "10:25", n: "입국 수속 완료", s: "—", type: "transit" },
       { t: "10:30", n: "공항 출발", s: "🚕 점보택시 1대 · ¥18,000 · 50분  |  🚃 뮤스카이 · ¥1,430/인 (8인 ¥11,440) · 28분 + 도보 7분", tag: "이동 수단 선택", type: "transit" },
-      { t: "11:00~11:15", n: "호텔 도착, 짐 보관", s: "쿠레타케인 프리미엄 나고야 나야바시 · 체크인 15:00 / 짐 보관 가능", type: "poi", poi: "hotel" },
+      { t: "11:00", n: "호텔 도착, 짐 보관", s: "쿠레타케인 프리미엄 나고야 나야바시 · 체크인 15:00 / 짐 보관 가능", type: "poi", poi: "hotel" },
       { t: "11:30", n: "점심 · 에스카 지하상가", s: "나고야역 직결", tag: "점심", type: "poi", poi: "esca" },
       { t: "13:15", n: "택시 이동", s: "호텔 → 나고야성 (약 10분)", tag: "택시 · 약 ¥2,500", type: "transit" },
       { t: "13:30", n: "나고야성 + 혼마루 궁전", s: "名古屋城 · 本丸御殿", tag: "메인 일정", type: "poi", poi: "castle" },
@@ -1019,22 +1019,26 @@ function renderRoute(dayKey) {
       .on('click', () => openPlaceModal(id));
   });
 
-  // Polyline (exclude NGO if too far for day 1 / 4)
+  // Polyline
   const inCityPts = pts.filter(([lat, lng]) => lat > 35.0);
-  if (inCityPts.length > 1) {
-    L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
-      .addTo(routeLayer);
-  }
-
-  // Airport route line: Day 1 (NGO → Hotel), Day 4 (Hotel → NGO)
   const NGO = [PLACES.ngo.lat, PLACES.ngo.lng];
   const HTL = [HOTEL.lat, HOTEL.lng];
+
   if (dayKey === '1') {
-    L.polyline([NGO, HTL], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
+    // Day 1 동선: 공항 → 나고야역(에스카) → 호텔 → 나고야성
+    const escaPt = [PLACES.esca.lat, PLACES.esca.lng];
+    const castlePt = [PLACES.castle.lat, PLACES.castle.lng];
+    L.polyline([NGO, escaPt], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
       .addTo(routeLayer)
-      .bindTooltip('공항 → 호텔', { sticky: true });
-  }
-  if (dayKey === '4') {
+      .bindTooltip('공항 → 나고야역', { sticky: true });
+    L.polyline([escaPt, HTL, castlePt], { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
+      .addTo(routeLayer);
+    map.fitBounds(L.latLngBounds([NGO, escaPt, HTL, castlePt]), { padding: [60, 60], maxZoom: 11 });
+  } else if (dayKey === '4') {
+    if (inCityPts.length > 1) {
+      L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
+        .addTo(routeLayer);
+    }
     L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
       .addTo(markerLayer)
       .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
@@ -1042,14 +1046,15 @@ function renderRoute(dayKey) {
     L.polyline([HTL, NGO], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
       .addTo(routeLayer)
       .bindTooltip('호텔 → 공항', { sticky: true });
-  }
-
-  // Fit bounds: Day 1/4 include airport, else in-city only
-  if (dayKey === '1' || dayKey === '4') {
-    const allPts = [NGO, HTL, ...inCityPts];
-    map.fitBounds(L.latLngBounds(allPts), { padding: [60, 60], maxZoom: 11 });
-  } else if (inCityPts.length > 0) {
-    map.fitBounds(L.latLngBounds(inCityPts), { padding: [60, 60], maxZoom: 14 });
+    map.fitBounds(L.latLngBounds([NGO, HTL, ...inCityPts]), { padding: [60, 60], maxZoom: 11 });
+  } else {
+    if (inCityPts.length > 1) {
+      L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
+        .addTo(routeLayer);
+    }
+    if (inCityPts.length > 0) {
+      map.fitBounds(L.latLngBounds(inCityPts), { padding: [60, 60], maxZoom: 14 });
+    }
   }
 }
 
