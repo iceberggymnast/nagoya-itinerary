@@ -1128,6 +1128,14 @@ function placeTooltipPrefix(p) {
   return '🍱';
 }
 
+function markerIds(day) {
+  return [
+    ...(day.restos || []), ...(day.shops || []), ...(day.attractions || []),
+    ...(day.eveningRestos || []), ...(day.eveningShops || []), ...(day.eveningAttractions || []),
+    ...(day.convenience || [])
+  ];
+}
+
 const MEIEKI_RESTOS = [
   "maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan",
   "misen_meieki","yamamotoya_meieki","yamachan_nayabashi","furaibo_meieki_minami"
@@ -1199,9 +1207,12 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥32,000~50,000",
-    attractions: ["osu_kannon","banshouji","nagoya_science",...MEIEKI_ATTRACTIONS],
-    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum",...MEIEKI_RESTOS],
-    shops: ["osu_shopping","mandarake_osu","niomondon",...MEIEKI_SHOPS],
+    attractions: ["osu_kannon","banshouji","nagoya_science"],
+    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum"],
+    shops: ["osu_shopping","mandarake_osu","niomondon"],
+    eveningAttractions: [...MEIEKI_ATTRACTIONS],
+    eveningRestos: [...MEIEKI_RESTOS],
+    eveningShops: [...MEIEKI_SHOPS],
     convenience: [...MEIEKI_CONVENIENCE]
   },
   "2b": {
@@ -1226,9 +1237,11 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥48,000~72,000",
-    attractions: ["atsuta_treasure","miya_dote",...MEIEKI_ATTRACTIONS],
-    restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten",...MEIEKI_RESTOS],
-    shops: [...MEIEKI_SHOPS],
+    attractions: ["atsuta_treasure","miya_dote"],
+    restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten"],
+    eveningAttractions: [...MEIEKI_ATTRACTIONS],
+    eveningRestos: [...MEIEKI_RESTOS],
+    eveningShops: [...MEIEKI_SHOPS],
     convenience: [...MEIEKI_CONVENIENCE]
   },
   3: {
@@ -1255,9 +1268,11 @@ const DAYS = {
       { l: "점심+저녁 (8인)", v: "¥20,000~32,000" }
     ],
     total: "¥49,000~66,000",
-    attractions: [...MEIEKI_ATTRACTIONS],
-    restos: ["jetty_food","sugakiya","tortoise",...MEIEKI_RESTOS],
-    shops: ["jetty_shop",...MEIEKI_SHOPS],
+    restos: ["jetty_food","sugakiya","tortoise"],
+    shops: ["jetty_shop"],
+    eveningAttractions: [...MEIEKI_ATTRACTIONS],
+    eveningRestos: [...MEIEKI_RESTOS],
+    eveningShops: [...MEIEKI_SHOPS],
     convenience: [...MEIEKI_CONVENIENCE]
   },
   4: {
@@ -1389,7 +1404,7 @@ function renderRoute(dayKey) {
 
   // Secondary markers (restos/shops/attractions/convenience)
   const seen = new Set();
-  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || []), ...(day.convenience || [])].forEach(id => {
+  markerIds(day).forEach(id => {
     if (seen.has(id)) return;
     seen.add(id);
     const p = PLACES[id];
@@ -1452,6 +1467,7 @@ function renderDay(dayKey) {
   if (isDay2) activeKey = window._day2Choice || '2a';
 
   const day = DAYS[activeKey];
+  const splitEvening = ['2a', '2b', '3'].includes(activeKey);
   document.documentElement.style.setProperty('--day-color', day.color);
 
   let html = `
@@ -1544,8 +1560,46 @@ function renderDay(dayKey) {
     html += `</div></div>`;
   }
 
+  // Evening near hotel / Nagoya Station
+  if (splitEvening && (
+    (day.eveningAttractions && day.eveningAttractions.length > 0) ||
+    (day.eveningRestos && day.eveningRestos.length > 0) ||
+    (day.eveningShops && day.eveningShops.length > 0) ||
+    (day.convenience && day.convenience.length > 0)
+  )) {
+    html += `<div class="section">
+      <div class="section-head">— 저녁 · 호텔/나고야역 주변</div>
+      <div class="card-list">`;
+    [...(day.eveningAttractions || []), ...(day.eveningRestos || []), ...(day.eveningShops || []), ...(day.convenience || [])].forEach(id => {
+      const p = PLACES[id];
+      if (!p) return;
+      const meta = p.cat === 'restaurant'
+        ? { code: 'FOOD', color: 'var(--accent-1)' }
+        : p.cat === 'shopping'
+          ? { code: 'SHOP', color: '#5A6B7D' }
+          : p.cat === 'convenience'
+            ? { code: 'CVS', color: '#29706B' }
+            : { code: 'SIGHT', color: '#1B4D3E' };
+      const info = p.cat === 'restaurant'
+        ? `${p.jp || ''} · ${(p.hours || '').split(' ')[0] || ''}`
+        : `${p.jp || ''} · ${p.hours || p.duration || ''}`;
+      const aside = p.cat === 'restaurant'
+        ? `<div class="card-price">${p.cost || ''}</div>`
+        : `<div class="card-arrow">→</div>`;
+      html += `<div class="card" data-place="${id}">
+        <div>
+          <div class="card-name"><span class="card-cat" style="color:${meta.color}">${meta.code}</span>${p.name}</div>
+          <div class="card-info">${info}</div>
+          ${placeTags(p)}
+        </div>
+        ${aside}
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
   // Convenience stores
-  if (day.convenience && day.convenience.length > 0) {
+  if (!splitEvening && day.convenience && day.convenience.length > 0) {
     html += `<div class="section">
       <div class="section-head">— 편의점 · Convenience Stores</div>
       <div class="card-list">`;
