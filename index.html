@@ -328,6 +328,24 @@
     font-size: 13px;
     color: var(--ink-soft);
   }
+  .map-actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  .locate-btn {
+    border: 1px solid var(--rule);
+    background: rgba(244, 241, 234, 0.96);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 12px;
+    padding: 9px 12px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+  }
+  .locate-btn:hover { background: var(--paper-2); }
+  .locate-btn:disabled { color: var(--ink-mute); cursor: wait; }
   .marker-pin {
     width: 28px;
     height: 28px;
@@ -355,6 +373,14 @@
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
   .marker-secondary.sight { border-color: #1B4D3E; background: #E8F0EC; }
   .marker-secondary.convenience { border-color: #29706B; background: #E7F3F1; }
+  .marker-user {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #2F80ED;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(47,128,237,0.22), 0 2px 8px rgba(0,0,0,0.22);
+  }
   .marker-heritage {
     width: 32px;
     height: 32px;
@@ -539,6 +565,14 @@
       padding: 7px 10px;
       font-size: 11px;
     }
+    .map-actions {
+      top: 10px;
+      right: 10px;
+    }
+    .locate-btn {
+      padding: 7px 9px;
+      font-size: 11px;
+    }
     .map-legend { display: none; }
     .title-jp { font-size: 36px; }
     .day-title { font-size: 22px; }
@@ -568,6 +602,9 @@
 
   <div class="map-wrap">
     <div class="map-title">동선 지도 · Route Map</div>
+    <div class="map-actions">
+      <button class="locate-btn" id="locate-btn" type="button">내 위치</button>
+    </div>
     <div id="map"></div>
     <div class="map-legend">
       <div class="legend-head">Days</div>
@@ -1309,6 +1346,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 let routeLayer = L.layerGroup().addTo(map);
 let markerLayer = L.layerGroup().addTo(map);
 let secondaryLayer = L.layerGroup().addTo(map);
+let userLocationLayer = L.layerGroup().addTo(map);
 
 function makeIcon(label, color) {
   return L.divIcon({
@@ -1326,6 +1364,12 @@ function makeHeritageIcon() {
   return L.divIcon({
     html: `<div class="marker-heritage">🏮</div>`,
     className: '', iconSize: [32, 32], iconAnchor: [16, 16]
+  });
+}
+function makeUserIcon() {
+  return L.divIcon({
+    html: `<div class="marker-user"></div>`,
+    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
   });
 }
 
@@ -1719,12 +1763,64 @@ function focusOnMap(lat, lng) {
   closeModal();
 }
 
+function updateUserLocationMarker(lat, lng, accuracy) {
+  userLocationLayer.clearLayers();
+
+  L.marker([lat, lng], { icon: makeUserIcon(), zIndexOffset: 1000 })
+    .addTo(userLocationLayer)
+    .bindTooltip('내 위치', { direction: 'top', offset: [0, -8] });
+
+  if (accuracy && Number.isFinite(accuracy)) {
+    L.circle([lat, lng], {
+      radius: Math.min(accuracy, 200),
+      color: '#2F80ED',
+      weight: 1,
+      opacity: 0.55,
+      fillColor: '#2F80ED',
+      fillOpacity: 0.08
+    }).addTo(userLocationLayer);
+  }
+}
+
+function locateMe() {
+  const btn = document.getElementById('locate-btn');
+
+  if (!navigator.geolocation) {
+    alert('이 브라우저에서는 현재 위치를 사용할 수 없습니다.');
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '확인 중';
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      updateUserLocationMarker(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '내 위치';
+      }
+    },
+    () => {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '내 위치';
+      }
+      alert('현재 위치를 가져오지 못했습니다. 브라우저 위치 권한을 확인하세요.');
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+  );
+}
+
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
 }
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target.id === 'modal') closeModal();
 });
+document.getElementById('locate-btn').addEventListener('click', locateMe);
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
