@@ -816,82 +816,160 @@ const PLACES = {
   // ─── 볼거리: 오스 ───
   osu_kannon: {
     name: "오스 칸논", jp: "大須観音",
-    lat: 35.160583, lng: 136.900406, cat: "attraction",
+    lat: 35.1596892, lng: 136.8994186, cat: "attraction",
     desc: "정식 명칭 호쇼잔 만복사. 오스 상점가 한복판에 위치한 관음사. 비둘기 떼와 함께하는 분위기가 독특. 경내 평지라 짧게 둘러보기 좋음.",
-    cost: "무료", duration: "약 20분"
+    cost: "무료", duration: "약 20분",
+    placeId: "ChIJr3HDSzJ3A2AR6Pctdr3J-yc"
   },
   banshouji: {
     name: "반쇼지", jp: "万松寺",
-    lat: 35.160083, lng: 136.904444, cat: "attraction",
+    lat: 35.1590778, lng: 136.9047731, cat: "attraction",
     desc: "오다 노부나가 아버지 노부히데의 위패를 모신 절. 오스 상점가 안쪽. 황금빛 용 분수와 정각마다 작동하는 로봇 노부나가 인형이 포토스팟.",
-    cost: "무료", duration: "약 15분"
+    cost: "무료", duration: "약 15분",
+    placeId: "ChIJSUasZMtwA2ARsECNLu00ZXI"
   },
   nagoya_science: {
     name: "나고야시 과학관", jp: "名古屋市科学館",
-    lat: 35.164819, lng: 136.899936, cat: "attraction",
+    lat: 35.1650768, lng: 136.8997026, cat: "attraction",
     desc: "세계 최대 규모 플라네타리움(돔 직경 35m) 보유. 오스 상점가에서 도보 약 10분. 이공계 전시 다양. 플라네타리움은 사전 예약 권장.",
-    cost: "성인 ¥800 · 시니어 ¥200", duration: "2~3시간"
+    cost: "성인 ¥800 · 시니어 ¥200", duration: "2~3시간",
+    ftid: "0x6003772c44f4f335:0x3947d91f2b70d713"
   },
 
   // ─── 식당: 오스 추가 ───
   yokoi: {
     name: "스파게티 하우스 요코이 본점", jp: "スパゲッティハウス ヨコイ",
-    lat: 35.165444, lng: 136.897806, cat: "restaurant",
+    lat: 35.1674472, lng: 136.9033464, cat: "restaurant",
     desc: "앙카케 스파게티(걸쭉한 소스 철판 스파) 원조 본점. 1963년 창업. 오스 북쪽 후시미 방향 도보 15분 또는 택시. 점심 대기 30~60분.",
     menu: [["미로네즈 (기본)","¥1,050"],["카쿠니 (삼겹살 토핑)","¥1,300"],["타마고 철판","¥1,150"]],
-    cost: "1인 ¥1,000~1,500", hours: "10:30–21:30 (화 휴무)"
+    cost: "1인 ¥1,000~1,500", hours: "10:30–21:30 (화 휴무)",
+    ftid: "0x600370d350419c13:0xbc2fc57af68b2a28"
   },
   taiyaki_yanagiya: {
-    name: "타이야키 야나기야", jp: "たい焼き 柳家",
-    lat: 35.158333, lng: 136.901722, cat: "restaurant",
-    desc: "오스 상점가 내 전통 붕어빵 가게. 팥·크림·고구마 앙금. 걸어 다니며 먹기 딱 좋고 가격도 부담 없음. 노약자 간식용으로 최적.",
-    menu: [["팥 타이야키","¥180"],["크림 타이야키","¥200"],["고구마 타이야키","¥200"]],
-    cost: "¥180~200/개", hours: "10:00–17:00 (수 휴무)"
+    name: "타이후쿠차안 야시로메 사와야", jp: "鯛福茶庵 八代目澤屋",
+    lat: 35.1594421, lng: 136.8999678, cat: "restaurant",
+    desc: "오스 칸논 근처 타이야키·화과자 가게. 걸어 다니며 먹기 좋고 가격 부담이 적어 노약자 간식용으로 적합.",
+    menu: [["타이야키","¥200~"],["오구라 계열 화과자","¥200~"],["차·디저트","¥500~"]],
+    cost: "¥200~700/인", hours: "11:00–18:00",
+    placeId: "ChIJA1uNrDN3A2ARgPbX6XolblE"
   },
 
   // ─── 쇼핑: 오스 추가 ───
   mandarake_osu: {
     name: "만다라케 나고야점", jp: "まんだらけ 名古屋店",
-    lat: 35.158861, lng: 136.903750, cat: "shopping",
+    lat: 35.1599906, lng: 136.9044669, cat: "shopping",
     desc: "오스 상점가 안 5층 건물 전체가 중고 만화·피규어·레트로 굿즈. 쇼와 시대 만화·레코드·레트로 완구도 풍부해 중장년층도 재미있게 구경 가능.",
-    cost: "자유", hours: "12:00–20:00"
+    cost: "자유", hours: "12:00–20:00",
+    ftid: "0x600370cc908fc865:0x30b05b8020a8fd04"
   },
   niomondon: {
     name: "니오몬도리 골동품 거리", jp: "仁王門通り",
-    lat: 35.159694, lng: 136.902167, cat: "shopping",
+    lat: 35.1588623, lng: 136.9007855, cat: "shopping",
     desc: "오스 칸논 앞으로 이어지는 골목. 골동품·도자기·오래된 잡화·불교 용품점 밀집. 빈티지 의류점과 섞여 있어 구경 재미 있음.",
-    cost: "자유", hours: "대부분 11:00–18:00"
+    cost: "자유", hours: "대부분 11:00–18:00",
+    ftid: "0x6003772beeaeba47:0x87b51fb9ef6b9d17"
   },
 
   // ─── 볼거리: 아츠타 ───
   atsuta_treasure: {
     name: "아츠타 신궁 보물관", jp: "熱田神宮宝物館",
-    lat: 35.128194, lng: 136.910083, cat: "attraction",
+    lat: 35.1249465, lng: 136.9093583, cat: "attraction",
     desc: "신궁 경내 박물관. 헌납 도검·갑옷·고문서·도자기 등 6,000점 이상 소장. 평지 실내라 노약자 적합. 신궁 산책 후 자연스럽게 들를 수 있음.",
-    cost: "성인 ¥300 · 시니어 ¥150", duration: "약 45분"
+    cost: "성인 ¥300 · 시니어 ¥150", duration: "약 45분",
+    ftid: "0x60037a196e4c5cff:0xba1f7ff53d91c727"
   },
   miya_dote: {
     name: "미야 도테 공원", jp: "宮の渡し公園",
-    lat: 35.122611, lng: 136.915722, cat: "attraction",
+    lat: 35.1184665, lng: 136.9062422, cat: "attraction",
     desc: "에도 시대 도카이도·나카센도의 연결 도선장 터. 나고야항 초입. 강변 공원으로 정비돼 산책하기 좋고 역사 표지판도 있음. 아츠타 신궁에서 도보 12분.",
-    cost: "무료", duration: "약 30분"
+    cost: "무료", duration: "약 30분",
+    ftid: "0x60037a21bec6d5dd:0xfca95a61360381ff"
   },
 
   // ─── 식당: 아츠타 추가 ───
   miya_kishimen: {
     name: "미야키시멘 (신궁 경내)", jp: "宮きしめん 神宮店",
-    lat: 35.127333, lng: 136.909694, cat: "restaurant",
+    lat: 35.1246599, lng: 136.908491, cat: "restaurant",
     desc: "아츠타 신궁 경내에 위치한 유일한 식당. 신사 경내 나무 그늘 아래 야외 테이블에서 키시멘·미타라시 당고를 먹는 경험이 특별.",
     menu: [["키시멘 (온/냉)","¥800"],["미타라시 당고","¥400"],["시라타마 안미츠","¥700"]],
-    cost: "1인 ¥700~1,200", hours: "09:00–16:30"
+    cost: "1인 ¥700~1,200", hours: "09:00–16:30",
+    placeId: "ChIJ-c22cxl6A2ARx4gE5g3fNxI"
   },
   horaiken_jingu: {
     name: "아츠타 호라이켄 신궁점", jp: "あつた蓬莱軒 神宮店",
-    lat: 35.126083, lng: 136.908861, cat: "restaurant",
+    lat: 35.12227, lng: 136.9085645, cat: "restaurant",
     desc: "히츠마부시 원조 호라이켄의 신궁 바로 앞 지점. 본점보다 접근성이 좋지만 월·화요일 휴무 주의.",
     menu: [["히츠마부시","¥4,990"],["우나동","¥4,200"],["우나기 정식","¥6,500~"]],
     cost: "1인 ¥5,000~7,000", hours: "11:30–14:00, 16:30–20:30 (월·화 휴무)",
-    warn: "6월 1일(월요일) 휴무. 이 날은 Ten 또는 호라이켄 본점을 선택하세요."
+    warn: "6월 1일(월요일) 휴무. 이 날은 Ten 또는 호라이켄 본점을 선택하세요.",
+    placeId: "ChIJAQBwxBh6A2ARcxKia4ZEwwI"
+  },
+
+  // ─── 호텔/나고야역 주변 추가 ───
+  misen_meieki: {
+    name: "미센 JR 나고야역점", jp: "味仙 JR名古屋駅店",
+    lat: 35.1688044, lng: 136.8817752, cat: "restaurant",
+    desc: "나고야식 대만라멘 대표점. JR 나고야역 안이라 비가 와도 접근이 쉽고, 매운 메뉴가 부담되면 볶음밥·만두·일반 중화 메뉴로 조절 가능.",
+    menu: [["대만라멘","¥900~"],["아오나 볶음","¥900~"],["마늘볶음밥","¥900~"],["교자","¥500~"]],
+    cost: "1인 ¥1,000~2,000", hours: "11:00–22:00",
+    ftid: "0x6000e6f3786e3143:0x6cb454ad9d79b29"
+  },
+  yamamotoya_meieki: {
+    name: "야마모토야 본점 나고야역앞점", jp: "山本屋本店 名古屋駅前店",
+    lat: 35.171982, lng: 136.8861482, cat: "restaurant",
+    desc: "나고야 명물 미소니코미 우동 전문점. 역 동쪽 지하 접근이 쉬운 편이라 저녁 식사 대안으로 좋다.",
+    menu: [["미소니코미 우동","¥1,300~"],["계란 미소니코미","¥1,500~"],["나고야 코친 메뉴","¥2,000~"]],
+    cost: "1인 ¥1,500~2,500", hours: "11:00–22:00",
+    placeId: "ChIJsQBnHtVwA2ARy9BLlKyKvtI"
+  },
+  yanagibashi_market: {
+    name: "야나기바시 중앙시장", jp: "柳橋中央市場",
+    lat: 35.1699909, lng: 136.8880404, cat: "attraction",
+    desc: "호텔에서 가까운 도심 수산시장. 이른 아침 분위기가 가장 좋지만, 주변 골목 식당과 시장 풍경을 짧게 둘러보기에도 좋다.",
+    cost: "자유", duration: "30~60분", hours: "대부분 새벽~오전",
+    ftid: "0x600376deaaf9b03b:0xc1a310228281cab2"
+  },
+  midland_square: {
+    name: "미들랜드 스퀘어", jp: "ミッドランドスクエア",
+    lat: 35.1700094, lng: 136.885186, cat: "shopping",
+    desc: "나고야역 앞 고층 복합몰. 고급 브랜드·식당·카페가 모여 있고 실내 동선이라 저녁 산책과 식사 후보를 같이 보기 좋다.",
+    cost: "자유", hours: "쇼핑 11:00–20:00 · 식당가 점포별 상이",
+    ftid: "0x600376ddb80e1a2f:0xf9fb96633f9d02a9"
+  },
+  sky_promenade: {
+    name: "스카이 프롬나드", jp: "スカイプロムナード",
+    lat: 35.1704593, lng: 136.8851422, cat: "attraction",
+    desc: "미들랜드 스퀘어 44~46층 야외 전망대. 해 진 뒤 나고야역 야경을 짧게 보기 좋고 엘리베이터 동선이라 부담이 적다.",
+    cost: "성인 ¥1,000 전후", duration: "30~45분", hours: "11:00–22:00",
+    ftid: "0x600376de9af83917:0x3e73fa9ef3ff1f88"
+  },
+  kitte_nagoya: {
+    name: "KITTE 나고야", jp: "KITTE名古屋",
+    lat: 35.173081, lng: 136.8823772, cat: "shopping",
+    desc: "JP타워 저층부 쇼핑·식당가. 나고야역과 연결돼 비 오는 날 저녁 식사·카페·기념품 구입을 한 번에 처리하기 좋다.",
+    cost: "자유", hours: "쇼핑 10:00–20:00 · 식당가 점포별 상이",
+    ftid: "0x600376e8394020a5:0x2d408f5483912d04"
+  },
+  dai_nagoya: {
+    name: "다이나고야 빌딩", jp: "大名古屋ビルヂング",
+    lat: 35.1719951, lng: 136.8845283, cat: "shopping",
+    desc: "나고야역 앞 복합상업시설. 지하·저층 쇼핑과 레스토랑, 카페가 모여 있어 호텔 복귀 전 저녁 활동지로 쓰기 좋다.",
+    cost: "자유", hours: "쇼핑 11:00–21:00 · 식당가 점포별 상이",
+    ftid: "0x600376dd4061715b:0xcc39339e46d12df4"
+  },
+  shikemichi: {
+    name: "시케미치 거리", jp: "四間道",
+    lat: 35.1749225, lng: 136.8923864, cat: "attraction",
+    desc: "에도 시대 상가와 흰 벽 창고가 남아 있는 골목. 호텔에서 택시로 짧고, 저녁 전후 조용한 산책지로 좋다.",
+    cost: "무료", duration: "30~45분",
+    ftid: "0x600376da6683aca3:0xa41070a2dd6d17c7"
+  },
+  endoji: {
+    name: "엔도지 상점가", jp: "円頓寺商店街",
+    lat: 35.1762659, lng: 136.8912995, cat: "shopping",
+    desc: "시케미치 북쪽의 오래된 아케이드 상점가. 작은 식당·카페·잡화점이 이어져 호텔 주변 저녁 산책 코스로 묶기 좋다.",
+    cost: "자유", hours: "점포별 상이",
+    ftid: "0x600376daafd3f321:0x100eaa1aa16b86ab"
   },
 
   // ─── 특별 장소 ───
@@ -910,6 +988,17 @@ function gmapUrl(p) {
   if (p.ftid)    return `https://www.google.com/maps/place/?ftid=${p.ftid}`;
   return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
 }
+
+const MEIEKI_RESTOS = [
+  "maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan",
+  "misen_meieki","yamamotoya_meieki"
+];
+const MEIEKI_SHOPS = [
+  "takashimaya","gatetower","esca_shopping","aeon_noritake","midland_square","kitte_nagoya","dai_nagoya","endoji"
+];
+const MEIEKI_ATTRACTIONS = [
+  "yanagibashi_market","sky_promenade","shikemichi"
+];
 
 // =============================================================
 // DAYS — 일자별 일정 (8인 기준)
@@ -940,8 +1029,9 @@ const DAYS = {
       { l: "점심+저녁 (8인)", v: "¥24,000~40,000" }
     ],
     total: "¥50,000~66,000",
-    restos: ["maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan"],
-    shops: ["takashimaya","gatetower","esca_shopping","aeon_noritake","kinshachi_shop"]
+    attractions: [...MEIEKI_ATTRACTIONS],
+    restos: [...MEIEKI_RESTOS],
+    shops: [...MEIEKI_SHOPS,"kinshachi_shop"]
   },
   "2a": {
     date: "6월 1일 (월요일) · A안",
@@ -965,9 +1055,9 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥32,000~50,000",
-    attractions: ["osu_kannon","banshouji","nagoya_science"],
-    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum","komeda","yamachan"],
-    shops: ["osu_shopping","mandarake_osu","niomondon","takashimaya","gatetower"]
+    attractions: ["osu_kannon","banshouji","nagoya_science",...MEIEKI_ATTRACTIONS],
+    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum",...MEIEKI_RESTOS],
+    shops: ["osu_shopping","mandarake_osu","niomondon",...MEIEKI_SHOPS]
   },
   "2b": {
     date: "6월 1일 (월요일) · B안",
@@ -990,9 +1080,9 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥44,000~64,000",
-    attractions: ["atsuta_treasure","miya_dote"],
-    restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten","komeda","yamachan","maruya"],
-    shops: ["takashimaya","gatetower","esca_shopping","aeon_noritake"]
+    attractions: ["atsuta_treasure","miya_dote",...MEIEKI_ATTRACTIONS],
+    restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten",...MEIEKI_RESTOS],
+    shops: [...MEIEKI_SHOPS]
   },
   3: {
     date: "6월 2일 (화요일)",
@@ -1017,8 +1107,9 @@ const DAYS = {
       { l: "점심+저녁 (8인)", v: "¥20,000~32,000" }
     ],
     total: "¥44,000~56,000",
-    restos: ["jetty_food","sugakiya","tortoise","komeda","yamachan","maruya"],
-    shops: ["jetty_shop","takashimaya","gatetower","esca_shopping"]
+    attractions: [...MEIEKI_ATTRACTIONS],
+    restos: ["jetty_food","sugakiya","tortoise",...MEIEKI_RESTOS],
+    shops: ["jetty_shop",...MEIEKI_SHOPS]
   },
   4: {
     date: "6월 3일 (수요일)",
