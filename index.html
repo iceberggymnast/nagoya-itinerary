@@ -1882,6 +1882,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     renderDay(tab.dataset.day);
+    document.querySelector('.panel').scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
 
