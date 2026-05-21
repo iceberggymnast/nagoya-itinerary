@@ -236,6 +236,21 @@
   .card:hover { background: var(--paper-3); border-color: var(--rule); }
   .card-name { font-size: 13px; font-weight: 500; }
   .card-info { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 7px;
+  }
+  .card-tag {
+    font-size: 10px;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    background: rgba(244, 241, 234, 0.65);
+    padding: 2px 5px;
+    border-radius: 2px;
+    line-height: 1.2;
+  }
   .card-cat {
     display: inline-block;
     font-size: 9px;
@@ -339,6 +354,8 @@
   .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
   .marker-secondary.sight { border-color: #1B4D3E; background: #E8F0EC; }
+  .marker-secondary.amenity { border-color: #6B5A7D; background: #F0ECF4; }
+  .marker-secondary.convenience { border-color: #29706B; background: #E7F3F1; }
   .marker-heritage {
     width: 32px;
     height: 32px;
@@ -623,6 +640,7 @@ const PLACES = {
     desc: "나고야 히츠마부시 노포. JR 나고야역 우마이몬도리에 위치. 노약자에게 추천. 대기 20~60분.",
     menu: [["히츠마부시 (1마리)","¥4,950"],["히츠마부시 (1.5마리)","¥6,930"],["미니 히츠마부시","¥3,300"],["우나동","¥3,520"]],
     cost: "1인 ¥3,500~7,000", hours: "11:00–22:00 (연중무휴)",
+    tags: ["나고야 명물", "웨이팅 주의", "역 안"],
     placeId: "ChIJDcxFked2A2ARKoF3INiy4CY"
   },
   binchou: {
@@ -631,6 +649,7 @@ const PLACES = {
     desc: "히츠마부시 전문점. 마루야보다 웨이팅 적은 편. 다이나고야빌딩 3층.",
     menu: [["히츠마부시","¥5,500~"],["우나기 8피스","¥7,500"],["뱀장어 본구이","¥6,000~"]],
     cost: "1인 ¥5,500~7,500", hours: "11:00–14:30, 17:00–21:30",
+    tags: ["나고야 명물", "실내 이동", "8인 분산"],
     placeId: "ChIJ-SgrX-uRQTUR8FWrnBgkJAk"
   },
   kitchen_nagoya: {
@@ -639,6 +658,7 @@ const PLACES = {
     desc: "미소카츠·치킨윙·키시멘 등 나고야 명물을 한 번에. 역 내 접근성 최고.",
     menu: [["미소카츠 정식","¥1,650"],["미소카츠+치킨윙","¥1,980"],["키시멘","¥1,100"],["테바사키 5p","¥780"]],
     cost: "1인 ¥1,500~2,000", hours: "10:30–22:00",
+    tags: ["나고야 명물", "역 안", "8인 쉬움"],
     placeId: "ChIJe8VLked2A2ARrar2JCOjN0I"
   },
   keitei: {
@@ -647,6 +667,7 @@ const PLACES = {
     desc: "돈카츠 전문점. 무한리필 양배추·미소국. 가격대 합리적.",
     menu: [["로스카츠 정식","¥1,650"],["히레카츠 정식","¥1,800"],["흑돼지 로스","¥2,200"]],
     cost: "1인 ¥1,500~2,500", hours: "11:00–23:00",
+    tags: ["가볍게", "역 근처", "8인 분산"],
     placeId: "ChIJe8VLked2A2ARDWerQje_33w"
   },
   kishimen: {
@@ -655,6 +676,7 @@ const PLACES = {
     desc: "납작 우동(키시멘) 전문. 아침 7시 오픈, 빠르게 가볍게.",
     menu: [["키시멘 (온/냉)","¥650~"],["텐푸라 키시멘","¥1,100"],["미소 니코미","¥1,200"]],
     cost: "1인 ¥600~1,200", hours: "07:00–22:00",
+    tags: ["가볍게", "역 안", "빠른 식사"],
     placeId: "ChIJL1OLked2A2AR6CQojjO0rhc"
   },
   yabaton_jr: {
@@ -663,6 +685,7 @@ const PLACES = {
     desc: "나고야 미소카츠 대표 체인 '야바톤'의 역내 점포. 단, 이곳은 테이크아웃 전용. 호텔에서 먹을 때 추천.",
     menu: [["미소카츠 도시락","¥1,300~"],["히레카츠 도시락","¥1,500"]],
     cost: "도시락 ¥1,300~1,800", hours: "07:00–21:00",
+    tags: ["테이크아웃", "역 안", "대기 회피"],
     placeId: "ChIJNXv5XpB3A2ARZPZWWk1GOag"
   },
   komeda: {
@@ -671,6 +694,7 @@ const PLACES = {
     desc: "나고야 발 카페 체인. 모닝 서비스(음료 주문 시 토스트+삶은달걀 무료)가 유명. 아침/오후 휴식용.",
     menu: [["블렌드 커피","¥520"],["모닝 세트 (~11시)","음료가만"],["시로노와르","¥760"],["오구라 토스트","¥530"]],
     cost: "1인 ¥500~1,000", hours: "07:00–23:00",
+    tags: ["휴식", "노약자 편함", "아침 가능"],
     placeId: "ChIJua9OPgB3A2AREk-XBTarTxM"
   },
   yamachan: {
@@ -679,6 +703,7 @@ const PLACES = {
     desc: "나고야 명물 테바사키(닭날개) 전문 이자카야. 저녁 술 한잔과 함께. 호텔에서 도보 가능.",
     menu: [["환상의 테바사키 5p","¥660"],["테바사키 10p","¥1,250"],["가라아게","¥680"],["나마비루(생맥주)","¥594"]],
     cost: "1인 ¥2,500~4,000", hours: "17:00–24:00 (저녁만)",
+    tags: ["나고야 명물", "저녁 술", "8인 분산"],
     placeId: "ChIJjXSuD9x2A2ARWf8ZoxWpKhw"
   },
 
@@ -689,6 +714,7 @@ const PLACES = {
     desc: "1947년 창업, 나고야 미소카츠의 원조 본점. 오스 상점가 인근. 본점 분위기가 압도적. 대기 30~90분.",
     menu: [["철판 미소카츠","¥1,900"],["로스카츠 정식","¥1,750"],["와라지(짚신) 톤카츠","¥2,200"],["테바사키","¥780"]],
     cost: "1인 ¥1,800~2,500", hours: "11:00–21:00",
+    tags: ["나고야 명물", "웨이팅 주의", "본점"],
     placeId: "ChIJeUhI_NNxA2ARSBP5UM663A0"
   },
   buriko: {
@@ -697,6 +723,7 @@ const PLACES = {
     desc: "오스 상점가 안 고민가 개조 카페. 말차 파르페·치즈케이크가 시그니처. 중장년 여성 인기 높음.",
     menu: [["말차 치즈케이크","¥850"],["호지차 파르페","¥1,200"],["말차 파르페","¥1,300"],["커피/홍차","¥600~"]],
     cost: "1인 ¥800~1,500", hours: "11:00–18:00 (목 휴무)",
+    tags: ["카페", "휴식", "분산 착석"],
     placeId: "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ"
   },
   yumyum: {
@@ -705,6 +732,7 @@ const PLACES = {
     desc: "오스 상점가 끝자락의 정통 포장마차 라멘. 쇼유 베이스 가벼운 국물. 8인이 한 번에 앉기는 어려움 (좌석 8석).",
     menu: [["쇼유 라멘","¥500"],["챠슈멘","¥800"],["맥주","¥500"]],
     cost: "1인 ¥500~1,000", hours: "12:00–13:45, 17:30–22:45",
+    tags: ["가볍게", "소규모", "8인 어려움"],
     placeId: "ChIJBUGaeQ53A2ARgMfKcmXqdCc"
   },
 
@@ -715,6 +743,7 @@ const PLACES = {
     desc: "아츠타 신궁 도보 5분. 호라이켄보다 웨이팅 적고 가성비 좋은 히츠마부시. 점심만 영업 (11:00–15:30).",
     menu: [["히츠마부시","¥3,500"],["우나동","¥2,800"],["우나기 라이스","¥3,200"]],
     cost: "1인 ¥2,500~4,000", hours: "11:00–15:30 (점심만)",
+    tags: ["점심 전용", "신궁 근처", "웨이팅 적음"],
     placeId: "ChIJb2Z4jWB7A2ARbVJFKs-d_js"
   },
   horaiken_honten: {
@@ -723,6 +752,7 @@ const PLACES = {
     desc: "히츠마부시 원조 노포 본점. 신궁점은 월·화 휴무지만 본점은 수요일만 휴무. 신궁에서 도보 15분, 대기 1~2시간 각오.",
     menu: [["히츠마부시","¥4,990"],["우나동","¥4,200"],["우나기 정식","¥6,500~"]],
     cost: "1인 ¥5,000~7,000", hours: "11:30–14:00, 16:30–20:30 (수 휴무)",
+    tags: ["나고야 명물", "웨이팅 주의", "원조"],
     warn: "예약 불가. 이름 적고 신궁 산책 후 돌아오는 게 일반적.",
     placeId: "ChIJJRIRWR96A2AR1pCxwc4H298"
   },
@@ -734,6 +764,7 @@ const PLACES = {
     desc: "나고야성 동문 바로 옆 식당가. 야바톤, 미소우동, 우나동 등 나고야 명물집들이 한 번에 모여 있어 1일차 일정과 결합 가능.",
     menu: [["야바톤 미소카츠","¥1,800~"],["미소 니코미 우동","¥1,400"],["히츠마부시","¥4,000~"]],
     cost: "1인 ¥1,500~4,500", hours: "10:30–17:30",
+    tags: ["나고야 명물", "선택지 많음", "성 근처"],
     placeId: "ChIJQ02iFcx2A2ARMRob2W5qhtY"
   },
   jetty_food: {
@@ -742,6 +773,7 @@ const PLACES = {
     desc: "나고야 명물 (앙카케 스파게티·미소카츠·키시멘·도테야키)을 한 곳에서. 푸드코트라 8인 자리 잡기 쉬움.",
     menu: [["앙카케 스파게티","¥900~"],["미소카츠 정식","¥1,200"],["키시멘","¥800"],["도테야키동","¥1,000"]],
     cost: "1인 ¥800~1,500", hours: "11:00–20:00",
+    tags: ["8인 쉬움", "푸드코트", "나고야항"],
     ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
   },
   sugakiya: {
@@ -750,6 +782,7 @@ const PLACES = {
     desc: "나고야 소울푸드 라멘 체인. 어른들 추억의 맛. JETTY 푸드코트 안.",
     menu: [["라멘","¥430"],["챠슈멘","¥720"],["크림젠자이(디저트)","¥330"]],
     cost: "1인 ¥400~800", hours: "10:30–17:30 (월 휴무)",
+    tags: ["가볍게", "푸드코트", "저렴"],
     placeId: "ChIJx1h936B5A2AR68VrEA3Al1Y"
   },
   tortoise: {
@@ -758,6 +791,7 @@ const PLACES = {
     desc: "수족관 남관 3층 푸드코트. 바다 뷰 창가석 있음. 수족관 관람 중 가볍게 끼니.",
     menu: [["키시멘","¥800"],["미소카츠동","¥1,200"],["대만 라멘","¥1,000"],["소프트 아이스크림","¥450"]],
     cost: "1인 ¥800~1,200", hours: "10:30–17:30",
+    tags: ["관람 중", "휴식", "수족관 내부"],
     placeId: "ChIJL35Mp895A2ARbCNBIvDRD7w"
   },
 
@@ -843,6 +877,7 @@ const PLACES = {
     desc: "앙카케 스파게티(걸쭉한 소스 철판 스파) 원조 본점. 1963년 창업. 오스 북쪽 후시미 방향 도보 15분 또는 택시. 점심 대기 30~60분.",
     menu: [["미로네즈 (기본)","¥1,050"],["카쿠니 (삼겹살 토핑)","¥1,300"],["타마고 철판","¥1,150"]],
     cost: "1인 ¥1,000~1,500", hours: "10:30–21:30 (화 휴무)",
+    tags: ["나고야 명물", "가볍게", "분산 착석"],
     ftid: "0x600370d350419c13:0xbc2fc57af68b2a28"
   },
   taiyaki_yanagiya: {
@@ -851,6 +886,7 @@ const PLACES = {
     desc: "오스 칸논 근처 타이야키·화과자 가게. 걸어 다니며 먹기 좋고 가격 부담이 적어 노약자 간식용으로 적합.",
     menu: [["타이야키","¥200~"],["오구라 계열 화과자","¥200~"],["차·디저트","¥500~"]],
     cost: "¥200~700/인", hours: "11:00–18:00",
+    tags: ["간식", "가볍게", "테이크아웃"],
     placeId: "ChIJA1uNrDN3A2ARgPbX6XolblE"
   },
 
@@ -893,6 +929,7 @@ const PLACES = {
     desc: "아츠타 신궁 경내에 위치한 유일한 식당. 신사 경내 나무 그늘 아래 야외 테이블에서 키시멘·미타라시 당고를 먹는 경험이 특별.",
     menu: [["키시멘 (온/냉)","¥800"],["미타라시 당고","¥400"],["시라타마 안미츠","¥700"]],
     cost: "1인 ¥700~1,200", hours: "09:00–16:30",
+    tags: ["가볍게", "신궁 내부", "야외석"],
     placeId: "ChIJ-c22cxl6A2ARx4gE5g3fNxI"
   },
   horaiken_jingu: {
@@ -901,6 +938,7 @@ const PLACES = {
     desc: "히츠마부시 원조 호라이켄의 신궁 바로 앞 지점. 본점보다 접근성이 좋지만 월·화요일 휴무 주의.",
     menu: [["히츠마부시","¥4,990"],["우나동","¥4,200"],["우나기 정식","¥6,500~"]],
     cost: "1인 ¥5,000~7,000", hours: "11:30–14:00, 16:30–20:30 (월·화 휴무)",
+    tags: ["나고야 명물", "웨이팅 주의", "월요일 휴무"],
     warn: "6월 1일(월요일) 휴무. 이 날은 Ten 또는 호라이켄 본점을 선택하세요.",
     placeId: "ChIJAQBwxBh6A2ARcxKia4ZEwwI"
   },
@@ -912,6 +950,7 @@ const PLACES = {
     desc: "나고야식 대만라멘 대표점. JR 나고야역 안이라 비가 와도 접근이 쉽고, 매운 메뉴가 부담되면 볶음밥·만두·일반 중화 메뉴로 조절 가능.",
     menu: [["대만라멘","¥900~"],["아오나 볶음","¥900~"],["마늘볶음밥","¥900~"],["교자","¥500~"]],
     cost: "1인 ¥1,000~2,000", hours: "11:00–22:00",
+    tags: ["나고야 명물", "매운맛 주의", "역 안"],
     ftid: "0x6000e6f3786e3143:0x6cb454ad9d79b29"
   },
   yamamotoya_meieki: {
@@ -920,7 +959,26 @@ const PLACES = {
     desc: "나고야 명물 미소니코미 우동 전문점. 역 동쪽 지하 접근이 쉬운 편이라 저녁 식사 대안으로 좋다.",
     menu: [["미소니코미 우동","¥1,300~"],["계란 미소니코미","¥1,500~"],["나고야 코친 메뉴","¥2,000~"]],
     cost: "1인 ¥1,500~2,500", hours: "11:00–22:00",
+    tags: ["나고야 명물", "노약자 편함", "역 근처"],
     placeId: "ChIJsQBnHtVwA2ARy9BLlKyKvtI"
+  },
+  yamachan_nayabashi: {
+    name: "세계의 야마짱 나야바시점", jp: "世界の山ちゃん 納屋橋店",
+    lat: 35.1681904, lng: 136.8940321, cat: "restaurant",
+    desc: "호텔에서 가장 가까운 편의 저녁 후보 중 하나. 테바사키와 나고야식 안주를 먹기 좋고, 택시 없이 도보로 이동 가능하다.",
+    menu: [["환상의 테바사키 5p","¥660"],["테바사키 10p","¥1,250"],["교자","¥500~"],["나마비루","¥600~"]],
+    cost: "1인 ¥2,500~4,000", hours: "17:00–24:00",
+    tags: ["호텔 도보권", "나고야 명물", "저녁 술"],
+    ftid: "0x600376d7e21819cb:0xbe9b3646b1a67557"
+  },
+  furaibo_meieki_minami: {
+    name: "후라이보 명역남점", jp: "風来坊 名駅南店",
+    lat: 35.166754, lng: 136.8885639, cat: "restaurant",
+    desc: "테바사키 원조 계열 이자카야. 호텔에서 도보권이고 저녁에 나고야식 닭날개를 가볍게 먹기 좋다.",
+    menu: [["테바사키","¥600~"],["도테니","¥700~"],["나고야 코친 메뉴","¥1,000~"]],
+    cost: "1인 ¥2,500~5,000", hours: "17:00–23:00",
+    tags: ["호텔 도보권", "나고야 명물", "저녁 술"],
+    ftid: "0x600376d8b42da3f7:0xb2e5d25d14c1265a"
   },
   yanagibashi_market: {
     name: "야나기바시 중앙시장", jp: "柳橋中央市場",
@@ -972,6 +1030,88 @@ const PLACES = {
     ftid: "0x600376daafd3f321:0x100eaa1aa16b86ab"
   },
 
+  // ─── 편의 / 휴식 포인트 ───
+  hotel_rest: {
+    name: "호텔 휴식 거점", jp: "ホテル",
+    lat: 35.1678167, lng: 136.8912896, cat: "amenity",
+    desc: "저녁 활동 전후로 화장실·짐 정리·휴식이 가능한 기준점. 노약자 컨디션이 떨어지면 여기서 바로 일정 축소.",
+    cost: "숙박지", hours: "24시간",
+    tags: ["화장실", "휴식", "짐 정리"],
+    ftid: "0x600376d86590af4b:0xc401e95192b0bfac"
+  },
+  takashimaya_rest: {
+    name: "다카시마야 휴식/화장실", jp: "ジェイアール名古屋タカシマヤ",
+    lat: 35.170914, lng: 136.883180, cat: "amenity",
+    desc: "역 직결 백화점. 화장실, 엘리베이터, 앉을 곳, 식품관이 있어 명역권 저녁 전후 휴식 포인트로 안정적이다.",
+    cost: "자유", hours: "10:00–20:00",
+    tags: ["화장실", "실내", "역 직결"],
+    placeId: "ChIJ_zIUlSd3A2ARsDK_g3Ov14M"
+  },
+  kitte_rest: {
+    name: "KITTE 나고야 휴식/화장실", jp: "KITTE名古屋",
+    lat: 35.173081, lng: 136.8823772, cat: "amenity",
+    desc: "나고야역과 연결된 실내 휴식 포인트. 식당가와 카페, 화장실을 같이 쓰기 좋다.",
+    cost: "자유", hours: "10:00–20:00",
+    tags: ["화장실", "실내", "식당가"],
+    ftid: "0x600376e8394020a5:0x2d408f5483912d04"
+  },
+  midland_rest: {
+    name: "미들랜드 스퀘어 휴식/화장실", jp: "ミッドランドスクエア",
+    lat: 35.1700094, lng: 136.885186, cat: "amenity",
+    desc: "역 앞 복합몰. 전망대·식당가·카페를 이용할 때 중간 휴식 포인트로 잡기 좋다.",
+    cost: "자유", hours: "11:00–20:00",
+    tags: ["화장실", "실내", "카페"],
+    ftid: "0x600376ddb80e1a2f:0xf9fb96633f9d02a9"
+  },
+  esca_rest: {
+    name: "에스카 지하상가 휴식/화장실", jp: "エスカ地下街",
+    lat: 35.1702144, lng: 136.880332, cat: "amenity",
+    desc: "신칸센 출구 직결 지하상가. 비 오는 날 역 안에서 식사·쇼핑·화장실을 해결하기 좋다.",
+    cost: "자유", hours: "10:00–20:30",
+    tags: ["화장실", "비 안 맞음", "역 직결"],
+    ftid: "0x600376e63b6ec021:0xff8054343d33ab"
+  },
+  jetty_rest: {
+    name: "JETTY 휴식/화장실", jp: "ジェティ",
+    lat: 35.0921498, lng: 136.8796408, cat: "amenity",
+    desc: "나고야항 수족관 옆 쇼핑몰. 점심, 화장실, 짧은 휴식을 한 번에 해결하는 나고야항 일정의 완충 지점.",
+    cost: "자유", hours: "10:00–20:00",
+    tags: ["화장실", "푸드코트", "나고야항"],
+    ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
+  },
+  seven_meieki_minami: {
+    name: "세븐일레븐 명고야 명역남1초메점", jp: "セブン‐イレブン 名古屋名駅南１丁目店",
+    lat: 35.1667869, lng: 136.8866862, cat: "convenience",
+    desc: "호텔 서쪽 도보권 편의점. 음료, 간식, 간단한 비상용품을 사기 좋다.",
+    cost: "24시간 편의점", hours: "24시간",
+    tags: ["편의점", "도보권", "이트인 가능"],
+    ftid: "0x600376df1a72bd3b:0x4f2dfc307b742dc2"
+  },
+  lawson_meieki_minami2: {
+    name: "로손 명역남2초메점", jp: "ローソン 名駅南二丁目店",
+    lat: 35.1656006, lng: 136.8883937, cat: "convenience",
+    desc: "호텔 남서쪽 도보권 편의점. 이동 전후 물·간식·우산 등을 보충하기 좋다.",
+    cost: "24시간 편의점", hours: "24시간",
+    tags: ["편의점", "도보권", "화장실"],
+    placeId: "ChIJm4E8VSd3A2ARdE3JYSystPQ"
+  },
+  familymart_meieki_minami: {
+    name: "패밀리마트 명역남점", jp: "ファミリーマート 名駅南店",
+    lat: 35.1650276, lng: 136.8852782, cat: "convenience",
+    desc: "명역남쪽 도보권 편의점. 2층 이트인 공간이 있어 간단히 앉아 쉬기 좋다.",
+    cost: "24시간 편의점", hours: "24시간",
+    tags: ["편의점", "이트인", "도보권"],
+    placeId: "ChIJ6bpy89h2A2ARU0diLeVjeYg"
+  },
+  ministop_nishikibashi: {
+    name: "미니스톱 니시키바시점", jp: "ミニストップ 錦橋店",
+    lat: 35.1693423, lng: 136.8927802, cat: "convenience",
+    desc: "호텔 북동쪽 도보권 편의점. 소프트크림·디저트류가 있어 저녁 산책 후 간단히 들르기 좋다.",
+    cost: "24시간 편의점", hours: "24시간",
+    tags: ["편의점", "디저트", "도보권"],
+    ftid: "0x600376d82694f1f9:0x47ad841caa5e84ce"
+  },
+
   // ─── 특별 장소 ───
   birthplace: {
     name: "할아버지 추정 출생지 일대", jp: "旧高砂町（現・浜二丁目）",
@@ -989,9 +1129,31 @@ function gmapUrl(p) {
   return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
 }
 
+function placeTags(p) {
+  return (p.tags && p.tags.length > 0)
+    ? `<div class="card-tags">${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>`
+    : '';
+}
+
+function placeCategory(p) {
+  if (p.cat === 'shopping') return 'shop';
+  if (p.cat === 'attraction') return 'sight';
+  if (p.cat === 'amenity') return 'amenity';
+  if (p.cat === 'convenience') return 'convenience';
+  return 'resto';
+}
+
+function placeTooltipPrefix(p) {
+  if (p.cat === 'shopping') return '🛍️';
+  if (p.cat === 'attraction') return '🏛️';
+  if (p.cat === 'amenity') return '🚻';
+  if (p.cat === 'convenience') return '🏪';
+  return '🍱';
+}
+
 const MEIEKI_RESTOS = [
   "maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan",
-  "misen_meieki","yamamotoya_meieki"
+  "misen_meieki","yamamotoya_meieki","yamachan_nayabashi","furaibo_meieki_minami"
 ];
 const MEIEKI_SHOPS = [
   "takashimaya","gatetower","esca_shopping","aeon_noritake","midland_square","kitte_nagoya","dai_nagoya","endoji"
@@ -999,6 +1161,11 @@ const MEIEKI_SHOPS = [
 const MEIEKI_ATTRACTIONS = [
   "yanagibashi_market","sky_promenade","shikemichi"
 ];
+const MEIEKI_AMENITIES = [
+  "hotel_rest","takashimaya_rest","kitte_rest","midland_rest","esca_rest",
+  "seven_meieki_minami","lawson_meieki_minami2","familymart_meieki_minami","ministop_nishikibashi"
+];
+const PORT_AMENITIES = ["jetty_rest"];
 
 // =============================================================
 // DAYS — 일자별 일정 (8인 기준)
@@ -1012,7 +1179,7 @@ const DAYS = {
     items: [
       { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "poi", poi: "ngo" },
       { t: "10:25", n: "입국 수속 완료", s: "—", type: "transit" },
-      { t: "10:30", n: "공항 출발", s: "🚕 점보택시 1대 · ¥18,000 · 50분  |  🚃 뮤스카이 · ¥1,430/인 (8인 ¥11,440) · 28분 + 도보 7분", tag: "이동 수단 선택", type: "transit" },
+      { t: "10:30", n: "공항 출발", s: "🚕 점보택시 1대 약 ¥23,500+통행료 · 일반택시 2대 약 ¥35,000+통행료 · 50분  |  🚃 뮤스카이 ¥1,430/인 (8인 ¥11,440)", tag: "긴거리 이동 비교", type: "transit" },
       { t: "11:00", n: "호텔 도착, 짐 보관", s: "쿠레타케인 프리미엄 나고야 나야바시 · 체크인 15:00 / 짐 보관 가능", type: "poi", poi: "hotel" },
       { t: "11:30", n: "점심 · 에스카 지하상가", s: "나고야역 직결", tag: "점심", type: "poi", poi: "esca" },
       { t: "13:15", n: "택시 이동", s: "호텔 → 나고야성 (약 10분)", tag: "택시 · 약 ¥2,500", type: "transit" },
@@ -1022,16 +1189,18 @@ const DAYS = {
       { t: "18:00", n: "저녁 · 호텔 주변", s: "메이에키 일대 자유 선택", tag: "저녁", type: "transit" }
     ],
     cost: [
-      { l: "공항→호텔 택시 (1대)", v: "¥18,000" },
-      { l: "공항→호텔 뮤스카이 (8인)", v: "¥11,440 (차액 ¥6,560 절약)" },
+      { l: "공항→호텔 점보택시 1대", v: "약 ¥23,500 + 통행료" },
+      { l: "공항→호텔 일반택시 2대", v: "약 ¥35,000 + 통행료" },
+      { l: "공항→호텔 뮤스카이 (8인)", v: "¥11,440" },
       { l: "택시 호텔↔나고야성 (왕복)", v: "¥5,000" },
       { l: "나고야성 입장 (8인, 시니어 일부)", v: "¥3,200" },
       { l: "점심+저녁 (8인)", v: "¥24,000~40,000" }
     ],
-    total: "¥50,000~66,000",
+    total: "¥44,000~76,000",
     attractions: [...MEIEKI_ATTRACTIONS],
     restos: [...MEIEKI_RESTOS],
-    shops: [...MEIEKI_SHOPS,"kinshachi_shop"]
+    shops: [...MEIEKI_SHOPS,"kinshachi_shop"],
+    amenities: [...MEIEKI_AMENITIES]
   },
   "2a": {
     date: "6월 1일 (월요일) · A안",
@@ -1057,7 +1226,8 @@ const DAYS = {
     total: "¥32,000~50,000",
     attractions: ["osu_kannon","banshouji","nagoya_science",...MEIEKI_ATTRACTIONS],
     restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum",...MEIEKI_RESTOS],
-    shops: ["osu_shopping","mandarake_osu","niomondon",...MEIEKI_SHOPS]
+    shops: ["osu_shopping","mandarake_osu","niomondon",...MEIEKI_SHOPS],
+    amenities: [...MEIEKI_AMENITIES]
   },
   "2b": {
     date: "6월 1일 (월요일) · B안",
@@ -1066,23 +1236,25 @@ const DAYS = {
     color: "#1B4D3E",
     items: [
       { t: "09:30", n: "호텔 출발", s: "택시 승차", type: "transit" },
-      { t: "09:50", n: "아츠타 신궁 도착", s: "택시 약 20분", tag: "택시 · 약 ¥4,000", type: "transit" },
+      { t: "09:50", n: "아츠타 신궁 도착", s: "점보 1대 약 ¥6,000 · 일반 2대 약 ¥8,000", tag: "긴거리 이동 비교", type: "transit" },
       { t: "09:50", n: "신궁 산책", s: "熱田神宮 · 본전까지 평지", tag: "메인 일정", type: "poi", poi: "atsuta" },
       { t: "11:30", n: "점심 · Ten 또는 호라이켄 본점", s: "히츠마부시", tag: "점심", type: "transit" },
-      { t: "13:00", n: "택시 승차", s: "아츠타 → 호텔", tag: "택시 · 약 ¥4,000", type: "transit" },
+      { t: "13:00", n: "택시 승차", s: "아츠타 → 호텔 · 점보 1대 약 ¥6,000 · 일반 2대 약 ¥8,000", tag: "긴거리 이동 비교", type: "transit" },
       { t: "13:30", n: "호텔 복귀 · 오후 자유", s: "메이에키 산책 또는 휴식", type: "transit" },
       { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
     ],
     cost: [
-      { l: "택시 (왕복)", v: "¥8,000" },
+      { l: "택시 왕복 · 점보 1대 기준", v: "약 ¥12,000" },
+      { l: "택시 왕복 · 일반 2대 기준", v: "약 ¥16,000" },
       { l: "아츠타 신궁 입장료", v: "무료" },
       { l: "점심 (8인 · Ten 기준)", v: "¥24,000~32,000" },
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
-    total: "¥44,000~64,000",
+    total: "¥48,000~72,000",
     attractions: ["atsuta_treasure","miya_dote",...MEIEKI_ATTRACTIONS],
     restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten",...MEIEKI_RESTOS],
-    shops: [...MEIEKI_SHOPS]
+    shops: [...MEIEKI_SHOPS],
+    amenities: [...MEIEKI_AMENITIES]
   },
   3: {
     date: "6월 2일 (화요일)",
@@ -1091,41 +1263,44 @@ const DAYS = {
     color: "#1E3A5F",
     items: [
       { t: "09:00", n: "호텔 출발", s: "택시 승차", type: "transit" },
-      { t: "09:25", n: "나고야항 도착", s: "택시 약 25분", tag: "택시 · 약 ¥5,000", type: "transit" },
+      { t: "09:25", n: "나고야항 도착", s: "점보 1대 약 ¥7,500 · 일반 2대 약 ¥10,000", tag: "긴거리 이동 비교", type: "transit" },
       { t: "09:30", n: "수족관 관람 (북관→남관)", s: "名古屋港水族館", tag: "메인 일정", type: "poi", poi: "aqua" },
       { t: "12:30", n: "점심 · JETTY 푸드코트", s: "ジェティ", tag: "점심", type: "poi", poi: "jetty" },
       { t: "13:30", n: "JETTY 쇼핑·카페", s: "기념품·휴식", type: "transit" },
       { t: "14:30", n: "포트빌딩 전망실", s: "ポートビル展望室", tag: "전망", type: "poi", poi: "porttower" },
-      { t: "15:20", n: "택시 승차", s: "나고야항 → 호텔", tag: "택시 · 약 ¥5,000", type: "transit" },
+      { t: "15:20", n: "택시 승차", s: "나고야항 → 호텔 · 점보 1대 약 ¥7,500 · 일반 2대 약 ¥10,000", tag: "긴거리 이동 비교", type: "transit" },
       { t: "15:50", n: "호텔 복귀", s: "—", type: "transit" },
       { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
     ],
     cost: [
-      { l: "택시 (왕복)", v: "¥10,000" },
+      { l: "택시 왕복 · 점보 1대 기준", v: "약 ¥15,000" },
+      { l: "택시 왕복 · 일반 2대 기준", v: "약 ¥20,000" },
       { l: "수족관 (성인 4+시니어 4)", v: "¥12,160" },
       { l: "포트빌딩 전망실 (8인)", v: "¥2,400" },
       { l: "점심+저녁 (8인)", v: "¥20,000~32,000" }
     ],
-    total: "¥44,000~56,000",
+    total: "¥49,000~66,000",
     attractions: [...MEIEKI_ATTRACTIONS],
     restos: ["jetty_food","sugakiya","tortoise",...MEIEKI_RESTOS],
-    shops: ["jetty_shop",...MEIEKI_SHOPS]
+    shops: ["jetty_shop",...MEIEKI_SHOPS],
+    amenities: [...PORT_AMENITIES,...MEIEKI_AMENITIES]
   },
   4: {
     date: "6월 3일 (수요일)",
     title: "귀국",
-    desc: "이른 출발. 짐 많으면 택시 2대, 짐 가벼우면 뮤스카이도 가능.",
+    desc: "이른 출발. 점보 1대와 일반택시 2대 비용을 비교하고, 짐이 가벼우면 뮤스카이도 가능.",
     color: "#6B6B6B",
     items: [
-      { t: "06:30", n: "호텔 출발", s: "🚕 점보택시 2대 · ¥36,000 · 45분  |  🚃 뮤스카이 · ¥11,440 (8인) · 28분 + 역 이동", tag: "이동 수단 선택", type: "transit" },
+      { t: "06:30", n: "호텔 출발", s: "🚕 점보택시 1대 약 ¥23,500+통행료 · 일반택시 2대 약 ¥35,000+통행료 · 45분  |  🚃 뮤스카이 ¥11,440 (8인)", tag: "긴거리 이동 비교", type: "transit" },
       { t: "07:15", n: "NGO 도착", s: "공항 카운터로 직행", type: "poi", poi: "ngo" },
       { t: "10:25", n: "출발", s: "—", type: "transit" }
     ],
     cost: [
-      { l: "호텔→공항 택시 2대", v: "¥36,000" },
-      { l: "호텔→공항 뮤스카이 (8인)", v: "¥11,440 (차액 ¥24,560 절약)" }
+      { l: "호텔→공항 점보택시 1대", v: "약 ¥23,500 + 통행료" },
+      { l: "호텔→공항 일반택시 2대", v: "약 ¥35,000 + 통행료" },
+      { l: "호텔→공항 뮤스카이 (8인)", v: "¥11,440" }
     ],
-    total: "¥36,000",
+    total: "¥11,440~약 ¥38,820",
     restos: [],
     shops: []
   }
@@ -1217,17 +1392,17 @@ function renderRoute(dayKey) {
       .on('click', () => openPlaceModal('birthplace'));
   }
 
-  // Secondary markers (restos/shops/attractions)
+  // Secondary markers (restos/shops/attractions/amenities)
   const seen = new Set();
-  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || [])].forEach(id => {
+  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || []), ...(day.amenities || [])].forEach(id => {
     if (seen.has(id)) return;
     seen.add(id);
     const p = PLACES[id];
     if (!p) return;
-    const iconType = p.cat === 'shopping' ? 'shop' : p.cat === 'attraction' ? 'sight' : 'resto';
+    const iconType = placeCategory(p);
     L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(iconType) })
       .addTo(secondaryLayer)
-      .bindTooltip(`${p.cat === 'shopping' ? '🛍️' : p.cat === 'attraction' ? '🏛️' : '🍱'} ${p.name}`, { direction: 'top', offset: [0, -6] })
+      .bindTooltip(`${placeTooltipPrefix(p)} ${p.name}`, { direction: 'top', offset: [0, -6] })
       .on('click', () => openPlaceModal(id));
   });
 
@@ -1324,6 +1499,7 @@ function renderDay(dayKey) {
         <div>
           <div class="card-name"><span class="card-cat" style="color:#1B4D3E">SIGHT</span>${p.name}</div>
           <div class="card-info">${p.jp || ''} · ${p.cost || ''} · ${p.duration || ''}</div>
+          ${placeTags(p)}
         </div>
         <div class="card-arrow">→</div>
       </div>`;
@@ -1343,6 +1519,7 @@ function renderDay(dayKey) {
         <div>
           <div class="card-name"><span class="card-cat">FOOD</span>${p.name}</div>
           <div class="card-info">${p.jp || ''} · ${(p.hours || '').split(' ')[0] || ''}</div>
+          ${placeTags(p)}
         </div>
         <div class="card-price">${p.cost || ''}</div>
       </div>`;
@@ -1362,6 +1539,29 @@ function renderDay(dayKey) {
         <div>
           <div class="card-name"><span class="card-cat" style="color:#5A6B7D">SHOP</span>${p.name}</div>
           <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
+          ${placeTags(p)}
+        </div>
+        <div class="card-arrow">→</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Amenities
+  if (day.amenities && day.amenities.length > 0) {
+    html += `<div class="section">
+      <div class="section-head">— 편의·휴식 · Restrooms / Convenience</div>
+      <div class="card-list">`;
+    day.amenities.forEach(id => {
+      const p = PLACES[id];
+      if (!p) return;
+      const label = p.cat === 'convenience' ? 'CVS' : 'REST';
+      const color = p.cat === 'convenience' ? '#29706B' : '#6B5A7D';
+      html += `<div class="card" data-place="${id}">
+        <div>
+          <div class="card-name"><span class="card-cat" style="color:${color}">${label}</span>${p.name}</div>
+          <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
+          ${placeTags(p)}
         </div>
         <div class="card-arrow">→</div>
       </div>`;
@@ -1410,7 +1610,14 @@ function openPlaceModal(id) {
   if (!p) return;
   const body = document.getElementById('modal-body');
 
-  const eyebrowMap = { attraction: '관광 · Attraction', restaurant: '식당 · Restaurant', shopping: '쇼핑 · Shopping', base: '기준점' };
+  const eyebrowMap = {
+    attraction: '관광 · Attraction',
+    restaurant: '식당 · Restaurant',
+    shopping: '쇼핑 · Shopping',
+    amenity: '편의 · Restroom / Rest',
+    convenience: '편의점 · Convenience Store',
+    base: '기준점'
+  };
   const eyebrow = eyebrowMap[p.cat] || '장소';
 
   let html = `
@@ -1427,6 +1634,10 @@ function openPlaceModal(id) {
   if (p.hours) stats.push(`<div class="modal-stat"><div class="v">${p.hours}</div><div class="l">영업 시간</div></div>`);
   if (stats.length > 0) {
     html += `<div class="modal-section"><div class="modal-grid">${stats.join('')}</div></div>`;
+  }
+
+  if (p.tags && p.tags.length > 0) {
+    html += `<div class="modal-section"><div class="card-tags">${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div></div>`;
   }
 
   // Menu
