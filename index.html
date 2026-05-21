@@ -354,7 +354,6 @@
   .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
   .marker-secondary.sight { border-color: #1B4D3E; background: #E8F0EC; }
-  .marker-secondary.amenity { border-color: #6B5A7D; background: #F0ECF4; }
   .marker-secondary.convenience { border-color: #29706B; background: #E7F3F1; }
   .marker-heritage {
     width: 32px;
@@ -1030,55 +1029,7 @@ const PLACES = {
     ftid: "0x600376daafd3f321:0x100eaa1aa16b86ab"
   },
 
-  // ─── 편의 / 휴식 포인트 ───
-  hotel_rest: {
-    name: "호텔 휴식 거점", jp: "ホテル",
-    lat: 35.1678167, lng: 136.8912896, cat: "amenity",
-    desc: "저녁 활동 전후로 화장실·짐 정리·휴식이 가능한 기준점. 노약자 컨디션이 떨어지면 여기서 바로 일정 축소.",
-    cost: "숙박지", hours: "24시간",
-    tags: ["화장실", "휴식", "짐 정리"],
-    ftid: "0x600376d86590af4b:0xc401e95192b0bfac"
-  },
-  takashimaya_rest: {
-    name: "다카시마야 휴식/화장실", jp: "ジェイアール名古屋タカシマヤ",
-    lat: 35.170914, lng: 136.883180, cat: "amenity",
-    desc: "역 직결 백화점. 화장실, 엘리베이터, 앉을 곳, 식품관이 있어 명역권 저녁 전후 휴식 포인트로 안정적이다.",
-    cost: "자유", hours: "10:00–20:00",
-    tags: ["화장실", "실내", "역 직결"],
-    placeId: "ChIJ_zIUlSd3A2ARsDK_g3Ov14M"
-  },
-  kitte_rest: {
-    name: "KITTE 나고야 휴식/화장실", jp: "KITTE名古屋",
-    lat: 35.173081, lng: 136.8823772, cat: "amenity",
-    desc: "나고야역과 연결된 실내 휴식 포인트. 식당가와 카페, 화장실을 같이 쓰기 좋다.",
-    cost: "자유", hours: "10:00–20:00",
-    tags: ["화장실", "실내", "식당가"],
-    ftid: "0x600376e8394020a5:0x2d408f5483912d04"
-  },
-  midland_rest: {
-    name: "미들랜드 스퀘어 휴식/화장실", jp: "ミッドランドスクエア",
-    lat: 35.1700094, lng: 136.885186, cat: "amenity",
-    desc: "역 앞 복합몰. 전망대·식당가·카페를 이용할 때 중간 휴식 포인트로 잡기 좋다.",
-    cost: "자유", hours: "11:00–20:00",
-    tags: ["화장실", "실내", "카페"],
-    ftid: "0x600376ddb80e1a2f:0xf9fb96633f9d02a9"
-  },
-  esca_rest: {
-    name: "에스카 지하상가 휴식/화장실", jp: "エスカ地下街",
-    lat: 35.1702144, lng: 136.880332, cat: "amenity",
-    desc: "신칸센 출구 직결 지하상가. 비 오는 날 역 안에서 식사·쇼핑·화장실을 해결하기 좋다.",
-    cost: "자유", hours: "10:00–20:30",
-    tags: ["화장실", "비 안 맞음", "역 직결"],
-    ftid: "0x600376e63b6ec021:0xff8054343d33ab"
-  },
-  jetty_rest: {
-    name: "JETTY 휴식/화장실", jp: "ジェティ",
-    lat: 35.0921498, lng: 136.8796408, cat: "amenity",
-    desc: "나고야항 수족관 옆 쇼핑몰. 점심, 화장실, 짧은 휴식을 한 번에 해결하는 나고야항 일정의 완충 지점.",
-    cost: "자유", hours: "10:00–20:00",
-    tags: ["화장실", "푸드코트", "나고야항"],
-    ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
-  },
+  // ─── 편의점 ───
   seven_meieki_minami: {
     name: "세븐일레븐 명고야 명역남1초메점", jp: "セブン‐イレブン 名古屋名駅南１丁目店",
     lat: 35.1667869, lng: 136.8866862, cat: "convenience",
@@ -1138,7 +1089,6 @@ function placeTags(p) {
 function placeCategory(p) {
   if (p.cat === 'shopping') return 'shop';
   if (p.cat === 'attraction') return 'sight';
-  if (p.cat === 'amenity') return 'amenity';
   if (p.cat === 'convenience') return 'convenience';
   return 'resto';
 }
@@ -1146,7 +1096,6 @@ function placeCategory(p) {
 function placeTooltipPrefix(p) {
   if (p.cat === 'shopping') return '🛍️';
   if (p.cat === 'attraction') return '🏛️';
-  if (p.cat === 'amenity') return '🚻';
   if (p.cat === 'convenience') return '🏪';
   return '🍱';
 }
@@ -1161,11 +1110,9 @@ const MEIEKI_SHOPS = [
 const MEIEKI_ATTRACTIONS = [
   "yanagibashi_market","sky_promenade","shikemichi"
 ];
-const MEIEKI_AMENITIES = [
-  "hotel_rest","takashimaya_rest","kitte_rest","midland_rest","esca_rest",
+const MEIEKI_CONVENIENCE = [
   "seven_meieki_minami","lawson_meieki_minami2","familymart_meieki_minami","ministop_nishikibashi"
 ];
-const PORT_AMENITIES = ["jetty_rest"];
 
 // =============================================================
 // DAYS — 일자별 일정 (8인 기준)
@@ -1200,7 +1147,7 @@ const DAYS = {
     attractions: [...MEIEKI_ATTRACTIONS],
     restos: [...MEIEKI_RESTOS],
     shops: [...MEIEKI_SHOPS,"kinshachi_shop"],
-    amenities: [...MEIEKI_AMENITIES]
+    convenience: [...MEIEKI_CONVENIENCE]
   },
   "2a": {
     date: "6월 1일 (월요일) · A안",
@@ -1227,7 +1174,7 @@ const DAYS = {
     attractions: ["osu_kannon","banshouji","nagoya_science",...MEIEKI_ATTRACTIONS],
     restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum",...MEIEKI_RESTOS],
     shops: ["osu_shopping","mandarake_osu","niomondon",...MEIEKI_SHOPS],
-    amenities: [...MEIEKI_AMENITIES]
+    convenience: [...MEIEKI_CONVENIENCE]
   },
   "2b": {
     date: "6월 1일 (월요일) · B안",
@@ -1254,7 +1201,7 @@ const DAYS = {
     attractions: ["atsuta_treasure","miya_dote",...MEIEKI_ATTRACTIONS],
     restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten",...MEIEKI_RESTOS],
     shops: [...MEIEKI_SHOPS],
-    amenities: [...MEIEKI_AMENITIES]
+    convenience: [...MEIEKI_CONVENIENCE]
   },
   3: {
     date: "6월 2일 (화요일)",
@@ -1283,7 +1230,7 @@ const DAYS = {
     attractions: [...MEIEKI_ATTRACTIONS],
     restos: ["jetty_food","sugakiya","tortoise",...MEIEKI_RESTOS],
     shops: ["jetty_shop",...MEIEKI_SHOPS],
-    amenities: [...PORT_AMENITIES,...MEIEKI_AMENITIES]
+    convenience: [...MEIEKI_CONVENIENCE]
   },
   4: {
     date: "6월 3일 (수요일)",
@@ -1392,9 +1339,9 @@ function renderRoute(dayKey) {
       .on('click', () => openPlaceModal('birthplace'));
   }
 
-  // Secondary markers (restos/shops/attractions/amenities)
+  // Secondary markers (restos/shops/attractions/convenience)
   const seen = new Set();
-  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || []), ...(day.amenities || [])].forEach(id => {
+  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || []), ...(day.convenience || [])].forEach(id => {
     if (seen.has(id)) return;
     seen.add(id);
     const p = PLACES[id];
@@ -1547,19 +1494,17 @@ function renderDay(dayKey) {
     html += `</div></div>`;
   }
 
-  // Amenities
-  if (day.amenities && day.amenities.length > 0) {
+  // Convenience stores
+  if (day.convenience && day.convenience.length > 0) {
     html += `<div class="section">
-      <div class="section-head">— 편의·휴식 · Restrooms / Convenience</div>
+      <div class="section-head">— 편의점 · Convenience Stores</div>
       <div class="card-list">`;
-    day.amenities.forEach(id => {
+    day.convenience.forEach(id => {
       const p = PLACES[id];
       if (!p) return;
-      const label = p.cat === 'convenience' ? 'CVS' : 'REST';
-      const color = p.cat === 'convenience' ? '#29706B' : '#6B5A7D';
       html += `<div class="card" data-place="${id}">
         <div>
-          <div class="card-name"><span class="card-cat" style="color:${color}">${label}</span>${p.name}</div>
+          <div class="card-name"><span class="card-cat" style="color:#29706B">CVS</span>${p.name}</div>
           <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
           ${placeTags(p)}
         </div>
@@ -1614,7 +1559,6 @@ function openPlaceModal(id) {
     attraction: '관광 · Attraction',
     restaurant: '식당 · Restaurant',
     shopping: '쇼핑 · Shopping',
-    amenity: '편의 · Restroom / Rest',
     convenience: '편의점 · Convenience Store',
     base: '기준점'
   };
