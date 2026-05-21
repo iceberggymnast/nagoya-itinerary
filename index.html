@@ -497,7 +497,7 @@
       <div class="eyebrow">Plush Travel · 2026.05.31 → 06.03</div>
       <h1 class="title-jp">名古屋 <em>Nagoya</em></h1>
       <div class="meta">
-        3박 4일 · <strong>8인</strong> · 호텔 <strong>ibis Styles Nagoya</strong> · 노약자 동반
+        3박 4일 · <strong>8인</strong> · 호텔 <strong>쿠레타케인 프리미엄 나고야 나야바시</strong> · 노약자 동반
       </div>
     </div>
     <nav class="tabs">
@@ -536,11 +536,13 @@
 const PLACES = {
   // ─── 기준점 ───
   hotel: {
-    name: "ibis Styles Nagoya", jp: "イビススタイルズ名古屋",
-    lat: 35.169048, lng: 136.889279, cat: "base",
-    desc: "나고야역 메이에키에서 도보 약 7분. 모든 일정의 기점.",
-    addr: "4-22-24 Meieki, Nakamura Ward",
-    placeId: "ChIJF2iihMh3A2ARhD9mlrU0JmA"
+    name: "쿠레타케인 프리미엄 나고야 나야바시", jp: "クレタケインプレミアム名古屋納屋橋",
+    lat: 35.1678167, lng: 136.8912896, cat: "base",
+    desc: "나고야역 메이에키에서 도보 약 13분. 국제센터 지하철역에서 도보 5분. 대욕장·욕조 완비. 체크인 15:00 / 체크아웃 10:00.",
+    addr: "1-2-12 Meiekiminami, Nakamura-ku, Nagoya",
+    hours: "체크인 15:00 · 체크아웃 10:00",
+    cost: "짐 보관 가능 (24시간 프런트)",
+    ftid: "0x600376d86590af4b:0xc401e95192b0bfac"
   },
   ngo: {
     name: "주부 센트레아 국제공항 (NGO)", jp: "中部国際空港",
@@ -552,9 +554,10 @@ const PLACES = {
   // ─── 관광지 ───
   esca: {
     name: "에스카 지하상가", jp: "エスカ地下街",
-    lat: 35.1706, lng: 136.8816, cat: "attraction",
+    lat: 35.1702144, lng: 136.880332, cat: "attraction",
     desc: "나고야역 신칸센 출구 직결 지하상가. 미소카츠·키시멘·히츠마부시 등 나고야 명물 식당이 한 곳에 모여 있어 짐 맡기고 바로 갈 수 있는 1일차 점심 최적지.",
-    cost: "¥1,000~2,500/인", duration: "60~90분"
+    cost: "¥1,000~2,500/인", duration: "60~90분",
+    ftid: "0x600376e63b6ec021:0xff8054343d33ab"
   },
   castle: {
     name: "나고야성 + 혼마루 궁전", jp: "名古屋城 · 本丸御殿",
@@ -566,9 +569,10 @@ const PLACES = {
   },
   atsuta: {
     name: "아츠타 신궁", jp: "熱田神宮",
-    lat: 35.127, lng: 136.908, cat: "attraction",
+    lat: 35.1273579, lng: 136.9086948, cat: "attraction",
     desc: "1900년 이상 역사를 가진 신사. 삼종신기 중 하나인 쿠사나기 신검을 모시는 곳으로 알려져 있다. 본전까지 가는 길은 깊은 녹음의 평지 산책로로 거동이 불편한 분도 무리 없이 걸을 수 있다.",
-    cost: "무료", duration: "약 90분"
+    cost: "무료", duration: "약 90분",
+    ftid: "0x60037a1b9ee1a6dd:0xaa951631c838e6bb"
   },
   osu: {
     name: "오스 상점가", jp: "大須商店街",
@@ -579,21 +583,24 @@ const PLACES = {
   },
   aqua: {
     name: "나고야항 수족관", jp: "名古屋港水族館",
-    lat: 35.0944, lng: 136.8814, cat: "attraction",
+    lat: 35.0905088, lng: 136.8784377, cat: "attraction",
     desc: "북관(고래·범고래·돌고래)과 남관(심해·산호초·펭귄)으로 구성된 일본 최대급 수족관. 엘리베이터·평지 동선 완비. 돌고래쇼는 이번 일정에서 제외.",
-    cost: "성인 ¥2,030 · 시니어/어린이 ¥1,010 · 3관 공통권 ¥2,440", duration: "약 3시간"
+    cost: "성인 ¥2,030 · 시니어/어린이 ¥1,010 · 3관 공통권 ¥2,440", duration: "약 3시간",
+    ftid: "0x600379a0d3c924b3:0xa1a962dc2785debe"
   },
   jetty: {
     name: "JETTY", jp: "ジェティ",
-    lat: 35.0924, lng: 136.8796, cat: "attraction",
+    lat: 35.0921498, lng: 136.8796408, cat: "attraction",
     desc: "수족관 바로 옆 쇼핑몰. 푸드코트에 나고야 명물(앙카케 스파게티·미소카츠·키시멘)과 스가키야 라멘이 모여 있다. 점심·쇼핑·휴식을 한 번에.",
-    cost: "¥800~1,500/인", duration: "1.5~2시간"
+    cost: "¥800~1,500/인", duration: "1.5~2시간",
+    ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
   },
   porttower: {
     name: "포트빌딩 전망실", jp: "名古屋港ポートビル展望室",
-    lat: 35.0905, lng: 136.8800, cat: "attraction",
+    lat: 35.0897364, lng: 136.8809226, cat: "attraction",
     desc: "지상 53m 전망실. 엘리베이터로 바로 올라가 나고야항 전경을 360도 조망. 짧고 가볍게 마무리하기 좋다.",
-    cost: "성인 ¥300 · 시니어/어린이 ¥200", duration: "약 40분"
+    cost: "성인 ¥300 · 시니어/어린이 ¥200", duration: "약 40분",
+    ftid: "0x6003790a602e7e5d:0xf69a43702840ee03"
   },
 
   // ─── 식당: 호텔/메이에키 주변 ───
@@ -718,10 +725,11 @@ const PLACES = {
   },
   jetty_food: {
     name: "JETTY 푸드코트", jp: "JETTY フードコート",
-    lat: 35.0924, lng: 136.8796, cat: "restaurant",
+    lat: 35.0921498, lng: 136.8796408, cat: "restaurant",
     desc: "나고야 명물 (앙카케 스파게티·미소카츠·키시멘·도테야키)을 한 곳에서. 푸드코트라 8인 자리 잡기 쉬움.",
     menu: [["앙카케 스파게티","¥900~"],["미소카츠 정식","¥1,200"],["키시멘","¥800"],["도테야키동","¥1,000"]],
-    cost: "1인 ¥800~1,500", hours: "11:00–20:00"
+    cost: "1인 ¥800~1,500", hours: "11:00–20:00",
+    ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
   },
   sugakiya: {
     name: "스가키야 (JETTY 내)", jp: "スガキヤ",
@@ -765,9 +773,10 @@ const PLACES = {
   },
   esca_shopping: {
     name: "에스카 지하상가 (쇼핑)", jp: "エスカ地下街",
-    lat: 35.1706, lng: 136.8816, cat: "shopping",
+    lat: 35.1702144, lng: 136.880332, cat: "shopping",
     desc: "신칸센 출구 직결 지하상가. 식당뿐 아니라 기념품·과자·로컬 특산품(우이로 등) 구입에 좋음. 비 와도 OK.",
-    cost: "자유", hours: "10:00–20:30"
+    cost: "자유", hours: "10:00–20:30",
+    ftid: "0x600376e63b6ec021:0xff8054343d33ab"
   },
   kinshachi_shop: {
     name: "킨샤치 요코초 (쇼핑)", jp: "金シャチ横丁",
@@ -785,17 +794,17 @@ const PLACES = {
   },
   jetty_shop: {
     name: "JETTY 쇼핑몰", jp: "ジェティ",
-    lat: 35.0924, lng: 136.8796, cat: "shopping",
+    lat: 35.0921498, lng: 136.8796408, cat: "shopping",
     desc: "나고야항 수족관 옆 쇼핑몰. 기념품·해양 굿즈·캐릭터 숍·푸드. 가족 단위 관광객 대상.",
-    cost: "자유", hours: "10:00–20:00"
+    cost: "자유", hours: "10:00–20:00",
+    ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
   }
 };
 
 // 구글 맵 링크 생성
 function gmapUrl(p) {
-  if (p.placeId) {
-    return `https://www.google.com/maps/place/?q=place_id:${p.placeId}`;
-  }
+  if (p.placeId) return `https://www.google.com/maps/place/?q=place_id:${p.placeId}`;
+  if (p.ftid)    return `https://www.google.com/maps/place/?ftid=${p.ftid}`;
   return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
 }
 
@@ -812,7 +821,7 @@ const DAYS = {
       { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "transit", poi: "ngo" },
       { t: "10:25", n: "입국 수속 완료", s: "—", type: "transit" },
       { t: "10:30", n: "공항 출발", s: "🚕 점보택시 1대 · ¥18,000 · 50분  |  🚃 뮤스카이 · ¥1,430/인 (8인 ¥11,440) · 28분 + 도보 7분", tag: "이동 수단 선택", type: "transit" },
-      { t: "11:00~11:15", n: "호텔 도착, 짐 보관", s: "ibis Styles Nagoya · 체크인 14:00 / 짐 보관 가능", type: "poi", poi: "hotel" },
+      { t: "11:00~11:15", n: "호텔 도착, 짐 보관", s: "쿠레타케인 프리미엄 나고야 나야바시 · 체크인 15:00 / 짐 보관 가능", type: "poi", poi: "hotel" },
       { t: "11:30", n: "점심 · 에스카 지하상가", s: "나고야역 직결", tag: "점심", type: "poi", poi: "esca" },
       { t: "13:15", n: "택시 이동", s: "호텔 → 나고야성 (약 10분)", tag: "택시 · 약 ¥2,500", type: "transit" },
       { t: "13:30", n: "나고야성 + 혼마루 궁전", s: "名古屋城 · 本丸御殿", tag: "메인 일정", type: "poi", poi: "castle" },
@@ -989,7 +998,7 @@ function renderRoute(dayKey) {
   if (dayKey !== '4') {
     L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
       .addTo(markerLayer)
-      .bindTooltip('ibis Styles Nagoya (호텔)', { direction: 'top', offset: [0, -8] })
+      .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
       .on('click', () => openPlaceModal('hotel'));
     if (dayKey !== '1') {
       pts.unshift([HOTEL.lat, HOTEL.lng]);
@@ -1017,8 +1026,29 @@ function renderRoute(dayKey) {
       .addTo(routeLayer);
   }
 
-  // Fit bounds (in-city only)
-  if (inCityPts.length > 0) {
+  // Airport route line: Day 1 (NGO → Hotel), Day 4 (Hotel → NGO)
+  const NGO = [PLACES.ngo.lat, PLACES.ngo.lng];
+  const HTL = [HOTEL.lat, HOTEL.lng];
+  if (dayKey === '1') {
+    L.polyline([NGO, HTL], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
+      .addTo(routeLayer)
+      .bindTooltip('공항 → 호텔', { sticky: true });
+  }
+  if (dayKey === '4') {
+    L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
+      .addTo(markerLayer)
+      .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
+      .on('click', () => openPlaceModal('hotel'));
+    L.polyline([HTL, NGO], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
+      .addTo(routeLayer)
+      .bindTooltip('호텔 → 공항', { sticky: true });
+  }
+
+  // Fit bounds: Day 1/4 include airport, else in-city only
+  if (dayKey === '1' || dayKey === '4') {
+    const allPts = [NGO, HTL, ...inCityPts];
+    map.fitBounds(L.latLngBounds(allPts), { padding: [60, 60], maxZoom: 11 });
+  } else if (inCityPts.length > 0) {
     map.fitBounds(L.latLngBounds(inCityPts), { padding: [60, 60], maxZoom: 14 });
   }
 }
