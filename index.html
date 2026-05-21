@@ -338,6 +338,18 @@
   }
   .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
+  .marker-heritage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FFF8E8;
+    border: 2.5px solid #C8901A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    box-shadow: 0 2px 8px rgba(200,144,26,0.35);
+  }
 
   .modal-bg {
     position: fixed;
@@ -798,6 +810,15 @@ const PLACES = {
     desc: "나고야항 수족관 옆 쇼핑몰. 기념품·해양 굿즈·캐릭터 숍·푸드. 가족 단위 관광객 대상.",
     cost: "자유", hours: "10:00–20:00",
     ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
+  },
+
+  // ─── 특별 장소 ───
+  birthplace: {
+    name: "할아버지 추정 출생지 일대", jp: "旧高砂町（現・浜二丁目）",
+    lat: 35.0959819, lng: 136.8816196, cat: "heritage",
+    desc: "1943년 당시 다카사고초(高砂町)였던 지역. 1974년 행정구역 개편으로 하마니초메(浜二丁目)로 변경. 나고야항 바로 옆에 위치한 옛 주거·항만 지구.",
+    addr: "〒455-0036 名古屋市港区浜二丁目",
+    hours: "—"
   }
 };
 
@@ -961,6 +982,12 @@ function makeSecondaryIcon(type) {
     className: '', iconSize: [18, 18], iconAnchor: [9, 9]
   });
 }
+function makeHeritageIcon() {
+  return L.divIcon({
+    html: `<div class="marker-heritage">🏮</div>`,
+    className: '', iconSize: [32, 32], iconAnchor: [16, 16]
+  });
+}
 
 function renderRoute(dayKey) {
   routeLayer.clearLayers();
@@ -1004,6 +1031,15 @@ function renderRoute(dayKey) {
       pts.unshift([HOTEL.lat, HOTEL.lng]);
       pts.push([HOTEL.lat, HOTEL.lng]);
     }
+  }
+
+  // 특별 마커: 할아버지 추정 출생지 (Day 3에만 표시)
+  if (dayKey === '3') {
+    const bp = PLACES.birthplace;
+    L.marker([bp.lat, bp.lng], { icon: makeHeritageIcon() })
+      .addTo(markerLayer)
+      .bindTooltip('🏮 ' + bp.name, { direction: 'top', offset: [0, -10] })
+      .on('click', () => openPlaceModal('birthplace'));
   }
 
   // Secondary markers (restos/shops)
