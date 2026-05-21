@@ -338,6 +338,7 @@
   }
   .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
+  .marker-secondary.sight { border-color: #1B4D3E; background: #E8F0EC; }
   .marker-heritage {
     width: 32px;
     height: 32px;
@@ -812,12 +813,93 @@ const PLACES = {
     ftid: "0x600379a0e5196f79:0x61a396de3dad1969"
   },
 
+  // ─── 볼거리: 오스 ───
+  osu_kannon: {
+    name: "오스 칸논", jp: "大須観音",
+    lat: 35.160583, lng: 136.900406, cat: "attraction",
+    desc: "정식 명칭 호쇼잔 만복사. 오스 상점가 한복판에 위치한 관음사. 비둘기 떼와 함께하는 분위기가 독특. 경내 평지라 짧게 둘러보기 좋음.",
+    cost: "무료", duration: "약 20분"
+  },
+  banshouji: {
+    name: "반쇼지", jp: "万松寺",
+    lat: 35.160083, lng: 136.904444, cat: "attraction",
+    desc: "오다 노부나가 아버지 노부히데의 위패를 모신 절. 오스 상점가 안쪽. 황금빛 용 분수와 정각마다 작동하는 로봇 노부나가 인형이 포토스팟.",
+    cost: "무료", duration: "약 15분"
+  },
+  nagoya_science: {
+    name: "나고야시 과학관", jp: "名古屋市科学館",
+    lat: 35.164819, lng: 136.899936, cat: "attraction",
+    desc: "세계 최대 규모 플라네타리움(돔 직경 35m) 보유. 오스 상점가에서 도보 약 10분. 이공계 전시 다양. 플라네타리움은 사전 예약 권장.",
+    cost: "성인 ¥800 · 시니어 ¥200", duration: "2~3시간"
+  },
+
+  // ─── 식당: 오스 추가 ───
+  yokoi: {
+    name: "스파게티 하우스 요코이 본점", jp: "スパゲッティハウス ヨコイ",
+    lat: 35.165444, lng: 136.897806, cat: "restaurant",
+    desc: "앙카케 스파게티(걸쭉한 소스 철판 스파) 원조 본점. 1963년 창업. 오스 북쪽 후시미 방향 도보 15분 또는 택시. 점심 대기 30~60분.",
+    menu: [["미로네즈 (기본)","¥1,050"],["카쿠니 (삼겹살 토핑)","¥1,300"],["타마고 철판","¥1,150"]],
+    cost: "1인 ¥1,000~1,500", hours: "10:30–21:30 (화 휴무)"
+  },
+  taiyaki_yanagiya: {
+    name: "타이야키 야나기야", jp: "たい焼き 柳家",
+    lat: 35.158333, lng: 136.901722, cat: "restaurant",
+    desc: "오스 상점가 내 전통 붕어빵 가게. 팥·크림·고구마 앙금. 걸어 다니며 먹기 딱 좋고 가격도 부담 없음. 노약자 간식용으로 최적.",
+    menu: [["팥 타이야키","¥180"],["크림 타이야키","¥200"],["고구마 타이야키","¥200"]],
+    cost: "¥180~200/개", hours: "10:00–17:00 (수 휴무)"
+  },
+
+  // ─── 쇼핑: 오스 추가 ───
+  mandarake_osu: {
+    name: "만다라케 나고야점", jp: "まんだらけ 名古屋店",
+    lat: 35.158861, lng: 136.903750, cat: "shopping",
+    desc: "오스 상점가 안 5층 건물 전체가 중고 만화·피규어·레트로 굿즈. 쇼와 시대 만화·레코드·레트로 완구도 풍부해 중장년층도 재미있게 구경 가능.",
+    cost: "자유", hours: "12:00–20:00"
+  },
+  niomondon: {
+    name: "니오몬도리 골동품 거리", jp: "仁王門通り",
+    lat: 35.159694, lng: 136.902167, cat: "shopping",
+    desc: "오스 칸논 앞으로 이어지는 골목. 골동품·도자기·오래된 잡화·불교 용품점 밀집. 빈티지 의류점과 섞여 있어 구경 재미 있음.",
+    cost: "자유", hours: "대부분 11:00–18:00"
+  },
+
+  // ─── 볼거리: 아츠타 ───
+  atsuta_treasure: {
+    name: "아츠타 신궁 보물관", jp: "熱田神宮宝物館",
+    lat: 35.128194, lng: 136.910083, cat: "attraction",
+    desc: "신궁 경내 박물관. 헌납 도검·갑옷·고문서·도자기 등 6,000점 이상 소장. 평지 실내라 노약자 적합. 신궁 산책 후 자연스럽게 들를 수 있음.",
+    cost: "성인 ¥300 · 시니어 ¥150", duration: "약 45분"
+  },
+  miya_dote: {
+    name: "미야 도테 공원", jp: "宮の渡し公園",
+    lat: 35.122611, lng: 136.915722, cat: "attraction",
+    desc: "에도 시대 도카이도·나카센도의 연결 도선장 터. 나고야항 초입. 강변 공원으로 정비돼 산책하기 좋고 역사 표지판도 있음. 아츠타 신궁에서 도보 12분.",
+    cost: "무료", duration: "약 30분"
+  },
+
+  // ─── 식당: 아츠타 추가 ───
+  miya_kishimen: {
+    name: "미야키시멘 (신궁 경내)", jp: "宮きしめん 神宮店",
+    lat: 35.127333, lng: 136.909694, cat: "restaurant",
+    desc: "아츠타 신궁 경내에 위치한 유일한 식당. 신사 경내 나무 그늘 아래 야외 테이블에서 키시멘·미타라시 당고를 먹는 경험이 특별.",
+    menu: [["키시멘 (온/냉)","¥800"],["미타라시 당고","¥400"],["시라타마 안미츠","¥700"]],
+    cost: "1인 ¥700~1,200", hours: "09:00–16:30"
+  },
+  horaiken_jingu: {
+    name: "아츠타 호라이켄 신궁점", jp: "あつた蓬莱軒 神宮店",
+    lat: 35.126083, lng: 136.908861, cat: "restaurant",
+    desc: "히츠마부시 원조 호라이켄의 신궁 바로 앞 지점. 본점보다 접근성이 좋지만 월·화요일 휴무 주의.",
+    menu: [["히츠마부시","¥4,990"],["우나동","¥4,200"],["우나기 정식","¥6,500~"]],
+    cost: "1인 ¥5,000~7,000", hours: "11:30–14:00, 16:30–20:30 (월·화 휴무)",
+    warn: "6월 1일(월요일) 휴무. 이 날은 Ten 또는 호라이켄 본점을 선택하세요."
+  },
+
   // ─── 특별 장소 ───
   birthplace: {
     name: "할아버지 추정 출생지 일대", jp: "旧高砂町（現・浜二丁目）",
     lat: 35.0959819, lng: 136.8816196, cat: "heritage",
-    desc: "1943년 당시 다카사고초(高砂町)였던 지역. 1974년 행정구역 개편으로 하마니초메(浜二丁目)로 변경. 나고야항 바로 옆에 위치한 옛 주거·항만 지구.",
-    addr: "〒455-0036 名古屋市港区浜二丁目",
+    desc: "1943년 당시 다카사고초(高砂町)였던 지역. 1974년 행정구역 개편으로 하마니초메(浜二丁目)로 변경. 나고야항 바로 옆에 위치한 옛 주거·항만 지구.<br><br>추정 주소: 나고야시(名古屋市) 미나토구(港区) 다카사고마치(高砂町) 6초메(丁目) 6반치(番地)",
+    addr: "名古屋市港区高砂町6丁目6番地（現・浜二丁目）",
     hours: "—"
   }
 };
@@ -883,8 +965,9 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥32,000~50,000",
-    restos: ["yabaton_honten","buriko","yumyum","komeda","yamachan"],
-    shops: ["osu_shopping","takashimaya","gatetower"]
+    attractions: ["osu_kannon","banshouji","nagoya_science"],
+    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum","komeda","yamachan"],
+    shops: ["osu_shopping","mandarake_osu","niomondon","takashimaya","gatetower"]
   },
   "2b": {
     date: "6월 1일 (월요일) · B안",
@@ -907,7 +990,8 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥44,000~64,000",
-    restos: ["ten","horaiken_honten","komeda","yamachan","maruya"],
+    attractions: ["atsuta_treasure","miya_dote"],
+    restos: ["miya_kishimen","ten","horaiken_jingu","horaiken_honten","komeda","yamachan","maruya"],
     shops: ["takashimaya","gatetower","esca_shopping","aeon_noritake"]
   },
   3: {
@@ -1042,16 +1126,17 @@ function renderRoute(dayKey) {
       .on('click', () => openPlaceModal('birthplace'));
   }
 
-  // Secondary markers (restos/shops)
+  // Secondary markers (restos/shops/attractions)
   const seen = new Set();
-  [...(day.restos || []), ...(day.shops || [])].forEach(id => {
+  [...(day.restos || []), ...(day.shops || []), ...(day.attractions || [])].forEach(id => {
     if (seen.has(id)) return;
     seen.add(id);
     const p = PLACES[id];
     if (!p) return;
-    L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(p.cat === 'shopping' ? 'shop' : 'resto') })
+    const iconType = p.cat === 'shopping' ? 'shop' : p.cat === 'attraction' ? 'sight' : 'resto';
+    L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(iconType) })
       .addTo(secondaryLayer)
-      .bindTooltip(`${p.cat === 'shopping' ? '🛍️' : '🍱'} ${p.name}`, { direction: 'top', offset: [0, -6] })
+      .bindTooltip(`${p.cat === 'shopping' ? '🛍️' : p.cat === 'attraction' ? '🏛️' : '🍱'} ${p.name}`, { direction: 'top', offset: [0, -6] })
       .on('click', () => openPlaceModal(id));
   });
 
@@ -1135,6 +1220,25 @@ function renderDay(dayKey) {
       </div>`;
   });
   html += `</div>`;
+
+  // Attractions
+  if (day.attractions && day.attractions.length > 0) {
+    html += `<div class="section">
+      <div class="section-head">— 볼거리 추천 · Sights</div>
+      <div class="card-list">`;
+    day.attractions.forEach(id => {
+      const p = PLACES[id];
+      if (!p) return;
+      html += `<div class="card" data-place="${id}">
+        <div>
+          <div class="card-name"><span class="card-cat" style="color:#1B4D3E">SIGHT</span>${p.name}</div>
+          <div class="card-info">${p.jp || ''} · ${p.cost || ''} · ${p.duration || ''}</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
 
   // Restaurants
   if (day.restos && day.restos.length > 0) {
