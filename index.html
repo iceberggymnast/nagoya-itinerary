@@ -618,7 +618,7 @@
     <nav class="tabs">
       <button class="tab active" data-day="1"><span class="num">01</span>도착·명역</button>
       <button class="tab" data-day="2"><span class="num">02</span>아츠타·오스</button>
-      <button class="tab" data-day="3"><span class="num">03</span>나고야항</button>
+      <button class="tab" data-day="3"><span class="num">03</span>나고야항·히가시야마</button>
       <button class="tab" data-day="4"><span class="num">04</span>귀국</button>
     </nav>
     <div id="day-content"></div>
@@ -723,6 +723,48 @@ const PLACES = {
     cost: "성인 ¥300 · 시니어/어린이 ¥200", duration: "약 40분",
     ftid: "0x6003790a602e7e5d:0xf69a43702840ee03"
   },
+  noritake_forest: {
+    name: "노리타케의 숲", jp: "ノリタケの森",
+    lat: 35.1791153, lng: 136.8812176, cat: "attraction",
+    desc: "도자기 브랜드 노리타케의 옛 공장 부지를 정원·전시·숍으로 꾸민 공간. 나고야성 관람 후 피곤도를 보고, 컨디션이 괜찮으면 정원과 숍 중심으로 짧게 들르기 좋다.",
+    cost: "정원 무료 · 뮤지엄 유료", duration: "45~75분", hours: "10:00–17:00",
+    ftid: "0x600376eadcaf5a91:0xe058541e779256d2"
+  },
+  oasis21: {
+    name: "오아시스 21", jp: "オアシス21",
+    lat: 35.1711148, lng: 136.9094757, cat: "attraction",
+    desc: "사카에의 유리 지붕 공원과 버스터미널 복합시설. 물의 우주선이라 불리는 옥상 산책로가 유명하고, 오스 일정 전후로 짧게 들르기 좋다.",
+    cost: "무료", duration: "30~45분",
+    ftid: "0x600370d429e2994f:0x54bee562b7bb83d6"
+  },
+  higashiyama_zoo: {
+    name: "히가시야마 동식물원", jp: "東山動植物園",
+    lat: 35.1591137, lng: 136.9852363, cat: "attraction",
+    desc: "동물원과 식물원이 결합된 대형 공원. 동물 관람, 온실, 정원 산책을 한 번에 묶을 수 있지만 면적이 넓어 무리하지 않고 핵심 구역만 보는 일정이 좋다.",
+    cost: "성인 ¥500 · 중학생 이하 무료", duration: "2.5~3.5시간", hours: "09:00–16:50",
+    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+  },
+  higashiyama_sky_tower: {
+    name: "히가시야마 스카이 타워", jp: "東山スカイタワー",
+    lat: 35.156767, lng: 136.978872, cat: "attraction",
+    desc: "동식물원 옆 전망 타워. 엘리베이터로 전망층까지 이동 가능하며, 맑은 날 나고야 동부와 도심을 내려다보기 좋다.",
+    cost: "성인 ¥300", duration: "40~60분", hours: "09:00–21:30",
+    ftid: "0x60037ab3657a15cb:0xcd81097b1fd5a58b"
+  },
+  hoshigaoka_terrace: {
+    name: "호시가오카 테라스", jp: "星が丘テラス",
+    lat: 35.161368, lng: 136.986595, cat: "shopping",
+    desc: "호시가오카역 옆 야외형 쇼핑·식당가. 동식물원 식물원문과 가까워 관람 후 카페·쇼핑·휴식지로 쓰기 좋다.",
+    cost: "자유", hours: "점포별 상이",
+    ftid: "0x60036532d72c5555:0xc2f829a7406114b5"
+  },
+  toganji: {
+    name: "도간지", jp: "桃巌寺",
+    lat: 35.160753, lng: 136.968702, cat: "attraction",
+    desc: "모토야마역 인근의 조용한 사찰. 녹색 대불로 알려져 있으며, 시간이 남을 때 택시로 짧게 들를 수 있는 근처 명소.",
+    cost: "무료", duration: "30~45분",
+    ftid: "0x600365854600f4df:0x59c01378cd284581"
+  },
 
   // ─── 식당: 호텔/메이에키 주변 ───
   maruya: {
@@ -797,6 +839,42 @@ const PLACES = {
     tags: ["나고야 명물", "저녁 술", "8인 분산"],
     placeId: "ChIJjXSuD9x2A2ARWf8ZoxWpKhw"
   },
+  tenmusu_keshiki: {
+    name: "텐무스도코로 케시키 나고야본점", jp: "天むす処 けしき 名古屋本店",
+    lat: 35.1736291, lng: 136.8901074, cat: "restaurant",
+    desc: "나고야 명물 텐무스 전문점. 호텔과 나고야역 사이에서 가볍게 먹거나 포장하기 좋은 후보.",
+    menu: [["텐무스","¥800~"],["도시락/포장","점포 확인"]],
+    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    tags: ["태기추천", "나고야 명물", "포장 가능"],
+    ftid: "0x60037763c12da639:0x598904ffe8d42fd7"
+  },
+  unau_okafuji: {
+    name: "우나우 오카후지", jp: "うなう 岡富士",
+    lat: 35.1673611, lng: 136.8973316, cat: "restaurant",
+    desc: "호텔 동쪽 도보·택시권의 장어 식당. 히츠마부시나 우나기 계열 저녁 후보로 분산 이용하기 좋다.",
+    menu: [["히츠마부시","점포 확인"],["우나동","점포 확인"]],
+    cost: "1인 ¥3,000~6,000", hours: "점포 확인",
+    tags: ["태기추천", "장어", "호텔 도보권"],
+    ftid: "0x600370c316d8301f:0xd4562726e32fcf4c"
+  },
+  moumoutei_hirokoji: {
+    name: "Moumoutei Hirokoji", jp: "もうもう亭 広小路店",
+    lat: 35.1679393, lng: 136.8954147, cat: "restaurant",
+    desc: "히로코지 주변 야키니쿠 식당. 호텔에서 멀지 않아 저녁에 고기 메뉴가 필요할 때 대안으로 넣기 좋다.",
+    menu: [["야키니쿠","점포 확인"],["코스/세트","점포 확인"]],
+    cost: "1인 ¥4,000~8,000", hours: "점포 확인",
+    tags: ["태기추천", "야키니쿠", "저녁"],
+    ftid: "0x600377bedef98cc5:0x71e414bd961b8585"
+  },
+  tsubamepan_amagasaka: {
+    name: "츠바메빵&밀크 아마가사카 본점", jp: "つばめパン＆Milk 尼ヶ坂本店",
+    lat: 35.1872779, lng: 136.9175487, cat: "restaurant",
+    desc: "오구라 토스트와 식빵으로 유명한 카페. 호텔·역 권역에서는 택시 이동 후보지만, 아침이나 카페 일정 대안으로 좋다.",
+    menu: [["오구라 토스트","점포 확인"],["토스트/카페 메뉴","점포 확인"]],
+    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    tags: ["태기추천", "카페", "오구라 토스트"],
+    ftid: "0x60037164f8fadf17:0xea59b30ae9f65d00"
+  },
 
   // ─── 식당: 오스 ───
   yabaton_honten: {
@@ -805,7 +883,7 @@ const PLACES = {
     desc: "1947년 창업, 나고야 미소카츠의 원조 본점. 오스 상점가 인근. 본점 분위기가 압도적. 대기 30~90분.",
     menu: [["철판 미소카츠","¥1,900"],["로스카츠 정식","¥1,750"],["와라지(짚신) 톤카츠","¥2,200"],["테바사키","¥780"]],
     cost: "1인 ¥1,800~2,500", hours: "11:00–21:00",
-    tags: ["나고야 명물", "웨이팅 주의", "본점"],
+    tags: ["태기추천", "나고야 명물", "웨이팅 주의", "본점"],
     placeId: "ChIJeUhI_NNxA2ARSBP5UM663A0"
   },
   buriko: {
@@ -825,6 +903,33 @@ const PLACES = {
     cost: "1인 ¥500~1,000", hours: "12:00–13:45, 17:30–22:45",
     tags: ["가볍게", "소규모", "8인 어려움"],
     placeId: "ChIJBUGaeQ53A2ARgMfKcmXqdCc"
+  },
+  unayasu_nishiki: {
+    name: "우나야스 니시키점", jp: "うな泰 錦店",
+    lat: 35.1695556, lng: 136.9043392, cat: "restaurant",
+    desc: "사카에·니시키 권역의 장어 식당. 오아시스21이나 오스 상점가 일정 전후에 장어 메뉴를 넣고 싶을 때 후보.",
+    menu: [["우나동","점포 확인"],["히츠마부시","점포 확인"]],
+    cost: "1인 ¥2,000~4,000", hours: "점포 확인",
+    tags: ["태기추천", "장어", "사카에"],
+    ftid: "0x600371d3f205f1db:0x7d0a6cdf25908262"
+  },
+  yamamotoya_hirokoji_fushimi: {
+    name: "야마모토야혼텐 히로코지후시미점", jp: "山本屋本店 広小路伏見店",
+    lat: 35.1682041, lng: 136.8943901, cat: "restaurant",
+    desc: "미소니코미 우동 전문점. 오스에서 호텔로 돌아오는 길이나 후시미 경유 일정에 넣기 좋은 나고야 명물 식당.",
+    menu: [["미소니코미 우동","¥1,300~"],["나고야 코친 메뉴","점포 확인"]],
+    cost: "1인 ¥1,500~2,500", hours: "점포 확인",
+    tags: ["태기추천", "나고야 명물", "우동"],
+    ftid: "0x600377282071be61:0xf2a2eceab47e6b9"
+  },
+  kujira_sakae: {
+    name: "쿠지라 사카에", jp: "Ramen Kujira Sakae",
+    lat: 35.1695082, lng: 136.9133635, cat: "restaurant",
+    desc: "사카에 동쪽 라멘 식당. 오아시스21 주변에서 가볍게 한 끼를 해결할 때 선택 가능한 후보.",
+    menu: [["라멘","점포 확인"],["사이드 메뉴","점포 확인"]],
+    cost: "1인 ¥900~1,500", hours: "점포 확인",
+    tags: ["태기추천", "라멘", "가볍게"],
+    ftid: "0x600371b4bc78e359:0x3d35ddd06c6e6b35"
   },
 
   // ─── 식당: 아츠타 ───
@@ -884,6 +989,42 @@ const PLACES = {
     cost: "1인 ¥800~1,200", hours: "10:30–17:30",
     tags: ["관람 중", "휴식", "수족관 내부"],
     placeId: "ChIJL35Mp895A2ARbCNBIvDRD7w"
+  },
+  gusto_higashiyama: {
+    name: "가스토 히가시야마코엔점", jp: "ガスト 東山公園店",
+    lat: 35.1607026, lng: 136.9740325, cat: "restaurant",
+    desc: "히가시야마 공원역 근처 패밀리 레스토랑. 메뉴 폭이 넓고 좌석 회전이 안정적이라 동식물원 일정의 부담 적은 점심 후보.",
+    menu: [["런치/정식","¥800~"],["드링크바","점포 확인"],["디저트","¥400~"]],
+    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    tags: ["태기추천", "패밀리레스토랑", "노약자 편함"],
+    ftid: "0x60037aae588e10bb:0x4b104ae8ad14b77d"
+  },
+  zooasis: {
+    name: "ZOOASIS", jp: "ゾアシス",
+    lat: 35.157978, lng: 136.976078, cat: "restaurant",
+    desc: "동식물원 안 푸드코트. 동물원 관람 중 이동 부담 없이 카레·라멘·우동 등 가벼운 식사를 해결하기 좋다.",
+    menu: [["푸드코트 메뉴","점포별 상이"],["카페/간식","점포별 상이"]],
+    cost: "1인 ¥800~1,500", hours: "09:00–16:45",
+    tags: ["관람 중", "푸드코트", "노약자 편함"],
+    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+  },
+  garden_terrace_higashiyama: {
+    name: "가든 테라스 히가시야마", jp: "ガーデンテラス東山",
+    lat: 35.154673, lng: 136.976977, cat: "restaurant",
+    desc: "동식물원 식물원 권역의 레스토랑. 식물원 쪽까지 이동할 컨디션이면 조금 여유 있는 점심·카페 후보로 쓸 수 있다.",
+    menu: [["런치","점포 확인"],["카페","점포 확인"]],
+    cost: "1인 ¥1,500~3,000", hours: "11:30–22:00",
+    tags: ["식물원", "휴식", "점심"],
+    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+  },
+  moet_dining: {
+    name: "MOET & DINING", jp: "モエ ダイニング",
+    lat: 35.156767, lng: 136.978872, cat: "restaurant",
+    desc: "히가시야마 스카이 타워 안 캐주얼 이탈리안. 전망을 보며 식사할 수 있지만 타워 입장권이 별도로 필요하다.",
+    menu: [["파스타/피자","점포 확인"],["카페 메뉴","점포 확인"]],
+    cost: "1인 ¥1,500~3,000", hours: "수~일 11:00–16:45",
+    tags: ["전망", "타워 내부", "점심"],
+    ftid: "0x60037ab3657a15cb:0xcd81097b1fd5a58b"
   },
 
   // ─── 쇼핑 ───
@@ -1202,7 +1343,8 @@ function markerIds(day) {
 
 const MEIEKI_RESTOS = [
   "maruya","binchou","kitchen_nagoya","keitei","kishimen","yabaton_jr","komeda","yamachan",
-  "misen_meieki","yamamotoya_meieki","yamachan_nayabashi","furaibo_meieki_minami"
+  "misen_meieki","yamamotoya_meieki","yamachan_nayabashi","furaibo_meieki_minami",
+  "tenmusu_keshiki","unau_okafuji","moumoutei_hirokoji","tsubamepan_amagasaka"
 ];
 const MEIEKI_SHOPS = [
   "takashimaya","gatetower","esca_shopping","aeon_noritake","midland_square","kitte_nagoya","dai_nagoya","endoji"
@@ -1221,7 +1363,7 @@ const DAYS = {
   1: {
     date: "5월 31일 (일요일)",
     title: "도착 · 명역 · 나고야성",
-    desc: "비행기에서 내려 호텔에 짐 풀고, 점심 후 나고야성에서 가볍게 첫날을 마무리.",
+    desc: "비행기에서 내려 호텔에 짐 풀고, 점심 후 나고야성 관람. 컨디션이 괜찮으면 노리타케의 숲까지 짧게 들른다.",
     color: "#B91D1D",
     items: [
       { t: "09:25", n: "NGO 도착", s: "주부 센트레아 국제공항", tag: "도착", type: "poi", poi: "ngo" },
@@ -1231,20 +1373,22 @@ const DAYS = {
       { t: "11:30", n: "점심 · 에스카 지하상가", s: "나고야역 직결", tag: "점심", type: "poi", poi: "esca" },
       { t: "13:15", n: "택시 이동", s: "호텔 → 나고야성 (약 10분)", tag: "택시 · 약 ¥2,500", type: "transit" },
       { t: "13:30", n: "나고야성 + 혼마루 궁전", s: "名古屋城 · 本丸御殿", tag: "메인 일정", type: "poi", poi: "castle" },
-      { t: "15:45", n: "택시 이동", s: "나고야성 → 호텔", tag: "택시 · 약 ¥2,500", type: "transit" },
-      { t: "16:00", n: "호텔 복귀 · 휴식", s: "—", type: "transit" },
+      { t: "15:35", n: "피곤도 체크", s: "피곤하면 바로 호텔, 괜찮으면 노리타케의 숲으로 이동", tag: "컨디션 분기", type: "transit" },
+      { t: "15:45", n: "노리타케의 숲", s: "ノリタケの森 · 정원/숍 위주 짧게 관람", tag: "선택 관람", type: "poi", poi: "noritake_forest" },
+      { t: "17:10", n: "택시 이동", s: "노리타케의 숲 → 호텔", tag: "택시 · 약 ¥1,500", type: "transit" },
+      { t: "17:25", n: "호텔 복귀 · 휴식", s: "—", type: "transit" },
       { t: "18:00", n: "저녁 · 호텔 주변", s: "메이에키 일대 자유 선택", tag: "저녁", type: "transit" }
     ],
     cost: [
       { l: "공항→호텔 점보택시 1대", v: "약 ¥23,500 + 통행료" },
       { l: "공항→호텔 일반택시 2대", v: "약 ¥35,000 + 통행료" },
       { l: "공항→호텔 뮤스카이 (8인)", v: "¥11,440" },
-      { l: "택시 호텔↔나고야성 (왕복)", v: "¥5,000" },
+      { l: "택시 호텔→나고야성→노리타케→호텔", v: "약 ¥5,500~6,500" },
       { l: "나고야성 입장 (8인, 시니어 일부)", v: "¥3,200" },
       { l: "점심+저녁 (8인)", v: "¥24,000~40,000" }
     ],
     total: "¥44,000~76,000",
-    attractions: [...MEIEKI_ATTRACTIONS],
+    attractions: ["noritake_forest", ...MEIEKI_ATTRACTIONS],
     restos: [...MEIEKI_RESTOS],
     shops: [...MEIEKI_SHOPS,"kinshachi_shop"],
     convenience: [...MEIEKI_CONVENIENCE]
@@ -1256,10 +1400,11 @@ const DAYS = {
     color: "#1B4D3E",
     items: [
       { t: "09:30", n: "호텔 출발", s: "택시 승차", type: "transit" },
-      { t: "09:45", n: "오스 상점가 도착", s: "택시 약 15분", tag: "택시 · 약 ¥3,000", type: "transit" },
-      { t: "10:00", n: "오스 상점가 자유 구경", s: "大須商店街 · 아케이드", tag: "메인 일정", type: "poi", poi: "osu" },
-      { t: "12:30", n: "점심 · 오스 내 식당", s: "야바톤 본점 / Buriko / 길거리", tag: "점심", type: "transit" },
-      { t: "14:00", n: "추가 구경 · 카페 휴식", s: "오스 칸논 사찰까지 산책 가능", type: "transit" },
+      { t: "09:45", n: "오아시스 21", s: "オアシス21 · 사카에 짧은 산책", tag: "볼거리", type: "poi", poi: "oasis21" },
+      { t: "10:30", n: "오스 상점가 도착", s: "택시 약 10분", tag: "택시 · 약 ¥2,000", type: "transit" },
+      { t: "10:45", n: "오스 상점가 자유 구경", s: "大須商店街 · 아케이드", tag: "메인 일정", type: "poi", poi: "osu" },
+      { t: "12:30", n: "점심 · 오스/사카에 권역", s: "야바톤 본점 / 우나야스 / 야마모토야 / 쿠지라", tag: "점심", type: "transit" },
+      { t: "14:00", n: "추가 구경 · 카페 휴식", s: "오스 칸논·반쇼지까지 산책 가능", type: "transit" },
       { t: "15:45", n: "택시 승차", s: "오스 → 호텔", tag: "택시 · 약 ¥3,000", type: "transit" },
       { t: "16:00", n: "호텔 복귀", s: "—", type: "transit" },
       { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
@@ -1271,8 +1416,8 @@ const DAYS = {
       { l: "저녁 (8인)", v: "¥12,000~24,000" }
     ],
     total: "¥32,000~50,000",
-    attractions: ["osu_kannon","banshouji","nagoya_science"],
-    restos: ["yabaton_honten","buriko","yokoi","taiyaki_yanagiya","yumyum"],
+    attractions: ["oasis21","osu_kannon","banshouji","nagoya_science"],
+    restos: ["yabaton_honten","unayasu_nishiki","yamamotoya_hirokoji_fushimi","kujira_sakae","buriko","yokoi","taiyaki_yanagiya","yumyum"],
     shops: ["osu_shopping","mandarake_osu","niomondon"],
     eveningAttractions: [...MEIEKI_ATTRACTIONS],
     eveningRestos: [...MEIEKI_RESTOS],
@@ -1308,9 +1453,9 @@ const DAYS = {
     eveningShops: [...MEIEKI_SHOPS],
     convenience: [...MEIEKI_CONVENIENCE]
   },
-  3: {
-    date: "6월 2일 (화요일)",
-    title: "나고야항",
+  "3a": {
+    date: "6월 2일 (화요일) · A안",
+    title: "나고야항 수족관",
     desc: "수족관 → 점심 → 쇼핑 → 전망대. 반경 500m 안에서 모두 해결되는 노약자 최적 코스.",
     color: "#1E3A5F",
     items: [
@@ -1334,6 +1479,38 @@ const DAYS = {
     total: "¥49,000~66,000",
     restos: ["jetty_food","sugakiya","tortoise"],
     shops: ["jetty_shop"],
+    eveningAttractions: [...MEIEKI_ATTRACTIONS],
+    eveningRestos: [...MEIEKI_RESTOS],
+    eveningShops: [...MEIEKI_SHOPS],
+    convenience: [...MEIEKI_CONVENIENCE]
+  },
+  "3b": {
+    date: "6월 2일 (화요일) · B안",
+    title: "히가시야마 동식물원",
+    desc: "동식물원 → 근처 점심 → 스카이 타워. 수족관보다 걷는 양이 많아 핵심 구역 위주로 보고, 힘들면 타워는 생략.",
+    color: "#1E3A5F",
+    items: [
+      { t: "09:00", n: "호텔 출발", s: "택시 승차", type: "transit" },
+      { t: "09:35", n: "히가시야마 동식물원 도착", s: "점보 1대 약 ¥8,000 · 일반 2대 약 ¥11,000", tag: "긴거리 이동 비교", type: "transit" },
+      { t: "09:45", n: "동식물원 관람", s: "東山動植物園 · 동물원 핵심 구역과 식물원 중 선택", tag: "메인 일정", type: "poi", poi: "higashiyama_zoo" },
+      { t: "12:30", n: "점심 · 공원 안팎", s: "가스토 / ZOOASIS / 가든 테라스", tag: "점심", type: "transit" },
+      { t: "13:45", n: "히가시야마 스카이 타워", s: "東山スカイタワー · 전망층", tag: "전망", type: "poi", poi: "higashiyama_sky_tower" },
+      { t: "14:45", n: "호시가오카 테라스 또는 카페 휴식", s: "컨디션이 좋을 때만 짧게", type: "poi", poi: "hoshigaoka_terrace" },
+      { t: "15:30", n: "택시 승차", s: "히가시야마 → 호텔 · 점보 1대 약 ¥8,000 · 일반 2대 약 ¥11,000", tag: "긴거리 이동 비교", type: "transit" },
+      { t: "16:05", n: "호텔 복귀", s: "—", type: "transit" },
+      { t: "18:00", n: "저녁 · 호텔 주변", s: "자유 선택", tag: "저녁", type: "transit" }
+    ],
+    cost: [
+      { l: "택시 왕복 · 점보 1대 기준", v: "약 ¥16,000" },
+      { l: "택시 왕복 · 일반 2대 기준", v: "약 ¥22,000" },
+      { l: "동식물원 (성인 8인 기준)", v: "¥4,000" },
+      { l: "스카이 타워 (8인)", v: "¥2,400" },
+      { l: "점심+저녁 (8인)", v: "¥20,000~36,000" }
+    ],
+    total: "¥42,000~64,000",
+    attractions: ["higashiyama_zoo","higashiyama_sky_tower","toganji"],
+    restos: ["gusto_higashiyama","zooasis","garden_terrace_higashiyama","moet_dining"],
+    shops: ["hoshigaoka_terrace"],
     eveningAttractions: [...MEIEKI_ATTRACTIONS],
     eveningRestos: [...MEIEKI_RESTOS],
     eveningShops: [...MEIEKI_SHOPS],
@@ -1466,7 +1643,7 @@ function renderRoute(dayKey) {
   }
 
   // 특별 마커: 할아버지 추정 출생지 (Day 3에만 표시)
-  if (dayKey === '3') {
+  if (String(dayKey).startsWith('3')) {
     const bp = PLACES.birthplace;
     L.marker([bp.lat, bp.lng], { icon: makeHeritageIcon() })
       .addTo(markerLayer)
@@ -1499,12 +1676,13 @@ function renderRoute(dayKey) {
     // Day 1 동선: 공항 → 나고야역(에스카) → 호텔 → 나고야성
     const escaPt = [PLACES.esca.lat, PLACES.esca.lng];
     const castlePt = [PLACES.castle.lat, PLACES.castle.lng];
+    const noritakePt = [PLACES.noritake_forest.lat, PLACES.noritake_forest.lng];
     L.polyline([NGO, escaPt], { color: color, weight: 2, opacity: 0.55, dashArray: '4 8' })
       .addTo(routeLayer)
       .bindTooltip('공항 → 나고야역', { sticky: true });
-    L.polyline([escaPt, HTL, castlePt], { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
+    L.polyline([escaPt, HTL, castlePt, noritakePt, HTL], { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
       .addTo(routeLayer);
-    map.fitBounds(L.latLngBounds([NGO, escaPt, HTL, castlePt]), { padding: [60, 60], maxZoom: 11 });
+    map.fitBounds(L.latLngBounds([NGO, escaPt, HTL, castlePt, noritakePt]), { padding: [60, 60], maxZoom: 11 });
   } else if (dayKey === '4') {
     if (inCityPts.length > 1) {
       L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
@@ -1535,11 +1713,13 @@ function renderRoute(dayKey) {
 function renderDay(dayKey) {
   const container = document.getElementById('day-content');
   const isDay2 = (dayKey === '2');
+  const isDay3 = (dayKey === '3');
   let activeKey = dayKey;
   if (isDay2) activeKey = window._day2Choice || '2a';
+  if (isDay3) activeKey = window._day3Choice || '3a';
 
   const day = DAYS[activeKey];
-  const splitEvening = ['2a', '2b', '3'].includes(activeKey);
+  const splitEvening = ['2a', '2b', '3a', '3b'].includes(activeKey);
   document.documentElement.style.setProperty('--day-color', day.color);
 
   let html = `
@@ -1553,6 +1733,13 @@ function renderDay(dayKey) {
       <div class="option-toggle">
         <button class="option-btn ${activeKey==='2a'?'active':''}" data-opt="2a">A안 · 오스 상점가</button>
         <button class="option-btn ${activeKey==='2b'?'active':''}" data-opt="2b">B안 · 아츠타 신궁</button>
+      </div>`;
+  }
+  if (isDay3) {
+    html += `
+      <div class="option-toggle">
+        <button class="option-btn ${activeKey==='3a'?'active':''}" data-opt="3a">A안 · 나고야항 수족관</button>
+        <button class="option-btn ${activeKey==='3b'?'active':''}" data-opt="3b">B안 · 히가시야마</button>
       </div>`;
   }
   html += `</div><div class="timeline">`;
@@ -1706,6 +1893,14 @@ function renderDay(dayKey) {
       btn.addEventListener('click', () => {
         window._day2Choice = btn.dataset.opt;
         renderDay('2');
+      });
+    });
+  }
+  if (isDay3) {
+    container.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window._day3Choice = btn.dataset.opt;
+        renderDay('3');
       });
     });
   }
