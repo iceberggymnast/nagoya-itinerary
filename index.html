@@ -386,12 +386,19 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   }
   .marker-secondary {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: var(--paper);
-    border: 1.5px solid var(--ink-mute);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 2px solid var(--ink-mute);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink);
   }
   .marker-secondary.resto { border-color: #C77A30; background: #FFF6E8; }
   .marker-secondary.shop { border-color: #5A6B7D; background: #EBF1F7; }
@@ -727,35 +734,35 @@ const PLACES = {
     name: "노리타케의 숲", jp: "ノリタケの森",
     lat: 35.1791153, lng: 136.8812176, cat: "attraction",
     desc: "도자기 브랜드 노리타케의 옛 공장 부지를 정원·전시·숍으로 꾸민 공간. 나고야성 관람 후 피곤도를 보고, 컨디션이 괜찮으면 정원과 숍 중심으로 짧게 들르기 좋다.",
-    cost: "정원 무료 · 뮤지엄 유료", duration: "45~75분", hours: "10:00–17:00",
+    cost: "정원 무료 · 크래프트센터 ¥500", duration: "45~75분", hours: "10:00–17:00 (월 휴무)",
     ftid: "0x600376eadcaf5a91:0xe058541e779256d2"
   },
   oasis21: {
     name: "오아시스 21", jp: "オアシス21",
     lat: 35.1711148, lng: 136.9094757, cat: "attraction",
     desc: "사카에의 유리 지붕 공원과 버스터미널 복합시설. 물의 우주선이라 불리는 옥상 산책로가 유명하고, 오스 일정 전후로 짧게 들르기 좋다.",
-    cost: "무료", duration: "30~45분",
+    cost: "무료", duration: "30~45분", hours: "광장 06:00–23:00 · 물의 우주선 10:00–21:00",
     ftid: "0x600370d429e2994f:0x54bee562b7bb83d6"
   },
   higashiyama_zoo: {
     name: "히가시야마 동식물원", jp: "東山動植物園",
-    lat: 35.1591137, lng: 136.9852363, cat: "attraction",
+    lat: 35.1565379, lng: 136.9818099, cat: "attraction",
     desc: "동물원과 식물원이 결합된 대형 공원. 동물 관람, 온실, 정원 산책을 한 번에 묶을 수 있지만 면적이 넓어 무리하지 않고 핵심 구역만 보는 일정이 좋다.",
-    cost: "성인 ¥500 · 중학생 이하 무료", duration: "2.5~3.5시간", hours: "09:00–16:50",
-    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+    cost: "성인 ¥500 · 중학생 이하 무료", duration: "2.5~3.5시간", hours: "09:00–16:50 (월 휴무)",
+    ftid: "0x6003654adb43b6b7:0x7006d577567b156d"
   },
   higashiyama_sky_tower: {
     name: "히가시야마 스카이 타워", jp: "東山スカイタワー",
     lat: 35.156767, lng: 136.978872, cat: "attraction",
     desc: "동식물원 옆 전망 타워. 엘리베이터로 전망층까지 이동 가능하며, 맑은 날 나고야 동부와 도심을 내려다보기 좋다.",
-    cost: "성인 ¥300", duration: "40~60분", hours: "09:00–21:30",
+    cost: "성인 ¥300 · 동식물원 공통권 ¥640", duration: "40~60분", hours: "09:00–21:30 (월 휴무)",
     ftid: "0x60037ab3657a15cb:0xcd81097b1fd5a58b"
   },
   hoshigaoka_terrace: {
     name: "호시가오카 테라스", jp: "星が丘テラス",
     lat: 35.161368, lng: 136.986595, cat: "shopping",
     desc: "호시가오카역 옆 야외형 쇼핑·식당가. 동식물원 식물원문과 가까워 관람 후 카페·쇼핑·휴식지로 쓰기 좋다.",
-    cost: "자유", hours: "점포별 상이",
+    cost: "자유", hours: "물판 10:00–20:00 · 음식점 점포별 상이",
     ftid: "0x60036532d72c5555:0xc2f829a7406114b5"
   },
   toganji: {
@@ -843,8 +850,8 @@ const PLACES = {
     name: "텐무스도코로 케시키 나고야본점", jp: "天むす処 けしき 名古屋本店",
     lat: 35.1736291, lng: 136.8901074, cat: "restaurant",
     desc: "나고야 명물 텐무스 전문점. 호텔과 나고야역 사이에서 가볍게 먹거나 포장하기 좋은 후보.",
-    menu: [["텐무스","¥800~"],["도시락/포장","점포 확인"]],
-    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    menu: [["무겐 텐무스 1개","¥360 (야간 ¥380)"],["모닝 텐무스","08:00–11:00"],["테이크아웃","가능"]],
+    cost: "1개 ¥360~380", hours: "08:00–16:00, 18:00–22:00 (부정휴)",
     tags: ["태기추천", "나고야 명물", "포장 가능"],
     ftid: "0x60037763c12da639:0x598904ffe8d42fd7"
   },
@@ -852,8 +859,8 @@ const PLACES = {
     name: "우나우 오카후지", jp: "うなう 岡富士",
     lat: 35.1673611, lng: 136.8973316, cat: "restaurant",
     desc: "호텔 동쪽 도보·택시권의 장어 식당. 히츠마부시나 우나기 계열 저녁 후보로 분산 이용하기 좋다.",
-    menu: [["히츠마부시","점포 확인"],["우나동","점포 확인"]],
-    cost: "1인 ¥3,000~6,000", hours: "점포 확인",
+    menu: [["히츠마부시","¥5,000대~"],["우나동/우나주","¥4,000대~"],["개인실","별도 요금"]],
+    cost: "1인 ¥4,000~7,000", hours: "11:00–14:30, 17:00–22:00",
     tags: ["태기추천", "장어", "호텔 도보권"],
     ftid: "0x600370c316d8301f:0xd4562726e32fcf4c"
   },
@@ -861,8 +868,8 @@ const PLACES = {
     name: "Moumoutei Hirokoji", jp: "もうもう亭 広小路店",
     lat: 35.1679393, lng: 136.8954147, cat: "restaurant",
     desc: "히로코지 주변 야키니쿠 식당. 호텔에서 멀지 않아 저녁에 고기 메뉴가 필요할 때 대안으로 넣기 좋다.",
-    menu: [["야키니쿠","점포 확인"],["코스/세트","점포 확인"]],
-    cost: "1인 ¥4,000~8,000", hours: "점포 확인",
+    menu: [["상시오탄","¥1,200"],["상하라미","¥1,500"],["이로도리 코스","¥6,600"]],
+    cost: "점심 ¥1,500~2,000 · 저녁 ¥7,000~10,000", hours: "평일 11:30–13:30, 18:00–22:30 · 토/공휴 11:30–14:00, 18:00–22:30 (일 휴무)",
     tags: ["태기추천", "야키니쿠", "저녁"],
     ftid: "0x600377bedef98cc5:0x71e414bd961b8585"
   },
@@ -870,8 +877,8 @@ const PLACES = {
     name: "츠바메빵&밀크 아마가사카 본점", jp: "つばめパン＆Milk 尼ヶ坂本店",
     lat: 35.1872779, lng: 136.9175487, cat: "restaurant",
     desc: "오구라 토스트와 식빵으로 유명한 카페. 호텔·역 권역에서는 택시 이동 후보지만, 아침이나 카페 일정 대안으로 좋다.",
-    menu: [["오구라 토스트","점포 확인"],["토스트/카페 메뉴","점포 확인"]],
-    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    menu: [["비에이 키누카 식빵","¥890"],["오구라 토스트","¥1,000 전후"],["오믈렛 샌드","¥1,000대"]],
+    cost: "1인 ¥800~1,500", hours: "08:00–19:00 (L.O. 18:30)",
     tags: ["태기추천", "카페", "오구라 토스트"],
     ftid: "0x60037164f8fadf17:0xea59b30ae9f65d00"
   },
@@ -908,8 +915,8 @@ const PLACES = {
     name: "우나야스 니시키점", jp: "うな泰 錦店",
     lat: 35.1695556, lng: 136.9043392, cat: "restaurant",
     desc: "사카에·니시키 권역의 장어 식당. 오아시스21이나 오스 상점가 일정 전후에 장어 메뉴를 넣고 싶을 때 후보.",
-    menu: [["우나동","점포 확인"],["히츠마부시","점포 확인"]],
-    cost: "1인 ¥2,000~4,000", hours: "점포 확인",
+    menu: [["장어덮밥","¥1,000대~"],["히츠마부시 보통","¥1,000~2,000대"],["테이크아웃","가능"]],
+    cost: "1인 ¥1,000~2,000", hours: "11:00–21:00 전후",
     tags: ["태기추천", "장어", "사카에"],
     ftid: "0x600371d3f205f1db:0x7d0a6cdf25908262"
   },
@@ -917,8 +924,8 @@ const PLACES = {
     name: "야마모토야혼텐 히로코지후시미점", jp: "山本屋本店 広小路伏見店",
     lat: 35.1682041, lng: 136.8943901, cat: "restaurant",
     desc: "미소니코미 우동 전문점. 오스에서 호텔로 돌아오는 길이나 후시미 경유 일정에 넣기 좋은 나고야 명물 식당.",
-    menu: [["미소니코미 우동","¥1,300~"],["나고야 코친 메뉴","점포 확인"]],
-    cost: "1인 ¥1,500~2,500", hours: "점포 확인",
+    menu: [["미소니코미 우동","¥1,364"],["나고야 코친 미소니코미","¥2,244"],["스타미나 모츠 미소니코미","¥2,354"]],
+    cost: "점심 ¥1,500~2,000 · 저녁 ¥2,000~3,000", hours: "11:00–22:00 (L.O. 21:30)",
     tags: ["태기추천", "나고야 명물", "우동"],
     ftid: "0x600377282071be61:0xf2a2eceab47e6b9"
   },
@@ -926,8 +933,8 @@ const PLACES = {
     name: "쿠지라 사카에", jp: "Ramen Kujira Sakae",
     lat: 35.1695082, lng: 136.9133635, cat: "restaurant",
     desc: "사카에 동쪽 라멘 식당. 오아시스21 주변에서 가볍게 한 끼를 해결할 때 선택 가능한 후보.",
-    menu: [["라멘","점포 확인"],["사이드 메뉴","점포 확인"]],
-    cost: "1인 ¥900~1,500", hours: "점포 확인",
+    menu: [["다시 중화소바","¥1,000대"],["카라아게 세트","¥1,000~2,000"],["라멘/사이드","¥1,000대"]],
+    cost: "1인 ¥1,000~2,000", hours: "10:50–24:00 (L.O. 23:40)",
     tags: ["태기추천", "라멘", "가볍게"],
     ftid: "0x600371b4bc78e359:0x3d35ddd06c6e6b35"
   },
@@ -994,8 +1001,8 @@ const PLACES = {
     name: "가스토 히가시야마코엔점", jp: "ガスト 東山公園店",
     lat: 35.1607026, lng: 136.9740325, cat: "restaurant",
     desc: "히가시야마 공원역 근처 패밀리 레스토랑. 메뉴 폭이 넓고 좌석 회전이 안정적이라 동식물원 일정의 부담 적은 점심 후보.",
-    menu: [["런치/정식","¥800~"],["드링크바","점포 확인"],["디저트","¥400~"]],
-    cost: "1인 ¥800~1,500", hours: "점포 확인",
+    menu: [["런치/정식","¥800~"],["드링크바","¥300대~"],["디저트","¥400~"]],
+    cost: "1인 ¥800~1,500", hours: "평일 07:00–23:30 · 토/일/공휴 06:30–23:30",
     tags: ["태기추천", "패밀리레스토랑", "노약자 편함"],
     ftid: "0x60037aae588e10bb:0x4b104ae8ad14b77d"
   },
@@ -1006,25 +1013,25 @@ const PLACES = {
     menu: [["푸드코트 메뉴","점포별 상이"],["카페/간식","점포별 상이"]],
     cost: "1인 ¥800~1,500", hours: "09:00–16:45",
     tags: ["관람 중", "푸드코트", "노약자 편함"],
-    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+    mapQuery: "ZOOASIS 東山動植物園"
   },
   garden_terrace_higashiyama: {
     name: "가든 테라스 히가시야마", jp: "ガーデンテラス東山",
     lat: 35.154673, lng: 136.976977, cat: "restaurant",
     desc: "동식물원 식물원 권역의 레스토랑. 식물원 쪽까지 이동할 컨디션이면 조금 여유 있는 점심·카페 후보로 쓸 수 있다.",
-    menu: [["런치","점포 확인"],["카페","점포 확인"]],
+    menu: [["런치","11:30–13:30"],["티타임","14:00–15:30"],["디너","17:00–19:30"]],
     cost: "1인 ¥1,500~3,000", hours: "11:30–22:00",
     tags: ["식물원", "휴식", "점심"],
-    ftid: "0x6003654c1b146d65:0x1766df0a6eb1c7c5"
+    mapQuery: "ガーデンテラス東山 東山動植物園"
   },
   moet_dining: {
     name: "MOET & DINING", jp: "モエ ダイニング",
     lat: 35.156767, lng: 136.978872, cat: "restaurant",
     desc: "히가시야마 스카이 타워 안 캐주얼 이탈리안. 전망을 보며 식사할 수 있지만 타워 입장권이 별도로 필요하다.",
-    menu: [["파스타/피자","점포 확인"],["카페 메뉴","점포 확인"]],
-    cost: "1인 ¥1,500~3,000", hours: "수~일 11:00–16:45",
+    menu: [["생파스타","¥1,000대~"],["런치","수~일 11:00–16:45"],["디너","토/일/공휴 16:00–21:00"]],
+    cost: "1인 ¥1,500~3,000", hours: "수~일 11:00–16:45 · 토/일/공휴 16:00–21:00",
     tags: ["전망", "타워 내부", "점심"],
-    ftid: "0x60037ab3657a15cb:0xcd81097b1fd5a58b"
+    mapQuery: "MOET & DINING 東山スカイタワー"
   },
 
   // ─── 쇼핑 ───
@@ -1310,6 +1317,7 @@ const PLACES = {
 function gmapUrl(p) {
   if (p.placeId) return `https://www.google.com/maps/place/?q=place_id:${p.placeId}`;
   if (p.ftid)    return `https://www.google.com/maps/place/?ftid=${p.ftid}`;
+  if (p.mapQuery) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.mapQuery)}`;
   return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
 }
 
@@ -1552,6 +1560,8 @@ let markerLayer = L.layerGroup().addTo(map);
 let secondaryLayer = L.layerGroup().addTo(map);
 let userLocationLayer = L.layerGroup().addTo(map);
 let userLocationWatchId = null;
+let placeMarkers = {};
+let focusedTooltipTimer = null;
 
 function makeIcon(label, color) {
   return L.divIcon({
@@ -1560,9 +1570,10 @@ function makeIcon(label, color) {
   });
 }
 function makeSecondaryIcon(type) {
+  const label = type === 'shop' ? 'S' : type === 'sight' ? 'A' : type === 'convenience' ? 'C' : 'R';
   return L.divIcon({
-    html: `<div class="marker-secondary ${type}"></div>`,
-    className: '', iconSize: [18, 18], iconAnchor: [9, 9]
+    html: `<div class="marker-secondary ${type}">${label}</div>`,
+    className: '', iconSize: [22, 22], iconAnchor: [11, 11]
   });
 }
 function makeHeritageIcon() {
@@ -1591,13 +1602,14 @@ function occupyMarker(p, occupied) {
   occupied.add(markerCoordIdentity(p));
 }
 function isMarkerOccupied(p, occupied) {
-  return occupied.has(markerIdentity(p)) || occupied.has(markerCoordIdentity(p));
+  return occupied.has(markerIdentity(p));
 }
 
 function renderRoute(dayKey) {
   routeLayer.clearLayers();
   markerLayer.clearLayers();
   secondaryLayer.clearLayers();
+  placeMarkers = {};
 
   const day = DAYS[dayKey];
   const color = day.color;
@@ -1612,7 +1624,7 @@ function renderRoute(dayKey) {
         // NGO too far - don't include in fitBounds normally
         pts.push([p.lat, p.lng]);
         occupyMarker(p, occupiedMarkers);
-        L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
+        placeMarkers[it.poi] = L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
           .addTo(markerLayer)
           .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
           .on('click', () => openPlaceModal(it.poi));
@@ -1620,7 +1632,7 @@ function renderRoute(dayKey) {
       } else if (p.cat !== 'base') {
         pts.push([p.lat, p.lng]);
         occupyMarker(p, occupiedMarkers);
-        L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
+        placeMarkers[it.poi] = L.marker([p.lat, p.lng], { icon: makeIcon(idx, color) })
           .addTo(markerLayer)
           .bindTooltip(p.name, { direction: 'top', offset: [0, -8] })
           .on('click', () => openPlaceModal(it.poi));
@@ -1632,7 +1644,7 @@ function renderRoute(dayKey) {
   // Hotel
   if (dayKey !== '4') {
     occupyMarker(HOTEL, occupiedMarkers);
-    L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
+    placeMarkers.hotel = L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
       .addTo(markerLayer)
       .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
       .on('click', () => openPlaceModal('hotel'));
@@ -1645,7 +1657,7 @@ function renderRoute(dayKey) {
   // 특별 마커: 할아버지 추정 출생지 (Day 3에만 표시)
   if (String(dayKey).startsWith('3')) {
     const bp = PLACES.birthplace;
-    L.marker([bp.lat, bp.lng], { icon: makeHeritageIcon() })
+    placeMarkers.birthplace = L.marker([bp.lat, bp.lng], { icon: makeHeritageIcon() })
       .addTo(markerLayer)
       .bindTooltip('🏮 ' + bp.name, { direction: 'top', offset: [0, -10] })
       .on('click', () => openPlaceModal('birthplace'));
@@ -1661,7 +1673,7 @@ function renderRoute(dayKey) {
     if (isMarkerOccupied(p, occupiedMarkers)) return;
     occupyMarker(p, occupiedMarkers);
     const iconType = placeCategory(p);
-    L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(iconType) })
+    placeMarkers[id] = L.marker([p.lat, p.lng], { icon: makeSecondaryIcon(iconType) })
       .addTo(secondaryLayer)
       .bindTooltip(`${placeTooltipPrefix(p)} ${p.name}`, { direction: 'top', offset: [0, -6] })
       .on('click', () => openPlaceModal(id));
@@ -1688,7 +1700,7 @@ function renderRoute(dayKey) {
       L.polyline(inCityPts, { color: color, weight: 2.5, opacity: 0.85, dashArray: '6 6' })
         .addTo(routeLayer);
     }
-    L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
+    placeMarkers.hotel = L.marker([HOTEL.lat, HOTEL.lng], { icon: makeIcon('H', '#1A1818') })
       .addTo(markerLayer)
       .bindTooltip('쿠레타케인 프리미엄 나고야 나야바시 (호텔)', { direction: 'top', offset: [0, -8] })
       .on('click', () => openPlaceModal('hotel'));
@@ -1974,16 +1986,34 @@ function openPlaceModal(id) {
   // Actions
   html += `<div class="modal-actions">
     <a href="${gmapUrl(p)}" target="_blank" rel="noopener" class="btn primary">📍 구글 지도에서 열기</a>
-    <button class="btn" onclick="focusOnMap(${p.lat}, ${p.lng})">지도에서 위치 보기</button>
+    <button class="btn" onclick="focusOnMap('${id}')">지도에서 위치 보기</button>
   </div>`;
 
   body.innerHTML = html;
   document.getElementById('modal').classList.add('open');
 }
 
-function focusOnMap(lat, lng) {
-  map.setView([lat, lng], 15, { animate: true });
+function focusOnMap(id) {
+  const p = PLACES[id];
+  if (!p) return;
+
+  map.setView([p.lat, p.lng], 16, { animate: true });
   closeModal();
+
+  if (focusedTooltipTimer) {
+    clearTimeout(focusedTooltipTimer);
+    focusedTooltipTimer = null;
+  }
+
+  window.setTimeout(() => {
+    const marker = placeMarkers[id];
+    if (!marker) return;
+    marker.openTooltip();
+    focusedTooltipTimer = window.setTimeout(() => {
+      marker.closeTooltip();
+      focusedTooltipTimer = null;
+    }, 5000);
+  }, 350);
 }
 
 function updateUserLocationMarker(lat, lng, accuracy) {
