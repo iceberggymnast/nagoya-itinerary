@@ -143,12 +143,20 @@
     font-size: 13px;
     max-width: 480px;
   }
+  .option-toggle-wrap {
+    position: sticky;
+    top: var(--tabs-h, 48px);
+    background: var(--paper);
+    z-index: 9;
+    padding: 10px 0 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
   .option-toggle {
     display: inline-flex;
     background: var(--paper-2);
     border-radius: 2px;
     padding: 3px;
-    margin: 16px 0 24px;
     border: 1px solid var(--rule);
   }
   .option-btn {
@@ -221,11 +229,44 @@
     margin-bottom: 14px;
     letter-spacing: 0.04em;
   }
+  .section-collapsible { display: block; }
+  .section-collapsible > summary {
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent-1);
+    letter-spacing: 0.04em;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-collapsible > summary::-webkit-details-marker { display: none; }
+  .section-collapsible > summary::before {
+    content: '▸';
+    font-style: normal;
+    font-size: 11px;
+    color: var(--ink-mute);
+    transition: transform 0.15s;
+    display: inline-block;
+  }
+  .section-collapsible[open] > summary::before { transform: rotate(90deg); }
+  .section-collapsible > summary .count {
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+  .section-collapsible > .card-list { margin-top: 14px; }
   .card-list { display: grid; gap: 10px; }
   .card {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
     padding: 12px 14px;
     background: var(--paper-2);
     border-radius: 2px;
@@ -233,9 +274,33 @@
     transition: background 0.15s;
     border: 1px solid transparent;
   }
+  .card-aside {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .card:hover { background: var(--paper-3); border-color: var(--rule); }
   .card-name { font-size: 13px; font-weight: 500; }
   .card-info { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+  .card-map-btn {
+    appearance: none;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    transition: all 0.15s;
+  }
+  .card-map-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card-map-btn:focus-visible { outline: 2px solid var(--accent-1); outline-offset: 2px; }
   .card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -333,6 +398,10 @@
     top: 20px;
     right: 20px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
   }
   .location-toggle {
     display: inline-flex;
@@ -634,6 +703,10 @@
   <div class="map-wrap">
     <div class="map-title">동선 지도 · Route Map</div>
     <div class="map-actions">
+      <button class="location-toggle is-on" id="secondary-toggle" type="button" role="switch" aria-checked="true">
+        <span class="toggle-track" aria-hidden="true"><span class="toggle-thumb"></span></span>
+        <span class="toggle-label">주변 추천</span>
+      </button>
       <button class="location-toggle" id="location-toggle" type="button" role="switch" aria-checked="false">
         <span class="toggle-track" aria-hidden="true"><span class="toggle-thumb"></span></span>
         <span class="toggle-label">내 위치</span>
@@ -1722,6 +1795,8 @@ function renderRoute(dayKey) {
       map.fitBounds(L.latLngBounds(inCityPts), { padding: [60, 60], maxZoom: 14 });
     }
   }
+
+  if (typeof applySecondaryVisibility === 'function') applySecondaryVisibility();
 }
 
 // =============================================================
@@ -1744,22 +1819,27 @@ function renderDay(dayKey) {
       <div class="day-date">${day.date}</div>
       <h2 class="day-title">${day.title}</h2>
       <p class="day-desc">${day.desc}</p>
+    </div>
   `;
   if (isDay2) {
     html += `
-      <div class="option-toggle">
-        <button class="option-btn ${activeKey==='2a'?'active':''}" data-opt="2a">A안 · 오스 상점가</button>
-        <button class="option-btn ${activeKey==='2b'?'active':''}" data-opt="2b">B안 · 아츠타 신궁</button>
+      <div class="option-toggle-wrap">
+        <div class="option-toggle">
+          <button class="option-btn ${activeKey==='2a'?'active':''}" data-opt="2a">A안 · 오스 상점가</button>
+          <button class="option-btn ${activeKey==='2b'?'active':''}" data-opt="2b">B안 · 아츠타 신궁</button>
+        </div>
       </div>`;
   }
   if (isDay3) {
     html += `
-      <div class="option-toggle">
-        <button class="option-btn ${activeKey==='3a'?'active':''}" data-opt="3a">A안 · 나고야항 수족관</button>
-        <button class="option-btn ${activeKey==='3b'?'active':''}" data-opt="3b">B안 · 히가시야마</button>
+      <div class="option-toggle-wrap">
+        <div class="option-toggle">
+          <button class="option-btn ${activeKey==='3a'?'active':''}" data-opt="3a">A안 · 나고야항 수족관</button>
+          <button class="option-btn ${activeKey==='3b'?'active':''}" data-opt="3b">B안 · 히가시야마</button>
+        </div>
       </div>`;
   }
-  html += `</div><div class="timeline">`;
+  html += `<div class="timeline">`;
 
   day.items.forEach((it, i) => {
     const cls = it.type === 'poi' ? 'item poi' : 'item transit';
@@ -1790,7 +1870,9 @@ function renderDay(dayKey) {
           <div class="card-info">${p.jp || ''} · ${p.cost || ''} · ${p.duration || ''}</div>
           ${placeTags(p)}
         </div>
-        <div class="card-arrow">→</div>
+        <div class="card-aside">
+          <button class="card-map-btn" data-map="${id}" type="button" aria-label="지도에서 보기">📍</button>
+        </div>
       </div>`;
     });
     html += `</div></div>`;
@@ -1810,7 +1892,10 @@ function renderDay(dayKey) {
           <div class="card-info">${p.jp || ''} · ${(p.hours || '').split(' ')[0] || ''}</div>
           ${placeTags(p)}
         </div>
-        <div class="card-price">${p.cost || ''}</div>
+        <div class="card-aside">
+          <div class="card-price">${p.cost || ''}</div>
+          <button class="card-map-btn" data-map="${id}" type="button" aria-label="지도에서 보기">📍</button>
+        </div>
       </div>`;
     });
     html += `</div></div>`;
@@ -1830,7 +1915,9 @@ function renderDay(dayKey) {
           <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
           ${placeTags(p)}
         </div>
-        <div class="card-arrow">→</div>
+        <div class="card-aside">
+          <button class="card-map-btn" data-map="${id}" type="button" aria-label="지도에서 보기">📍</button>
+        </div>
       </div>`;
     });
     html += `</div></div>`;
@@ -1843,10 +1930,11 @@ function renderDay(dayKey) {
     (day.eveningShops && day.eveningShops.length > 0) ||
     (day.convenience && day.convenience.length > 0)
   )) {
-    html += `<div class="section">
-      <div class="section-head">— 저녁 · 호텔/나고야역 주변</div>
+    const eveningIds = [...(day.eveningAttractions || []), ...(day.eveningRestos || []), ...(day.eveningShops || []), ...(day.convenience || [])];
+    html += `<details class="section section-collapsible">
+      <summary>— 저녁 · 호텔/나고야역 주변 <span class="count">${eveningIds.length}곳</span></summary>
       <div class="card-list">`;
-    [...(day.eveningAttractions || []), ...(day.eveningRestos || []), ...(day.eveningShops || []), ...(day.convenience || [])].forEach(id => {
+    eveningIds.forEach(id => {
       const p = PLACES[id];
       if (!p) return;
       const meta = p.cat === 'restaurant'
@@ -1859,19 +1947,22 @@ function renderDay(dayKey) {
       const info = p.cat === 'restaurant'
         ? `${p.jp || ''} · ${(p.hours || '').split(' ')[0] || ''}`
         : `${p.jp || ''} · ${p.hours || p.duration || ''}`;
-      const aside = p.cat === 'restaurant'
+      const priceCell = p.cat === 'restaurant'
         ? `<div class="card-price">${p.cost || ''}</div>`
-        : `<div class="card-arrow">→</div>`;
+        : '';
       html += `<div class="card" data-place="${id}">
         <div>
           <div class="card-name"><span class="card-cat" style="color:${meta.color}">${meta.code}</span>${p.name}</div>
           <div class="card-info">${info}</div>
           ${placeTags(p)}
         </div>
-        ${aside}
+        <div class="card-aside">
+          ${priceCell}
+          <button class="card-map-btn" data-map="${id}" type="button" aria-label="지도에서 보기">📍</button>
+        </div>
       </div>`;
     });
-    html += `</div></div>`;
+    html += `</div></details>`;
   }
 
   // Convenience stores
@@ -1888,7 +1979,9 @@ function renderDay(dayKey) {
           <div class="card-info">${p.jp || ''} · ${p.hours || ''}</div>
           ${placeTags(p)}
         </div>
-        <div class="card-arrow">→</div>
+        <div class="card-aside">
+          <button class="card-map-btn" data-map="${id}" type="button" aria-label="지도에서 보기">📍</button>
+        </div>
       </div>`;
     });
     html += `</div></div>`;
@@ -1931,6 +2024,13 @@ function renderDay(dayKey) {
     el.addEventListener('click', () => {
       const k = el.dataset.place;
       if (k && PLACES[k]) openPlaceModal(k);
+    });
+  });
+  container.querySelectorAll('.card-map-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const k = btn.dataset.map;
+      if (k && PLACES[k]) focusOnMap(k);
     });
   });
 }
@@ -2103,6 +2203,37 @@ document.getElementById('location-toggle').addEventListener('click', toggleLocat
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
+
+// =============================================================
+// SECONDARY MARKERS TOGGLE
+// =============================================================
+let secondaryVisible = true;
+function applySecondaryVisibility() {
+  if (secondaryVisible) {
+    if (!map.hasLayer(secondaryLayer)) map.addLayer(secondaryLayer);
+  } else {
+    if (map.hasLayer(secondaryLayer)) map.removeLayer(secondaryLayer);
+  }
+}
+document.getElementById('secondary-toggle').addEventListener('click', () => {
+  secondaryVisible = !secondaryVisible;
+  const btn = document.getElementById('secondary-toggle');
+  btn.classList.toggle('is-on', secondaryVisible);
+  btn.setAttribute('aria-checked', String(secondaryVisible));
+  applySecondaryVisibility();
+});
+
+// =============================================================
+// STICKY OFFSET — measure tabs height
+// =============================================================
+function updateTabsOffset() {
+  const tabs = document.querySelector('.tabs');
+  if (!tabs) return;
+  const h = tabs.getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--tabs-h', `${Math.ceil(h)}px`);
+}
+window.addEventListener('resize', updateTabsOffset);
+updateTabsOffset();
 
 // =============================================================
 // TABS
